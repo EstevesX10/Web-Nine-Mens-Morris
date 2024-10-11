@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/css/style.css" />
+    <link rel="stylesheet" href="static/css/authentication.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     <title>Nine Men's Morris</title>
   </head>
   <body>
@@ -23,24 +28,129 @@
           <li>
             <button class="nav-btn" data-target="section3">Seção 3</button>
           </li>
+          <li>
+            <button class="nav-btn" data-target="section4">Seção 4</button>
+          </li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <section id="section1" class="content active">
-        <h2>Bem-vindo à Seção 1</h2>
-        <p>Conteúdo inicial da primeira seção.</p>
-      </section>
-      <section id="section2" class="content">
-        <h2>Seção 2</h2>
-        <p>Conteúdo da segunda seção.</p>
-      </section>
-      <section id="section3" class="content">
-        <h2>Seção 3</h2>
-        <p>Conteúdo da terceira seção.</p>
-      </section>
+      <div class="content-box">
+        <section id="section1" class="content active">
+          <div class="containerAuthentication">
+            <div class="contentAuthentication">
+              <h2 class="logo"><i class="bx bxl-firebase"></i>Authenticaton</h2>
+
+              <div class="text-sci">
+                <h2>Welcome!<br /><span>To Our New Website.</span></h2>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Officiis, suscipit
+                </p>
+
+                <div class="social-icons">
+                  <a href="#"><i class="bx bxl-linkedin"></i></a>
+                  <a href="#"><i class="bx bxl-facebook"></i></a>
+                  <a href="#"><i class="bx bxl-instagram"></i></a>
+                  <a href="#"><i class="bx bxl-twitter"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="logreg-box">
+              <div class="form-box login">
+                <form action="#">
+                  <h2>Sign In</h2>
+
+                  <div class="input-box">
+                    <span class="icon"><i class="bx bxs-envelope"></i></span>
+                    <input type="email" required />
+                    <label>Email</label>
+                  </div>
+
+                  <div class="input-box">
+                    <span class="icon"><i class="bx bxs-lock-alt"></i></span>
+                    <input type="password" required />
+                    <label>Password</label>
+                  </div>
+
+                  <div class="remember-forgot">
+                    <label> <input type="checkbox" /> Remember me </label>
+                    <a href="#">Forgot password?</a>
+                  </div>
+
+                  <button type="submit" class="btn">Sign In</button>
+
+                  <div class="login-register">
+                    <p>
+                      Don't have an account?
+                      <a href="#" class="register-link">Sign up</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
+
+              <div class="form-box register">
+                <form action="#">
+                  <h2>Sign Up</h2>
+
+                  <div class="input-box">
+                    <span class="icon"><i class="bx bxs-user"></i></span>
+                    <input type="text" required />
+                    <label>Name</label>
+                  </div>
+
+                  <div class="input-box">
+                    <span class="icon"><i class="bx bxs-envelope"></i></span>
+                    <input type="email" required />
+                    <label>Email</label>
+                  </div>
+
+                  <div class="input-box">
+                    <span class="icon"><i class="bx bxs-lock-alt"></i></span>
+                    <input type="password" required />
+                    <label>Password</label>
+                  </div>
+
+                  <div class="remember-forgot">
+                    <label>
+                      <input type="checkbox" />
+                      I agree to the terms & conditions</label
+                    >
+                  </div>
+
+                  <button type="submit" class="btn">Sign In</button>
+
+                  <div class="login-register">
+                    <p>
+                      Already have an account?
+                      <a href="#" class="login-link">Sign in</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section2" class="content">
+          <h2>Seção 2</h2>
+          <p>Conteúdo da segunda seção.</p>
+        </section>
+
+        <section id="section3" class="content">
+          <h2>Seção 3</h2>
+          <p>Conteúdo da terceira seção.</p>
+        </section>
+
+        <section id="section4" class="content">
+          <h2>Seção 4</h2>
+          <p>Conteúdo da quarta seção.</p>
+        </section>
+      </div>
     </main>
     <script src="static/js/script.js"></script>
+    <script src="static/js/authentication.js"></script>
   </body>
 </html>

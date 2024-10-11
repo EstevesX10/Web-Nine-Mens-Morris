@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family-Poppins:wght@600&display-swap');
+
+:root {
+    --white: #ffffff;
+    --backgroundColor: #1f242d;
+    --lightBlue: #0ef;
+    --lightGreen: #0f0;
+    --pink: #e0f;
+    --yellow: #ff0;
+
+    --spaceBetweenButtons: 20px;
+    --spaceEnd: 40px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +20,14 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-image: url('../images/Dunes.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 header {
-    background-color: #333;
-    padding: 10px 0;
+    background-color: transparent;
+    padding: 50px 0;
     color: #fff;
 }
 
@@ -19,7 +35,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 40px;
 }
 
 .logo-container {
@@ -29,48 +45,88 @@ nav {
 
 .logo {
     height: 40px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .logo-text {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: bold;
 }
 
 ul {
     list-style: none;
     display: flex;
+    justify-content: space-between;
+    width: 50%;
 }
 
 ul li {
-    margin-left: 20px;
+    margin-left: var(--spaceBetweenButtons);
+}
+
+ul li:last-child {
+    margin-right: var(--spaceEnd);
 }
 
 .nav-btn {
-    background-color: transparent;
+    position: relative;
     color: #fff;
+    background-color: transparent;
+    font-size: 24px;
+    text-decoration: none;
     border: none;
-    font-size: 18px;
     cursor: pointer;
-    padding: 10px;
-    transition: color 0.3s;
+    z-index: 1;
 }
 
-.nav-btn:hover {
-    color: #ddd;
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s;
+}
+
+.nav-btn:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
 }
 
 main {
     padding: 20px;
 }
 
+.content-box {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
 .content {
     display: none;
     opacity: 0;
+    color: #e4e4e4e4;
     transition: opacity 0.5s ease;
 }
 
 .content.active {
     display: block;
     opacity: 1;
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-bottom: 18px;
+}
+
+.content p {
+    font-size: 18px;
 }
