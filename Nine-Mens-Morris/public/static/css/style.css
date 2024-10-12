@@ -100,13 +100,13 @@ ul li:last-child {
 }
 
 main {
-    padding: 20px;
+    padding: 0px;
 }
 
 .content-box {
-    width: 50%;
-    margin: 40px auto;
-    padding: 20px;
+    width: 30%;
+    margin: 70px auto;
+    padding: 5px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }

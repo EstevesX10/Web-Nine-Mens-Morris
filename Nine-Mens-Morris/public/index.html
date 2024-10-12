@@ -56,38 +56,46 @@
           <div class="config-section">
             <h2>Configuration</h2>
 
-            <form id="configForm" class="config-form">
-              <label class="label-config" for="board-size">Board Size</label>
-              <select id="board-size" class="select-config" name="board-size">
-                <option value="3x3">3x3</option>
-                <option value="4x4">4x4</option>
-                <option value="5x5">5x5</option>
-              </select>
+            <form id="config-form" class="config-form">
+              <div class="select-group">
+                <label class="label-config" for="board-size">Board Size</label>
+                <select id="board-size" class="select-config" name="board-size">
+                  <option value="3x3">3x3</option>
+                  <option value="4x4">4x4</option>
+                  <option value="5x5">5x5</option>
+                </select>
+              </div>
 
-              <label class="label-config" for="opponent">Game Mode</label>
-              <select id="opponent" class="select-config" name="opponent">
-                <option value="ai">AI</option>
-                <option value="pvp">PvP</option>
-              </select>
+              <div class="select-group">
+                <label class="label-config" for="opponent">Game Mode</label>
+                <select id="opponent" class="select-config" name="opponent">
+                  <option value="ai">AI</option>
+                  <option value="pvp">PvP</option>
+                </select>
+              </div>
 
-              <label class="label-config" for="first-player"
-                >First Player</label
-              >
-              <select
-                id="first-player"
-                class="select-config"
-                name="first-player"
-              >
-                <option value="player">Player1</option>
-                <option value="ai">AI</option>
-              </select>
+              <div class="select-group">
+                <label class="label-config" for="first-player"
+                  >First Player</label
+                >
+                <select
+                  id="first-player"
+                  class="select-config"
+                  name="first-player"
+                >
+                  <option value="player">Player1</option>
+                  <option value="ai">AI</option>
+                </select>
+              </div>
 
-              <label class="label-config" for="ai-level">AI Dificulty</label>
-              <select id="ai-level" class="select-config" name="ai-level">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </select>
+              <div class="select-group">
+                <label class="label-config" for="ai-level">AI Dificulty</label>
+                <select id="ai-level" class="select-config" name="ai-level">
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
 
               <button class="btn-config" type="submit">
                 Save Configuration
@@ -196,5 +204,6 @@
     </main>
     <script src="static/js/script.js"></script>
     <script src="static/js/authentication.js"></script>
+    <script src="static/js/configuration.js"></script>
   </body>
 </html>
