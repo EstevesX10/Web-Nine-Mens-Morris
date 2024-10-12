@@ -1,0 +1,94 @@
+:root {
+    --configBtnColor: #1f242d;
+    --configBtnColorHighlight: #1f242a;
+}
+
+.config-section {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    width: 60%;
+    max-width: 600px; /* Define a largura máxima */
+    margin: 50px auto;
+    color: #fff;
+    text-align: center; /* Centraliza o texto */
+}
+
+.config-section h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.config-section p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #ddd;
+}
+
+.config-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+    gap: 20px; /* Espaço entre os campos */
+    margin-bottom: 20px;
+}
+
+.label-config {
+    font-size: 16px;
+    color: #f0f0f0;
+    margin-bottom: 5px;
+    text-align: left; /* Alinha o texto da label à esquerda */
+}
+
+.select-group {
+    display: flex;
+    flex-direction: column; /* As labels ficam em cima dos campos */
+}
+
+.select-config {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+
+.select-config:hover, .select-config:focus {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-config {
+    grid-column: span 2; /* O botão ocupa ambas as colunas */
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: var(--configBtnColor);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 15px; /* Adicionar margem no topo do botão */
+}
+
+.btn-config:hover {
+    background-color: var(--configBtnColorHighlight);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+.btn-config:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/css/style.css" />
     <link rel="stylesheet" href="static/css/authentication.css" />
+    <link rel="stylesheet" href="static/css/configuration.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -20,16 +21,20 @@
         </div>
         <ul>
           <li>
-            <button class="nav-btn" data-target="section1">Seção 1</button>
+            <button class="nav-btn" data-target="section1">Section 1</button>
           </li>
           <li>
-            <button class="nav-btn" data-target="section2">Seção 2</button>
+            <button class="nav-btn" data-target="section2">Section 2</button>
           </li>
           <li>
-            <button class="nav-btn" data-target="section3">Seção 3</button>
+            <button class="nav-btn" data-target="section3">
+              Configuration
+            </button>
           </li>
           <li>
-            <button class="nav-btn" data-target="section4">Seção 4</button>
+            <button class="nav-btn" data-target="section4">
+              Authentication
+            </button>
           </li>
         </ul>
       </nav>
@@ -38,6 +43,60 @@
     <main>
       <div class="content-box">
         <section id="section1" class="content active">
+          <h2>Section 1</h2>
+          <p>SECTION 1 CONTENT</p>
+        </section>
+
+        <section id="section2" class="content">
+          <h2>Section 2</h2>
+          <p>SECTION 2 CONTENT</p>
+        </section>
+
+        <section id="section3" class="content">
+          <div class="config-section">
+            <h2>Configuration</h2>
+
+            <form id="configForm" class="config-form">
+              <label class="label-config" for="board-size">Board Size</label>
+              <select id="board-size" class="select-config" name="board-size">
+                <option value="3x3">3x3</option>
+                <option value="4x4">4x4</option>
+                <option value="5x5">5x5</option>
+              </select>
+
+              <label class="label-config" for="opponent">Game Mode</label>
+              <select id="opponent" class="select-config" name="opponent">
+                <option value="ai">AI</option>
+                <option value="pvp">PvP</option>
+              </select>
+
+              <label class="label-config" for="first-player"
+                >First Player</label
+              >
+              <select
+                id="first-player"
+                class="select-config"
+                name="first-player"
+              >
+                <option value="player">Player1</option>
+                <option value="ai">AI</option>
+              </select>
+
+              <label class="label-config" for="ai-level">AI Dificulty</label>
+              <select id="ai-level" class="select-config" name="ai-level">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+
+              <button class="btn-config" type="submit">
+                Save Configuration
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <section id="section4" class="content">
           <div class="containerAuthentication">
             <div class="contentAuthentication">
               <h2 class="logo"><i class="bx bxl-firebase"></i>Authenticaton</h2>
@@ -132,21 +191,6 @@
               </div>
             </div>
           </div>
-        </section>
-
-        <section id="section2" class="content">
-          <h2>Seção 2</h2>
-          <p>Conteúdo da segunda seção.</p>
-        </section>
-
-        <section id="section3" class="content">
-          <h2>Seção 3</h2>
-          <p>Conteúdo da terceira seção.</p>
-        </section>
-
-        <section id="section4" class="content">
-          <h2>Seção 4</h2>
-          <p>Conteúdo da quarta seção.</p>
         </section>
       </div>
     </main>
