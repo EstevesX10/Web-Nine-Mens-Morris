@@ -10,6 +10,7 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link rel="icon" href="./static/images/logo.png" />
     <title>Nine Men's Morris</title>
   </head>
   <body>
@@ -42,7 +43,7 @@
 
     <main>
       <div class="content-box">
-        <section id="section1" class="content active">
+        <section id="section1" class="content">
           <h2>Section 1</h2>
           <p>SECTION 1 CONTENT</p>
         </section>
@@ -65,6 +66,29 @@
                   <option value="5x5">5x5</option>
                 </select>
               </div>
+
+              <!-- <div class="select-group">
+                <div class="select-menu">
+                  <div class="select-btn" id="select-btn">
+                    <span id="text">Dropdown Select</span>
+                    <ion-icon
+                      name="chevron-down-outline"
+                      class="icon-arrow"
+                    ></ion-icon>
+                  </div>
+
+                  <ul class="list">
+                    <li class="option" style="--i: 5">
+                      <ion-icon name="logo-html5" class="icon"></ion-icon>
+                      <span class="option-text">HTML</span>
+                    </li>
+                    <li class="option" style="--i: 4">
+                      <ion-icon name="logo-html5" class="icon"></ion-icon>
+                      <span class="option-text">CSS</span>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
 
               <div class="select-group">
                 <label class="label-config" for="opponent">Game Mode</label>
@@ -104,7 +128,7 @@
           </div>
         </section>
 
-        <section id="section4" class="content">
+        <section id="section4" class="content active">
           <div class="containerAuthentication">
             <div class="contentAuthentication">
               <h2 class="logo"><i class="bx bxl-firebase"></i>Authenticaton</h2>
@@ -205,5 +229,13 @@
     <script src="static/js/script.js"></script>
     <script src="static/js/authentication.js"></script>
     <script src="static/js/configuration.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>

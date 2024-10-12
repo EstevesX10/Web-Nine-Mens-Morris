@@ -9,7 +9,7 @@
     backdrop-filter: blur(10px);
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    width: 60%;
+    width: 70%;
     max-width: 600px;
     margin: 50px auto;
     color: #fff;
@@ -51,7 +51,7 @@
 
 .select-config {
     padding: 10px 15px;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 6px;
     border: none;
     outline: none;
@@ -76,8 +76,8 @@
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 15px;
 }
@@ -92,3 +92,93 @@
     transform: translateY(1px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+
+/* ------------------------------------------------------- */
+
+/*
+
+.select-menu {
+    width: 100%;
+}
+
+.select-menu .select-btn {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    background: #fff;
+    color: #333;
+    font-size: 16px;
+    padding: 16px;
+    margin-top: 26px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+}
+
+.select-btn .icon-arrow {
+    font-size: 16px;
+    transition: 1s;
+}
+
+.select-btn.active .icon-arrow {
+    transform: rotate(180deg);
+}
+
+.select-menu .list {
+    position: absolute;
+    width: auto;
+    transform: translateY(30px);
+    margin-top: 30px;
+    z-index: -10;
+}
+
+.list .option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    padding: 0 16px;
+    cursor: pointer;
+    transform-origin: top;
+    opacity: 0;
+    transform: scale(0) translateY(-65px);
+    transition: opacity .5s ease-in-out, transform .5s ease-in-out, margin-bottom .5s ease-in-out;
+    transition-delay: calc(.1s * var(--i));
+}
+
+.select-btn.active~.list .option {
+    transition: opacity 1s ease-in-out, transform .5s ease-in-out, margin-bottom .2s ease-in-out;
+    transition-delay: calc(.1s * var(--i));
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    margin-bottom: 0;
+}
+
+.list .option:hover {
+    background: #f2f2f2;
+}
+
+.list .option:nth-child(1) {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.list .option:nth-child(5) {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.option .icon {
+    font-size: 16px;
+}
+
+.option .option-text {
+    font-size: 16px;
+    color: red
+}
+
+*/
