@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/css/style.css" />
-    <link rel="stylesheet" href="static/css/authentication.css" />
+    <link rel="stylesheet" href="static/css/boardGame.css" />
     <link rel="stylesheet" href="static/css/configuration.css" />
+    <link rel="stylesheet" href="static/css/authentication.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -25,7 +26,7 @@
             <button class="nav-btn" data-target="section1">Section 1</button>
           </li>
           <li>
-            <button class="nav-btn" data-target="section2">Section 2</button>
+            <button class="nav-btn" data-target="section2">Game Board</button>
           </li>
           <li>
             <button class="nav-btn" data-target="section3">
@@ -48,11 +49,12 @@
           <p>SECTION 1 CONTENT</p>
         </section>
 
+        <!-- Game Board -->
         <section id="section2" class="content">
-          <h2>Section 2</h2>
-          <p>SECTION 2 CONTENT</p>
+          <div id="board" class="board-container"></div>
         </section>
 
+        <!-- Configuration -->
         <section id="section3" class="content">
           <div class="config-section">
             <h2>Configuration</h2>
@@ -61,9 +63,9 @@
               <div class="select-group">
                 <label class="label-config" for="board-size">Board Size</label>
                 <select id="board-size" class="select-config" name="board-size">
-                  <option value="3x3">3x3</option>
-                  <option value="4x4">4x4</option>
-                  <option value="5x5">5x5</option>
+                  <option value="2">2 Squares</option>
+                  <option value="3">3 Squares</option>
+                  <option value="4">4 Squares</option>
                 </select>
               </div>
 
@@ -128,6 +130,7 @@
           </div>
         </section>
 
+        <!-- Authenticaton -->
         <section id="section4" class="content active">
           <div class="containerAuthentication">
             <div class="contentAuthentication">
@@ -227,8 +230,10 @@
       </div>
     </main>
     <script src="static/js/script.js"></script>
-    <script src="static/js/authentication.js"></script>
+    <script src="static/js/boardGame.js"></script>
+    <script src="static/js/logicGame.js"></script>
     <script src="static/js/configuration.js"></script>
+    <script src="static/js/authentication.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"

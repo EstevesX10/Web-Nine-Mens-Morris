@@ -1,0 +1,77 @@
+:root {
+    --boardSide: 500px;
+    --pointRadius: 14px;
+    --pointColor: #000;
+    --pointBorderColor: #fff;
+    --pointHighlightColor: crimson;
+    --lineThickness: 4px;
+    --lineColor: #fff;
+    --squareColor: purple;
+
+    --boardOffset: 25px;
+}
+
+.board-container {
+    position: relative;
+    width: var(--boardSide);
+    height: var(--boardSide);
+    margin: var(--boardOffset) auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.point {
+    position: absolute;
+    width: calc(var(--pointRadius)*2);
+    height: calc(var(--pointRadius)*2);
+    border-radius: 50%;
+    color: var(--pointColor);
+    background-color: var(--pointColor);
+    border: 3px solid var(--pointBorderColor);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    z-index: 5;
+}
+
+.point:hover {
+    background-color: var(--pointHighlightColor);
+}
+
+.line {
+    position: absolute;
+    background-color: var(--squareColor);
+}
+
+.vertical-line {
+    width: var(--lineThickness);
+    height: 100px;
+}
+
+.horizontal-line {
+    height: var(--lineThickness);
+    width: 100px;
+}
+
+.square {
+    position: absolute;
+    border: var(--lineThickness) solid var(--lineColor);
+    background-color: var(--squareColor);
+    align-self: center;
+}
+
+.small-square {
+    width: 150px;
+    height: 150px;
+}
+
+.medium-square {
+    width: 300px;
+    height: 300px;
+}
+
+.large-square {
+    width: 450px;
+    height: 450px;
+}
