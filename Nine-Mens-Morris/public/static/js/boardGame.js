@@ -25,20 +25,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generatePointsAndLines(squareSizes, boardCenter, pointSize, lineWidth) {
+        const lineThickness = 4
         squareSizes.forEach((size, index) => {
             const half = size / 2;
             const offset = boardCenter - half;
     
             // Create Points
             const positions = [
-                { x: offset - pointSize / 2, y: offset - pointSize / 2 }, // Upper left corner
-                { x: boardCenter - pointSize / 2, y: offset - pointSize / 2 }, // Upper middle corner
-                { x: boardCenter + half - pointSize / 2, y: offset - pointSize / 2 }, // Upper right corner
-                { x: offset - pointSize / 2, y: boardCenter - pointSize / 2 }, // Middle left point
-                { x: boardCenter + half - pointSize / 2, y: boardCenter - pointSize / 2 }, // Middle right point
-                { x: offset - pointSize / 2, y: boardCenter + half - pointSize / 2 }, // Lower left corner
-                { x: boardCenter - pointSize / 2, y: boardCenter + half - pointSize / 2 }, // Lower middle corner
-                { x: boardCenter + half - pointSize / 2, y: boardCenter + half - pointSize / 2 } // Lower righ corner
+                { x: offset - pointSize / 2 + lineThickness / 2, y: offset - pointSize / 2 + lineThickness / 2}, // Upper left corner
+                { x: boardCenter - pointSize / 2 - lineThickness / 2, y: offset - pointSize / 2 + lineThickness / 2}, // Upper middle corner
+                { x: boardCenter + half - pointSize / 2 - lineThickness / 2, y: offset - pointSize / 2 + lineThickness / 2}, // Upper right corner
+                { x: offset - pointSize / 2 + lineThickness / 2, y: boardCenter - pointSize / 2 }, // Middle left point
+                { x: boardCenter + half - pointSize / 2 - lineThickness / 2, y: boardCenter - pointSize / 2 }, // Middle right point
+                { x: offset - pointSize / 2 + lineThickness / 2, y: boardCenter + half - pointSize / 2 - lineThickness / 2}, // Lower left corner
+                { x: boardCenter - pointSize / 2 + lineThickness / 2, y: boardCenter + half - pointSize / 2 - lineThickness / 2}, // Lower middle corner
+                { x: boardCenter + half - pointSize / 2 - lineThickness / 2, y: boardCenter + half - pointSize / 2 - lineThickness / 2} // Lower right corner
             ];
     
             // Add points to the board
@@ -63,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 drawLine(boardCenter, offset + 2*half, boardCenter, nextOffset + half);
                 
                 // Horizontal Segments
-                drawLine(0, boardCenter, offset + half/2, boardCenter);
-                drawLine(offset + 2*half, boardCenter, nextOffset + half, boardCenter);
+                drawLine(0, boardCenter - lineThickness/2, offset + half/2, boardCenter - lineThickness/2);
+                drawLine(offset + 2*half, boardCenter + lineThickness/2, nextOffset + half, boardCenter + lineThickness/2);
             }
         });
     }
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const line = document.createElement('div');
         line.classList.add('line');
         lineThickness = 4
-        lineColor = '#fff'
+        lineColor = '#8499ce'
 
         // Calculate line length
         const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);

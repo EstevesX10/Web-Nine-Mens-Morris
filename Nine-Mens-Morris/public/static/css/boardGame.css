@@ -1,12 +1,12 @@
 :root {
     --boardSide: 500px;
     --pointRadius: 14px;
-    --pointColor: #000;
-    --pointBorderColor: #fff;
+    --pointColor: #e5e9f5;
+    --pointBorderColor: #8499ce;
     --pointHighlightColor: crimson;
     --lineThickness: 4px;
-    --lineColor: #fff;
-    --squareColor: purple;
+    --lineColor: #8499ce;
+    --squareColor: #101f44;
 
     --boardOffset: 25px;
 }
