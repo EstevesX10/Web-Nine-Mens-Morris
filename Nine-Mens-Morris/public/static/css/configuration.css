@@ -9,7 +9,7 @@
     backdrop-filter: blur(10px);
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    width: 70%;
+    width: 80%;
     max-width: 600px;
     margin: 50px auto;
     color: #fff;
@@ -18,7 +18,7 @@
 
 .config-section h2 {
     font-size: 28px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
@@ -50,20 +50,56 @@
 }
 
 .select-config {
-    padding: 10px 15px;
+    appearance: none; /* Remove o estilo padrão */
+    -webkit-appearance: none; /* Para navegadores Webkit */
+    padding: 12px 15px;
     font-size: 16px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     outline: none;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
     background-color: rgba(255, 255, 255, 0.8);
     color: #333;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
 }
 
 .select-config:hover, .select-config:focus {
+    background-color: rgba(255, 255, 255, 1);
+    border-color: #aaa;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
+}
+
+.select-config option {
+    padding: 12px;
+    background: white;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.select-config option:hover {
+    background-color: rgba(100, 100, 100, 0.1); /* Destaque da opção ao passar o mouse */
+}
+
+.select-config {
+    animation: dropdownOpen 0.4s ease-in-out;
+}
+
+@keyframes dropdownOpen {
+    0% {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
 }
 
 .btn-config {
