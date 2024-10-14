@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Generate the Points and Lines
-        generatePointsAndLines(squareSizes, boardCenter, pointSize, lineWidth)
+        generatePointsAndLines(squareSizes, boardCenter, pointSize)
     }
 
-    function generatePointsAndLines(squareSizes, boardCenter, pointSize, lineWidth) {
+    function generatePointsAndLines(squareSizes, boardCenter, pointSize) {
         const lineThickness = 4
         squareSizes.forEach((size, index) => {
             const half = size / 2;

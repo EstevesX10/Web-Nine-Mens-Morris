@@ -104,21 +104,21 @@ main {
 .content-box {
     width: 30%;
     margin: -50px auto;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .content {
     display: none;
     opacity: 0;
     color: #e4e4e4e4;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s ease;
 }
 
 .content.active {
     display: block;
     opacity: 1;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.7);
 }
 
 .content h2 {
