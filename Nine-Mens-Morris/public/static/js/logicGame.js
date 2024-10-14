@@ -7,7 +7,7 @@ class PlaceAction {
         this.player = player;
     }
 
-    function execute(state) {
+    execute(state) {
         gameState.board[this.pos] = this.player;
         gameState.placedPieces[this.player]++;
         if (gameState.placedPieces[this.player] >= gameState.playerPieces[this.player]) {
@@ -24,7 +24,7 @@ class DestroyAction {
         this.player = player;
     }
 
-    function execute(state) {
+    execute(state) {
         gameState.board[this.pos] = 0;
         gameState.playerPieces[3 - this.player]--;
         gameState.currentPlayer = 3 - this.player;
@@ -38,7 +38,7 @@ class MoveAction {
         this.player = player;
     }
 
-    function execute(state) {
+    execute(state) {
         gameState.board[this.from] = 0;
         gameState.board[this.to] = this.player;
         gameState.currentPlayer = 3 - this.player;
@@ -56,7 +56,7 @@ class State {
 
 
     // Executes a action and updates the history
-    function execute(action) {
+    execute(action) {
         this.history.splice(this.cur_hist);
         this.history.append(action)
         this.cur_hist += 1
@@ -65,9 +65,10 @@ class State {
 
     // Undoes the last action and updates history
     // Returns False if there was no previous action
-    function undo(this) {
-        if this.cur_hist == 0:
+    undo(this) {
+        if (this.cur_hist == 0){
             return False
+        }
 
         this.cur_hist -= 1
         this.history[this.cur_hist].undo(this.board)
@@ -85,7 +86,7 @@ class Board {
         this.gamePhase = { 1:"placing", 2:"placing" };  // Fase atual do jogo (placing ou moving)
     }
 
-    function getPiece(i) {
+    getPiece(i) {
         return this.board[i];
     }
 }
