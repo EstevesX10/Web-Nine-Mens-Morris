@@ -103,7 +103,7 @@ main {
 
 .content-box {
     width: 30%;
-    margin: 70px auto;
+    margin: -50px auto;
     padding: 5px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);

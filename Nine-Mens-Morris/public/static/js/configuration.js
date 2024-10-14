@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Get Config Form
     const form = document.getElementById('config-form');
 
-    // Load a previous configuration when loading the page
+    // Load initial configs  
     loadSavedSettings();
 
     // Save the configuration when submiting the form
@@ -20,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('firstPlayer', firstPlayer);
         localStorage.setItem('aiLevel', aiLevel);
 
+        // Load a previous configuration when loading the page  
+        loadSavedSettings();
+
         alert('Configuration saved successfuly!');
     });
 
@@ -35,6 +39,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedOpponent) document.getElementById('opponent').value = savedOpponent;
         if (savedFirstPlayer) document.getElementById('first-player').value = savedFirstPlayer;
         if (savedAiLevel) document.getElementById('ai-level').value = savedAiLevel;
+
+        // Update game state
+        gameState = {
+            currentPlayer: savedFirstPlayer,  // Começa com o jogador 1
+            player1Pieces: 3*savedBoardSize,          // 9 peças para cada jogador
+            player2Pieces: 3*savedBoardSize,
+            placedPieces: { Player1: 0, Player2: 0 },  // Contagem de peças colocadas
+            board: {},  // Para armazenar o estado do tabuleiro
+            gamePhase: "placing",  // Fase atual do jogo (placing ou moving)
+        }
     }
 });
 

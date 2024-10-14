@@ -43,13 +43,20 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
     
             // Add points to the board
-            positions.forEach(pos => {
+            positions.forEach((pos, i)  => {
                 const point = document.createElement('div');
                 point.classList.add('point');
                 point.style.left = `${pos.x}px`;
                 point.style.top = `${pos.y}px`;
                 point.style.width = `${pointSize}px`;
                 point.style.height = `${pointSize}px`;
+
+                // Handle Point clicking
+                point.addEventListener('click', function() {
+                    // handlePointClick(point, i);
+                    placePiece(point, 8*index + i)
+                });
+
                 boardContainer.appendChild(point);
             });
     

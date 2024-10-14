@@ -1,15 +1,20 @@
+:root {
+    --authenticationBackgroundImage: url('../images/Mountains.png');
+}
+
 .containerAuthentication {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    height: 550px;
-    background: url('../images/Mountains.png') no-repeat;
+    width: 60%;
+    height: 500px;
+    background: var(--authenticationBackgroundImage)  no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 .containerAuthentication .contentAuthentication {

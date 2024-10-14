@@ -3,7 +3,7 @@
     --pointRadius: 14px;
     --pointColor: #e5e9f5;
     --pointBorderColor: #8499ce;
-    --pointHighlightColor: crimson;
+    --pointHighlightColor: green;
     --lineThickness: 4px;
     --lineColor: #8499ce;
     --squareColor: #101f44;
@@ -37,6 +37,16 @@
 
 .point:hover {
     background-color: var(--pointHighlightColor);
+}
+
+.point.selected-player1 {
+    background-color: #3B82F6; /* Cor diferente para o ponto selecionado */
+    border: 2px solid #FFFFFF; /* Adiciona uma borda branca ao ponto selecionado */
+}
+
+.point.selected-player2 {
+    background-color: crimson; /* Cor diferente para o ponto selecionado */
+    border: 2px solid #FFFFFF; /* Adiciona uma borda branca ao ponto selecionado */
 }
 
 .line {
