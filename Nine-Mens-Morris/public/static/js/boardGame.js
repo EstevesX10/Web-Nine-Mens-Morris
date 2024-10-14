@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         boardContainer.innerHTML = ''; // Limpar o tabuleiro atual
 
         // Define some board parameters
-        const boardSize = 500;
+        const boardSize = 350;
         const boardCenter = boardSize / 2;
         const lineWidth = 10;
 
