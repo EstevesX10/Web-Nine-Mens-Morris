@@ -1,26 +1,96 @@
+// TODO: thy this here?
 let boardSize = document.getElementById('board-size').value
 
-var gameState = {};
+class PlaceAction {
+    constructor(pos, player) {
+        this.pos = pos;
+        this.player = player;
+    }
 
-// class square {
-//     constructor(){
-//         this.topLeft = 0;
-//         this.topMiddle = 0;
-//         this.topRight = 0;
-//         this.middleLeft = 0;
-//         this.middleRight = 0;
-//         this.bottomLeft = 0;
-//         this.bottomMiddle = 0;
-//         this.bottomRight = 0;
-//     }
-// }
+    function execute(state) {
+        gameState.board[this.pos] = this.player;
+        gameState.placedPieces[this.player]++;
+        if (gameState.placedPieces[this.player] >= gameState.playerPieces[this.player]) {
+            gameState.gamePhase[this.player] = "moving";
+        }
+        gameState.currentPlayer = 3 - this.player;
+    }
+}
 
-// class board {
-//     constructor(boardSize) {
-//         this.squares = 0
-//     }
-// }
+// TODO: think when to switch the player in this case
+class DestroyAction {
+    constructor(pos, player) {
+        this.pos = pos;
+        this.player = player;
+    }
 
+    function execute(state) {
+        gameState.board[this.pos] = 0;
+        gameState.playerPieces[3 - this.player]--;
+        gameState.currentPlayer = 3 - this.player;
+    }
+}
+
+class MoveAction {
+    constructor(from, to, player) {
+        this.from = from;
+        this.to = to;
+        this.player = player;
+    }
+
+    function execute(state) {
+        gameState.board[this.from] = 0;
+        gameState.board[this.to] = this.player;
+        gameState.currentPlayer = 3 - this.player;
+    }
+}
+
+// Holds the board state and history
+class State {
+    constructor(board) {
+        this.board = board
+
+        this.history = []
+        this.cur_hist = 0
+    }
+
+
+    // Executes a action and updates the history
+    function execute(action) {
+        this.history.splice(this.cur_hist);
+        this.history.append(action)
+        this.cur_hist += 1
+        action.execute(this.board)
+    }
+
+    // Undoes the last action and updates history
+    // Returns False if there was no previous action
+    function undo(this) {
+        if this.cur_hist == 0:
+            return False
+
+        this.cur_hist -= 1
+        this.history[this.cur_hist].undo(this.board)
+        return True
+    }
+}
+
+class Board {
+    constructor(boardSize, firstPlayer) {
+        this.currentPlayer = firstPlayer;
+        this.boardSize = boardSize;
+        this.playerPieces = { 1: 3*boardSize, 2: 3*boardSize };          // 9 peças para cada jogador
+        this.placedPieces = { 1: 0, 2: 0 };  // Contagem de peças colocadas
+        this.board = {};  // Para armazenar o estado do tabuleiro
+        this.gamePhase = { 1:"placing", 2:"placing" };  // Fase atual do jogo (placing ou moving)
+    }
+
+    function getPiece(i) {
+        return this.board[i];
+    }
+}
+
+// TODO: is this being used?
 function startGame() {
     // Obter o jogador inicial da configuração guardada
     const firstPlayer = localStorage.getItem("firstPlayer");
@@ -29,6 +99,7 @@ function startGame() {
     gameState.currentPlayer = firstPlayer;
 }
 
+// TODO: idk if it should be the action or the game loop to do this
 function switchPlayer() {
     gameState.currentPlayer = gameState.currentPlayer === "1" ? "2" : "1";
     console.log(`É a vez de ${gameState.currentPlayer}`);
@@ -68,7 +139,7 @@ function checkMillFormed(point, player) {
         // ["D1", "D4", "D7"],  // Outra linha horizontal
         // ["A1", "D1", "G1"],  // Exemplo de linha vertical
         // Adicionar todas as possíveis combinações de trilhas
-        
+
         // Horizontal
         [0, 1, 2],
         [5, 6, 7],
@@ -87,36 +158,31 @@ function checkMillFormed(point, player) {
 
 function placePiece(point, i) {
     // Verifica se o ponto já tem uma peça
-    if (gameState.board[i]) {
+    if (gameState.board.getPiece(i) != 0) {
         console.log("Este ponto já está ocupado!");
         return;
     }
 
-    // Colocar a peça no ponto selecionado
-    gameState.board[i] = gameState.currentPlayer;
-    gameState.placedPieces[gameState.currentPlayer]++;
-
-    if (gameState.currentPlayer == "1"){
+    if (gameState.board.currentPlayer == "1"){
         point.classList.add('selected-player1');
     }
     else {
         point.classList.add('selected-player2');
     }
 
+    // Execute the action
+    // TODO: different actions
+    action = PlaceAction(i, gameState.board.currentPlayer);
+    gameState.execute(action);
+
     // Verificar se uma trilha foi formada
-    if (checkMillFormed(i, gameState.currentPlayer)) {
-        console.log(`${gameState.currentPlayer} formou uma trilha! Remova uma peça do adversário.`);
+    if (checkMillFormed(i, gameState.board.currentPlayer)) {
+        console.log(`${gameState.board.currentPlayer} formou uma trilha! Remova uma peça do adversário.`);
         // Aqui entra a lógica para remover uma peça do adversário
     }
 
     // Alternar para o próximo jogador
-    switchPlayer();
-
-    // Verificar se a fase de colocação terminou
-    if (gameState.placedPieces.Player1 === 9 && gameState.placedPieces.Player2 === 9) {
-        gameState.gamePhase = "moving";
-        console.log("Fase de movimentação iniciada!");
-    }
+    // switchPlayer();
 }
 
 function movePiece(fromPoint, toPoint) {
