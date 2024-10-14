@@ -30,12 +30,18 @@
     font-size: 20px;
     padding: 10px;
     margin: 0 auto;
-    border: #101f44;
-    border-style: solid;
+    border: var(--squareColor);
+    border-style: ridge;
     border-width: calc(var(--lineThickness) / 1.5);
     border-radius: 8px;
     background-color: var(--pointBorderColor);
-    box-shadow: 0 0px 0px rgba(255, 0, 0, 0.7);
+}
+
+.game-phase:hover{
+    color: #e4e4e4;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--pointColor);
 }
 
 .player-game-board {
@@ -43,23 +49,32 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-    width: 80%;
+    width: 70%;
 }
 
 .player-info {
-    width: 150px; /* Defina uma largura fixa */
+    width: max-content;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     margin-top: -25%;
-    font-weight: bold;
-    color: #101f44;
-    background-color: #f4f4f4;
+    color: var(--squareColor);
+    background-color: var(--pointColor);
     border-radius: 10px;
-    border-color: #3B82F6;
+    border-color: var(--lineColor);
+    border-width: calc(var(--lineThickness) / 1.5);
+    border-style: ridge;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.player-info:hover {
+    background-color: #e4e4e4;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--pointBorderColor);
 }
 
 .current-player {
-    background-color: yellow;
+    background-color: rgb(0, 255, 42);
 }
 
 .point {
