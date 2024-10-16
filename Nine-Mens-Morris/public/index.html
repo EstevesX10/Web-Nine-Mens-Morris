@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/css/style.css" />
+    <link rel="stylesheet" href="static/css/rules.css" />
     <link rel="stylesheet" href="static/css/boardGame.css" />
     <link rel="stylesheet" href="static/css/configuration.css" />
     <link rel="stylesheet" href="static/css/authentication.css" />
@@ -15,6 +16,7 @@
     <title>Nine Men's Morris</title>
   </head>
   <body>
+    <!-- Navigation Bar -->
     <header>
       <nav>
         <div class="logo-container">
@@ -23,7 +25,7 @@
         </div>
         <ul>
           <li>
-            <button class="nav-btn" data-target="section1">Section 1</button>
+            <button class="nav-btn" data-target="section1">Rules</button>
           </li>
           <li>
             <button class="nav-btn" data-target="section2">Game Board</button>
@@ -43,10 +45,86 @@
     </header>
 
     <main>
+      <!-- Rules -->
       <div class="content-box">
         <section id="section1" class="content">
-          <h2>Section 1</h2>
-          <p>SECTION 1 CONTENT</p>
+          <div class="rules">
+            <!-- Main Topic Slider -->
+            <div class="main-slider-container">
+              <div class="main-slider">
+                <!-- Topic 1 -->
+                <div class="topic-slide active">
+                  <h3>Topic 1: Basic Rules</h3>
+                  <div class="slider-container">
+                    <div class="slider">
+                      <div class="slide active">
+                        <h4>Placement Phase</h4>
+                        <p>
+                          Each player places one piece per turn on an empty
+                          point. Forming a mill allows you to remove an
+                          opponent's piece.
+                        </p>
+                      </div>
+                      <div class="slide">
+                        <h4>Movement Phase</h4>
+                        <p>
+                          Once all pieces are placed, players move their pieces
+                          to adjacent points. Forming a mill still lets you
+                          remove an opponent's piece.
+                        </p>
+                      </div>
+                      <div class="slide">
+                        <h4>Flying Phase</h4>
+                        <p>
+                          When a player has only three pieces left, they can
+                          "fly", moving a piece to any empty point on the board.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="slider-dots">
+                      <span class="dot active" data-slide="0"></span>
+                      <span class="dot" data-slide="1"></span>
+                      <span class="dot" data-slide="2"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="topic-slide">
+                  <h3>Topic 2: Advanced Rules</h3>
+                  <div class="slider-container">
+                    <div class="slider">
+                      <div class="slide active">
+                        <h4>Special Moves</h4>
+                        <p>
+                          In certain cases, a player may move pieces in specific
+                          ways to gain an advantage.
+                        </p>
+                      </div>
+                      <div class="slide">
+                        <h4>Winning Strategies</h4>
+                        <p>
+                          Understanding how to control the board can help you
+                          win the game by blocking or outmaneuvering your
+                          opponent.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="slider-dots">
+                      <span class="dot active" data-slide="0"></span>
+                      <span class="dot" data-slide="1"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dots for navigating between topics -->
+              <div class="main-slider-dots">
+                <span class="main-dot active" data-topic="0"></span>
+                <span class="main-dot" data-topic="1"></span>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- Game Board -->
@@ -248,6 +326,7 @@
       </div>
     </main>
     <script src="static/js/script.js"></script>
+    <script src="static/js/rules.js"></script>
     <script src="static/js/boardGame.js"></script>
     <script src="static/js/logicGame.js"></script>
     <script src="static/js/configuration.js"></script>
