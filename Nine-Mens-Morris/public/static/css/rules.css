@@ -8,9 +8,9 @@
     --mainSliderHoverDotColor: rgb(0, 6, 128);
     --mainSliderHoverBoxShadowDotColor: rgb(128, 0, 90);
 
+    --contentTextColor: #fff;
     --subSlidersBackgroundColor: #e5e9f5;
     --subSlidersHeaderTextColor: #fff;
-    --subSlidersTextColor: #fff;
     --subSlidersIdleDotColor: #d3d3d3;
     --subSlidersSelectedDotColor: crimson;
     --subSlidersSelectedBorderDotColor: crimson;
@@ -70,7 +70,7 @@
     max-width: 600px;
     margin: 0 auto;
     overflow: hidden;
-    color: #ffffff;
+    color: var(--contentTextColor);
     background-color: var(--subSlidersBackgroundColor);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -129,13 +129,14 @@
 .dot.active{
     background-color: var(--subSlidersSelectedDotColor);
     border-color: var(--subSlidersSelectedBorderDotColor);
-    border-style: hidden;
-    border-width: 1px;
 }
 
 .main-dot.active {
     background-color: var(--mainSliderSelectedDotColor);
     border-color: var(--mainSliderSelectedBorderDotColor);
+}
+
+.dot.active, .main-dot.active {
     border-style: hidden;
     border-width: 1px;
 }
