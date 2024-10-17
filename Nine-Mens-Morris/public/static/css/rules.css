@@ -2,11 +2,8 @@
     --mainSliderBackgroundColor: #8499ce;
     --mainSliderHeaderTextColor: #fff;
     --mainSliderTextColor: #fff;
-    --mainSliderIdleDotColor: #d3d3d3;
-    --mainSliderSelectedDotColor: purple;
-    --mainSliderSelectedBorderDotColor: purple;
-    --mainSliderHoverDotColor: rgb(0, 6, 128);
-    --mainSliderHoverBoxShadowDotColor: rgb(128, 0, 90);
+    --mainArrowColor: #e4e4e4;
+    --mainArrowHighlightColor: #fff;
 
     --contentTextColor: #fff;
     --subSlidersBackgroundColor: #e5e9f5;
@@ -65,6 +62,49 @@
     transition: opacity 0.3s ease-in-out;
 }
 
+.arrow {
+    position: absolute;
+    margin: 0 0 auto;
+    width: 12%;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    color: var(--mainArrowColor);
+    border: none;
+    box-shadow: none;
+    pointer-events: all;
+}
+
+.arrow::before {
+    content: '\203A';
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: inline-block;
+}
+
+.arrow:hover::before {
+    transform: scale(1.2);
+    color: var(--mainArrowHighlightColor);
+}
+
+.left-arrow {
+    top: 54%;
+    left: calc((100% - 800px) / 4);
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.right-arrow {
+    top: 50%;
+    right: calc((100% - 800px) / 4);
+    transform: translateY(-50%);
+}
+
+.arrow:focus {
+    outline: none;
+}
+
 .slider-container {
     position: relative;
     max-width: 600px;
@@ -102,21 +142,13 @@
     visibility: visible;
 }
 
-.slider-dots, .main-slider-dots {
+.slider-dots {
     display: flex;
     justify-content: center;
     margin-top: 15px;
 }
 
-.dot {
-    background-color: var(--subSlidersIdleDotColor);
-}
-
-.main-dot {
-    background-color: var(--mainSliderIdleDotColor);
-}
-
-.dot, .main-dot {
+.dot{
     height: 12px;
     width: 12px;
     border-radius: 50%;
@@ -124,6 +156,7 @@
     margin: 0 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    background-color: var(--subSlidersIdleDotColor);
 }
 
 .dot.active{
@@ -131,12 +164,7 @@
     border-color: var(--subSlidersSelectedBorderDotColor);
 }
 
-.main-dot.active {
-    background-color: var(--mainSliderSelectedDotColor);
-    border-color: var(--mainSliderSelectedBorderDotColor);
-}
-
-.dot.active, .main-dot.active {
+.dot.active {
     border-style: hidden;
     border-width: 1px;
 }
@@ -144,9 +172,4 @@
 .dot:hover {
     background-color: var(--subSlidersHoverDotColor);
     box-shadow: 0 0 3px var(--subSlidersHoverBoxShadowDotColor)
-}
-
-.main-dot:hover {
-    background-color: var(--mainSliderHoverDotColor);
-    box-shadow: 0 0 3px var(--mainSliderHoverBoxShadowDotColor)
 }
