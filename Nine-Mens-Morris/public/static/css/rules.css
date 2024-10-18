@@ -47,19 +47,31 @@
 .main-slider {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 
 .topic-slide {
-    display: none;
+    min-width: 100%;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
     opacity: 0;
-    visibility: hidden;
+    position: absolute;
 }
 
 .topic-slide.active {
-    display: block;
-    visibility: visible;
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    position: relative;
+    z-index: 2;
+}
+
+.topic-slide.prev {
+    left: 0;
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.topic-slide.next {
+    transform: translateX(100%);
+    opacity: 0;
 }
 
 .arrow {
@@ -75,7 +87,6 @@
     color: var(--mainArrowColor);
     border: none;
     box-shadow: none;
-    pointer-events: all;
 }
 
 .arrow::before {
@@ -127,7 +138,7 @@
 
 .slide {
     display: none;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
