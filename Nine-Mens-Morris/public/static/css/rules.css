@@ -1,18 +1,18 @@
 :root {
-    --mainSliderBackgroundColor: #8499ce;
+    --mainSliderBackgroundColor: #3e4f6d;
     --mainSliderHeaderTextColor: #fff;
     --mainSliderTextColor: #fff;
     --mainArrowColor: #e4e4e4;
     --mainArrowHighlightColor: #fff;
-
+    
     --contentTextColor: #fff;
-    --subSlidersBackgroundColor: #e5e9f5;
+    --subSlidersBackgroundColor: #8499ce;
     --subSlidersHeaderTextColor: #fff;
     --subSlidersIdleDotColor: #d3d3d3;
-    --subSlidersSelectedDotColor: crimson;
-    --subSlidersSelectedBorderDotColor: crimson;
-    --subSlidersHoverDotColor: rgb(0, 6, 128);
-    --subSlidersHoverBoxShadowDotColor: rgb(128, 0, 90);
+    --subSlidersSelectedDotColor: #232a44;
+    --subSlidersSelectedBorderDotColor: #242b45;
+    --subSlidersHoverDotColor: #425371;
+    --subSlidersHoverBoxShadowDotColor: #242b45;
 }
 
 .rules {
@@ -133,7 +133,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    min-height: 200px;
+    min-height: 320px;
 }
 
 .slide {
@@ -145,12 +145,30 @@
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     visibility: hidden;
+    vertical-align: middle;
+}
+
+.slide p {
+    padding: 3px;
+}
+
+.slide img {
+    width: 18%;
+    height: auto;
+    display: block;
+    opacity: 0;
+    margin: 20px auto;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .slide.active {
     display: block;
     opacity: 1;
     visibility: visible;
+}
+
+.slide.active img {
+    opacity: 1;
 }
 
 .slider-dots {
@@ -168,6 +186,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     background-color: var(--subSlidersIdleDotColor);
+    z-index: 5;
 }
 
 .dot.active{

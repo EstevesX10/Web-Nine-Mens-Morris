@@ -55,71 +55,153 @@
               <button id="prev-topic" class="arrow left-arrow"></button>
               <!-- Left Arrow -->
               <div class="main-slider">
-                <!-- Topic 1 -->
+                <!-- Board -->
                 <div class="topic-slide active">
-                  <h3>Topic 1: Basic Rules</h3>
+                  <h3>Board</h3>
                   <div class="slider-container">
                     <div class="slider">
                       <div class="slide active">
-                        <h4>Placement Phase</h4>
+                        <h4>Basic Information</h4>
+                        <p>Nine Men's Morris is a board game for two players</p>
+                        <p>It is played on a board with concentric squares</p>
                         <p>
-                          Each player places one piece per turn on an empty
-                          point. Forming a mill allows you to remove an
-                          opponent's piece.
+                          The squares are connected by lines in the middle of
+                          the sides
                         </p>
+                        <p>
+                          Each square has 8 spots, the corners and the middle of
+                          the sides
+                        </p>
+                        <p>The spots are marked with a circle</p>
+                        <img src="./static/images/logo.png" />
                       </div>
                       <div class="slide">
-                        <h4>Movement Phase</h4>
+                        <h4>Other Boards</h4>
+                        <p>Another number of squares is possible</p>
+                        <p>The number of spots per square is always 8</p>
                         <p>
-                          Once all pieces are placed, players move their pieces
-                          to adjacent points. Forming a mill still lets you
-                          remove an opponent's piece.
+                          The connections between squares are in the middle of
+                          the sides
                         </p>
+                        <p>
+                          In the example above, the board has only 2 squares
+                        </p>
+                        <p>But it could have more than 3, like 4 or 5</p>
                       </div>
                       <div class="slide">
-                        <h4>Flying Phase</h4>
+                        <h4>Pieces</h4>
                         <p>
-                          When a player has only three pieces left, they can
-                          "fly", moving a piece to any empty point on the board.
+                          On a board with n squares, each player has 3 * n
+                          pieces
                         </p>
+                        <p>
+                          Each player plays with pieces of a different color
+                          from the opponent's
+                        </p>
+                        <p>
+                          All pieces are always visible, on the board or off the
+                          board
+                        </p>
+                        <p>On the board, the pieces are placed on the spots</p>
+                      </div>
+                      <div class="slide">
+                        <h4>Mills</h4>
+                        <p>
+                          A sequence of 3 pieces of the same color is a mill
+                        </p>
+                        <p>The pieces of a mill must be along a single line</p>
+                        <p>
+                          In vertical or horizontal lines, never in diagonals
+                        </p>
+                        <p>The pieces on the board above are part of mills</p>
+                        <p>Except for the ones in the bottom-right corners</p>
+                        <img src="./static/images/logo.png" />
                       </div>
                     </div>
                     <div class="slider-dots">
                       <span class="dot active" data-slide="0"></span>
                       <span class="dot" data-slide="1"></span>
                       <span class="dot" data-slide="2"></span>
+                      <span class="dot" data-slide="3"></span>
                     </div>
                   </div>
                 </div>
 
-                <!-- Topic 2 -->
+                <!-- Game Phases -->
                 <div class="topic-slide">
-                  <h3>Topic 2: Advanced Rules</h3>
+                  <h3>Game Phases</h3>
                   <div class="slider-container">
                     <div class="slider">
                       <div class="slide active">
-                        <h4>Special Moves</h4>
+                        <h4>Initial Layout</h4>
+                        <p>Players choose a color and decide who plays first</p>
+                        <p>Initially, the board is empty</p>
+                        <p>The game has 2 phases:</p>
+                        <p>Phase 1 - Drop the pieces (drop)</p>
+                        <p>Phase 2 - Move the pieces (move)</p>
+                      </div>
+                      <div class="slide">
+                        <h4>[Phase] Place Pieces</h4>
                         <p>
-                          In certain cases, a player may move pieces in specific
-                          ways to gain an advantage.
+                          Players alternately place one of their pieces on a
+                          free spot
+                        </p>
+                        <p>Mills can be created (but it is not advantageous)</p>
+                        <p>When all pieces are placed, this phase ends</p>
+                      </div>
+                      <div class="slide">
+                        <h4>[Phase] Move Pieces</h4>
+                        <p>
+                          This phase begins right after all the pieces are
+                          placed
+                        </p>
+                        <p>Each player alternately moves one of their pieces</p>
+                        <p>A piece can only be moved to an adjacent spot</p>
+                        <p>
+                          Spots must be connected by a vertical or horizontal
+                          line
                         </p>
                       </div>
                       <div class="slide">
-                        <h4>Winning Strategies</h4>
+                        <h4>[Phase] Capture Pieces</h4>
                         <p>
-                          Understanding how to control the board can help you
-                          win the game by blocking or outmaneuvering your
-                          opponent.
+                          Creating a mill allows you to capture an opponent's
+                          piece
                         </p>
+                        <p>Only one piece is removed per turn</p>
+                        <p>
+                          A piece can return to the position of the previous
+                          move
+                        </p>
+                        <p>And form a mill again on the next move</p>
+                      </div>
+                      <div class="slide">
+                        <h4>[Phase] Open Moves</h4>
+                        <p>It begins when a player has only 3 pieces</p>
+                        <p>That player is allowed to move to any free spot</p>
+                        <p>
+                          They are not restricted to moving to adjacent spots
+                        </p>
+                      </div>
+                      <div class="slide">
+                        <h4>[Phase] End Game</h4>
+                        <p>The game ends with the defeat of the player who has only 2 pieces</p>
+                        <p>It ends in a draw if no valid move can be made</p>
+                        <p>OR</p>
+                        <p>Both players have 3 pieces and after 10 moves, there is no winner</p>
                       </div>
                     </div>
                     <div class="slider-dots">
                       <span class="dot active" data-slide="0"></span>
                       <span class="dot" data-slide="1"></span>
+                      <span class="dot" data-slide="2"></span>
+                      <span class="dot" data-slide="3"></span>
+                      <span class="dot" data-slide="4"></span>
+                      <span class="dot" data-slide="5"></span>
                     </div>
                   </div>
                 </div>
-              </div>
+                
               <button id="next-topic" class="arrow right-arrow"></button>
               <!-- Right Arrow -->
             </div>
