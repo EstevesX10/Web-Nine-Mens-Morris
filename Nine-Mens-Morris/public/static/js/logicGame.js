@@ -1,7 +1,6 @@
 // TODO: thy this here?
 let boardSize = document.getElementById('board-size').value
-let selectedPoints = new Set(); // Usar um Set para armazenar os pontos selecionados
-
+let selectedPoints = Array(1); // Using a Array with a singular position in order to store the previously selected point
 let game = null;
 
 // Actions to be performed in he first phase of the game (Placing pieces)
@@ -170,6 +169,37 @@ class Game {
         this.currentState = state
     }
 
+    // Map list index into a x, y coodinates system to better manage piece's movement
+    mapIndex(i){
+        box = Math.floor(i / 8);
+        if (i >= 4){
+            i += box + 1;
+        }
+        x = i % 3;
+        y = Math.floor(i / 3) - box * 3;
+        return [box, x, y];
+    }
+
+    // Check valid movement
+    isValidMovement(initialIndex, newIndex){
+        // Map the Indices into a x-y coordenate system
+        [oldBox, x_i, y_i] = this.mapIndex(initialIndex);
+        [newBox, x_f, y_f] = this.mapIndex(newIndex);
+        
+        // Check if we can move vertically
+        if ((x_i === x_f) && (Math.abs(y_f - y_i) === 1)){
+            return true;
+        }
+        // Check if we can move horizontally
+        else if ((y_i === y_f) && (Math.abs(x_f - x_i) === 1)){
+            return true;
+        }
+        // Impossible Move
+        else {
+            return false;
+        }
+    }
+
     handlePointClick(point, index) {
         // Get the phase of the current player
         var currentPlayerPhase = this.currentState.board.gamePhase[this.currentState.board.currentPlayer];
@@ -184,7 +214,7 @@ class Game {
                 var action = new DestroyAction(index, this.currentState.board.currentPlayer)
                 this.currentState.execute(action);
             }
-            console.log("THER EIS A NILEL")
+            console.log("THERE IS A MILL")
         }
 
         // Separate the movements based on the current game pahse of the player
@@ -204,16 +234,48 @@ class Game {
                 console.log(this.currentState.board.board);
             }
         }
-        else if (currentPlayerPhase === "moving"){
-            box = Math.floor(i / 8);
-            if (i >= 4)
-                i += box + 1;
-            x = i % 3;
-            y = Math.floor(i / 3) - box * 3;
-            
 
-            if (abs(x - x_prime) === 1 && (y === y_prime)){
-                console.log("YES")
+        // [IN PROGRESS]
+        // [TODO] THERE IS A PROBLEM WHEN WE REMOVE A PIECE FROM A PREVIOUS MILL, IF THE ENEMY PUTS ONE BACK IN ITS PLACE, THE GAME
+        // IS NOT ALLOWING TO REMOVE A PIECE AS IT SHOULD
+        else if (currentPlayerPhase === "moving"){
+
+            // Check if any piece was previously selected
+            if (selectedPoints.length > 0){
+                // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
+                initialIndex = selectedPoints.at(0)[1];
+                initialPoint = selectedPoints.at(0)[1];
+
+                // Check if the final place is empty
+                if (this.currentState.board.getPiece(index) === 0){
+                    // Define the new position
+                    newIndex = index;
+                    newPoint = point;
+
+                    // Check if a movement is valid
+                    if (this.isValidMovement(initialIndex, newIndex)){
+                        // Remove point from previous place [In the HTML]
+                        initialPoint.classList.remove(`selected-player${this.currentState.board.currentPlayer}`);;
+
+                        // Adds the point to the new place [In the HTML]
+                        newPoint.classList.add(`selected-player${this.currentState.board.currentPlayer}`);
+
+                        // Perform the action
+                        var action = new MoveAction(index, this.currentState.board.currentPlayer)
+                        this.currentState.execute(action);   
+
+                        // Define a new and clean Array
+                        selectedPoints =  Array(1);
+                    }
+                }
+            } else { // We are selecting the initial piece
+                // Check if the selected piece is valid
+                if (this.currentState.board.currentPlayer === this.currentState.board.getPiece(index)){
+                    selectedPoints.add([point, index]);
+                }
+                else{
+                    console.log("WRONG Point SELECTED!")
+                }
             }
         }
         else if (currentPlayerPhase === "flying"){
@@ -222,32 +284,7 @@ class Game {
         else{
             console.log("DEU MERDA!");
         }
-
-        // Verificar se o ponto já está selecionado
-        // if (selectedPoints.has(index)) {
-        //     // Se já está selecionado, remove a seleção
-        //     point.classList.remove('selected-player1');
-        //     point.classList.remove('selected-player2');
-        //     selectedPoints.delete(index);
-        // } else {
-        //     // Se não está selecionado, marca como selecionado
-        //     if (this.currentState.board.currentPlayer == "1"){
-        //         point.classList.add('selected-player1');
-        //     }
-        //     else {
-        //         point.classList.add('selected-player2');
-        //     }
-        //     selectedPoints.add(index);
-        // }
     }
-
-    // startGame() {
-    //     // Obter o jogador inicial da configuração guardada
-    //     const firstPlayer = localStorage.getItem("firstPlayer");
-    
-    //     // Inicializar o estado do jogo
-    //     this.currentState.board.currentPlayer = firstPlayer;
-    // }
 }
 
 
