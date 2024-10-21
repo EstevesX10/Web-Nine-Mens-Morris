@@ -23,6 +23,7 @@ class PlaceAction {
         if (!gameBoard.checkMillFormed(this.pos, this.player)){
             gameBoard.switchPlayer();
         } else {
+            gameBoard.millFormed = true;
             console.log("Mill Formed");
         }
     }
@@ -39,10 +40,12 @@ class DestroyAction {
     execute(gameBoard) {
         gameBoard.board[this.pos] = 0;
         gameBoard.playerPieces[3 - this.player]--;
+        gameBoard.placedPieces[3 - this.player]--;
         gameBoard.switchPlayer();
         if (gameBoard.placedPieces[gameBoard.currentPlayer] === 3){
             gameBoard.gamePhase[gameBoard.currentPlayer] = "moving";
         }
+        gameBoard.millFormed = false;
     }
 }
 
@@ -60,6 +63,9 @@ class MoveAction {
         // Check for mills [If there is a mill we do not change player. We do it otherwise]
         if (!gameBoard.checkMillFormed(this.pos, this.player)){
             gameBoard.switchPlayer();
+        } else {
+            gameBoard.millFormed = true;
+            console.log("Mill Formed");
         }
     }
 }
@@ -68,10 +74,11 @@ class Board {
     constructor(boardSize, firstPlayer) {
         this.currentPlayer = firstPlayer;
         this.boardSize = boardSize;
-        this.playerPieces = { 1: 3*boardSize, 2: 3*boardSize };          // 9 peças para cada jogador
+        this.playerPieces = { 1: 3*boardSize, 2: 3*boardSize }; // 9 peças para cada jogador
         this.placedPieces = { 1: 0, 2: 0 };  // Contagem de peças colocadas
         this.board = Array(boardSize*8).fill(0);;  // Para armazenar o estado do tabuleiro
         this.gamePhase = { 1:"placing", 2:"placing" };  // Fase atual do jogo (placing ou moving)
+        this.millFormed = false;
     }
 
     getPiece(i) {
@@ -167,8 +174,21 @@ class Game {
         // Get the phase of the current player
         var currentPlayerPhase = this.currentState.board.gamePhase[this.currentState.board.currentPlayer];
 
+        if (this.currentState.board.millFormed){
+            if (this.currentState.board.board[index] === 3 - this.currentState.board.currentPlayer){
+                // Se já está selecionado, remove a seleção
+                point.classList.remove('selected-player1');
+                point.classList.remove('selected-player2');
+
+                // Perform the action
+                var action = new DestroyAction(index, this.currentState.board.currentPlayer)
+                this.currentState.execute(action);
+            }
+            console.log("THER EIS A NILEL")
+        }
+
         // Separate the movements based on the current game pahse of the player
-        if (currentPlayerPhase === "placing"){
+        else if (currentPlayerPhase === "placing"){
             if (this.currentState.board.board[index] === 0) {
                 // Adds the selected player class to the HTML
                 point.classList.add(`selected-player${this.currentState.board.currentPlayer}`);
@@ -185,7 +205,16 @@ class Game {
             }
         }
         else if (currentPlayerPhase === "moving"){
-            console.log("MOVING")
+            box = Math.floor(i / 8);
+            if (i >= 4)
+                i += box + 1;
+            x = i % 3;
+            y = Math.floor(i / 3) - box * 3;
+            
+
+            if (abs(x - x_prime) === 1 && (y === y_prime)){
+                console.log("YES")
+            }
         }
         else if (currentPlayerPhase === "flying"){
             console.log("FlYING")
