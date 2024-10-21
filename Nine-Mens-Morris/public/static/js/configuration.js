@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load previously saved configuration
     function loadSavedSettings() {
-        const savedBoardSize = localStorage.getItem('boardSize');
-        const savedOpponent = localStorage.getItem('opponent');
-        const savedFirstPlayer = localStorage.getItem('firstPlayer');
-        const savedAiLevel = localStorage.getItem('aiLevel');
+        const savedBoardSize = parseInt(localStorage.getItem('boardSize'));
+        const savedOpponent = parseInt(localStorage.getItem('opponent'));
+        const savedFirstPlayer = parseInt(localStorage.getItem('firstPlayer'));
+        const savedAiLevel = parseInt(localStorage.getItem('aiLevel'));
 
         // Fill the brackets with the saved values
         if (savedBoardSize) document.getElementById('board-size').value = savedBoardSize;
@@ -41,9 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedAiLevel) document.getElementById('ai-level').value = savedAiLevel;
 
         // Update the game state
-        board = Board(savedBoardSize, savedFirstPlayer)
-        gameState = State(board)
-        console.log(gameState)
+        board = new Board(savedBoardSize, savedFirstPlayer);
+        gameState = new State(board);
+        game = new Game(gameState);
+        // console.log(gameState)
     }
 });
 

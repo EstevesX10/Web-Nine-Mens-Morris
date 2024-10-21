@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Generate the Points and Lines
-        generatePointsAndLines(squareSizes, boardCenter, pointSize)
+        generatePointsAndLines(squareSizes, boardCenter, pointSize);
     }
 
     function generatePointsAndLines(squareSizes, boardCenter, pointSize) {
@@ -53,8 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Handle Point clicking
                 point.addEventListener('click', function() {
-                    // handlePointClick(point, i);
-                    placePiece(point, 8*index + i)
+                    game.handlePointClick(point, 8*index + i)
                 });
 
                 boardContainer.appendChild(point);

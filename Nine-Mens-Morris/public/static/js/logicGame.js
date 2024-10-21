@@ -1,33 +1,48 @@
 // TODO: thy this here?
 let boardSize = document.getElementById('board-size').value
+let selectedPoints = new Set(); // Usar um Set para armazenar os pontos selecionados
 
+let game = null;
+
+// Actions to be performed in he first phase of the game (Placing pieces)
 class PlaceAction {
     constructor(pos, player) {
         this.pos = pos;
         this.player = player;
     }
 
-    execute(state) {
-        gameState.board[this.pos] = this.player;
-        gameState.placedPieces[this.player]++;
-        if (gameState.placedPieces[this.player] >= gameState.playerPieces[this.player]) {
-            gameState.gamePhase[this.player] = "moving";
+    execute(gameBoard) {
+        gameBoard.board[this.pos] = this.player;
+        gameBoard.placedPieces[this.player]++;
+        if (gameBoard.placedPieces[this.player] >= gameBoard.playerPieces[this.player]) {
+            gameBoard.gamePhase[this.player] = "moving";
         }
-        gameState.currentPlayer = 3 - this.player;
+        console.log(this.pos);
+
+        // Check for mills [If there is a mill we do not change player. We do it otherwise]
+        if (!gameBoard.checkMillFormed(this.pos, this.player)){
+            gameBoard.switchPlayer();
+        } else {
+            console.log("Mill Formed");
+        }
     }
 }
 
-// TODO: think when to switch the player in this case
+// We suppose that the action is valid and good to be performed
+// Can be performed anytime during the game loop
 class DestroyAction {
     constructor(pos, player) {
         this.pos = pos;
         this.player = player;
     }
 
-    execute(state) {
-        gameState.board[this.pos] = 0;
-        gameState.playerPieces[3 - this.player]--;
-        gameState.currentPlayer = 3 - this.player;
+    execute(gameBoard) {
+        gameBoard.board[this.pos] = 0;
+        gameBoard.playerPieces[3 - this.player]--;
+        gameBoard.switchPlayer();
+        if (gameBoard.placedPieces[gameBoard.currentPlayer] === 3){
+            gameBoard.gamePhase[gameBoard.currentPlayer] = "moving";
+        }
     }
 }
 
@@ -38,10 +53,79 @@ class MoveAction {
         this.player = player;
     }
 
-    execute(state) {
-        gameState.board[this.from] = 0;
-        gameState.board[this.to] = this.player;
-        gameState.currentPlayer = 3 - this.player;
+    execute(gameBoard) {
+        gameBoard.board[this.from] = 0;
+        gameBoard.board[this.to] = this.player;
+        
+        // Check for mills [If there is a mill we do not change player. We do it otherwise]
+        if (!gameBoard.checkMillFormed(this.pos, this.player)){
+            gameBoard.switchPlayer();
+        }
+    }
+}
+
+class Board {
+    constructor(boardSize, firstPlayer) {
+        this.currentPlayer = firstPlayer;
+        this.boardSize = boardSize;
+        this.playerPieces = { 1: 3*boardSize, 2: 3*boardSize };          // 9 peças para cada jogador
+        this.placedPieces = { 1: 0, 2: 0 };  // Contagem de peças colocadas
+        this.board = Array(boardSize*8).fill(0);;  // Para armazenar o estado do tabuleiro
+        this.gamePhase = { 1:"placing", 2:"placing" };  // Fase atual do jogo (placing ou moving)
+    }
+
+    getPiece(i) {
+        return this.board[i];
+    }
+
+    gameOver(){
+        return this.playerPieces[1] <= 2 || this.playerPieces[2] <= 2;
+    }
+
+    getWinner(){
+        // Returns the ID of the winner [Only execute this when the game is over!]
+        if (this.playerPieces[1] > this.playerPieces[2]){
+            return 1;
+        }
+        else if (this.playerPieces[1] === this.playerPieces[2]){
+            return 0;
+        }
+        else{
+            return 2;
+        }
+    }
+
+    checkMillFormed(point, player) {
+        // Exemplo básico: Verifica linhas horizontais e verticais
+        const mills = [
+            // ["A1", "A4", "A7"],  // Exemplo de linha horizontal
+            // ["D1", "D4", "D7"],  // Outra linha horizontal
+            // ["A1", "D1", "G1"],  // Exemplo de linha vertical
+            // Adicionar todas as possíveis combinações de trilhas
+    
+            // Horizontal
+            [0, 1, 2],
+            [5, 6, 7],
+            [8, 9, 10],
+            [13, 14, 15],
+    
+            // Vertical
+            [0, 3, 5],
+            [2, 4, 7],
+            [8, 11, 13],
+            [10, 12, 15],
+        ];
+    
+        return mills.some(mill => mill.includes(point) && mill.every(pos => this.board[pos] === player));
+    }    
+
+    switchPlayer() {
+        this.currentPlayer = 3 - this.currentPlayer;
+        console.log(`É a vez de ${this.currentPlayer}`);
+    }
+
+    toString(){
+        console.log("PRINT CENAS BONITAS")
     }
 }
 
@@ -49,23 +133,21 @@ class MoveAction {
 class State {
     constructor(board) {
         this.board = board
-
         this.history = []
         this.cur_hist = 0
     }
 
-
     // Executes a action and updates the history
     execute(action) {
         this.history.splice(this.cur_hist);
-        this.history.append(action)
+        this.history.push(action)
         this.cur_hist += 1
         action.execute(this.board)
     }
 
     // Undoes the last action and updates history
     // Returns False if there was no previous action
-    undo(this) {
+    undo(action) {
         if (this.cur_hist == 0){
             return False
         }
@@ -76,170 +158,69 @@ class State {
     }
 }
 
-class Board {
-    constructor(boardSize, firstPlayer) {
-        this.currentPlayer = firstPlayer;
-        this.boardSize = boardSize;
-        this.playerPieces = { 1: 3*boardSize, 2: 3*boardSize };          // 9 peças para cada jogador
-        this.placedPieces = { 1: 0, 2: 0 };  // Contagem de peças colocadas
-        this.board = {};  // Para armazenar o estado do tabuleiro
-        this.gamePhase = { 1:"placing", 2:"placing" };  // Fase atual do jogo (placing ou moving)
+class Game {
+    constructor(state){
+        this.currentState = state
     }
 
-    getPiece(i) {
-        return this.board[i];
-    }
-}
+    handlePointClick(point, index) {
+        // Get the phase of the current player
+        var currentPlayerPhase = this.currentState.board.gamePhase[this.currentState.board.currentPlayer];
 
-// TODO: is this being used?
-function startGame() {
-    // Obter o jogador inicial da configuração guardada
-    const firstPlayer = localStorage.getItem("firstPlayer");
+        // Separate the movements based on the current game pahse of the player
+        if (currentPlayerPhase === "placing"){
+            if (this.currentState.board.board[index] === 0) {
+                // Adds the selected player class to the HTML
+                point.classList.add(`selected-player${this.currentState.board.currentPlayer}`);
 
-    // Inicializar o estado do jogo
-    gameState.currentPlayer = firstPlayer;
-}
+                // Perform the action
+                var action = new PlaceAction(index, this.currentState.board.currentPlayer)
+                this.currentState.execute(action);
 
-// TODO: idk if it should be the action or the game loop to do this
-function switchPlayer() {
-    gameState.currentPlayer = gameState.currentPlayer === "1" ? "2" : "1";
-    console.log(`É a vez de ${gameState.currentPlayer}`);
-}
-
-
-let selectedPoints = new Set(); // Usar um Set para armazenar os pontos selecionados
-
-function handlePointClick(point, index) {
-    // Verificar se o ponto já está selecionado
-    if (selectedPoints.has(index)) {
-        // Se já está selecionado, remove a seleção
-        point.classList.remove('selected-player1');
-        point.classList.remove('selected-player2');
-        selectedPoints.delete(index);
-    } else {
-        // Se não está selecionado, marca como selecionado
-        if (gameState.currentPlayer == "1"){
-            point.classList.add('selected-player1');
+                console.log("cur player:", this.currentState.board.currentPlayer);
+            }
+            else {
+                console.log("OCUPADO MEUUU!!!");
+                console.log(this.currentState.board.board);
+            }
         }
-        else {
-            point.classList.add('selected-player2');
+        else if (currentPlayerPhase === "moving"){
+            console.log("MOVING")
         }
-        switchPlayer()
-        selectedPoints.add(index);
-    }
-
-    console.log(gameState);
-}
-
-// --------------------------------------------------------------------------------------------------------
-
-function checkMillFormed(point, player) {
-    // Exemplo básico: Verifica linhas horizontais e verticais
-    const mills = [
-        // ["A1", "A4", "A7"],  // Exemplo de linha horizontal
-        // ["D1", "D4", "D7"],  // Outra linha horizontal
-        // ["A1", "D1", "G1"],  // Exemplo de linha vertical
-        // Adicionar todas as possíveis combinações de trilhas
-
-        // Horizontal
-        [0, 1, 2],
-        [5, 6, 7],
-        [8, 9, 10],
-        [13, 14, 15],
-
-        // Vertical
-        [0, 3, 5],
-        [2, 4, 7],
-        [8, 11, 13],
-        [10, 12, 15],
-    ];
-
-    return mills.some(mill => mill.includes(point) && mill.every(pos => gameState.board[pos] === player));
-}
-
-function placePiece(point, i) {
-    // Verifica se o ponto já tem uma peça
-    if (gameState.board.getPiece(i) != 0) {
-        console.log("Este ponto já está ocupado!");
-        return;
-    }
-
-    if (gameState.board.currentPlayer == "1"){
-        point.classList.add('selected-player1');
-    }
-    else {
-        point.classList.add('selected-player2');
-    }
-
-    // Execute the action
-    // TODO: different actions
-    action = PlaceAction(i, gameState.board.currentPlayer);
-    gameState.execute(action);
-
-    // Verificar se uma trilha foi formada
-    if (checkMillFormed(i, gameState.board.currentPlayer)) {
-        console.log(`${gameState.board.currentPlayer} formou uma trilha! Remova uma peça do adversário.`);
-        // Aqui entra a lógica para remover uma peça do adversário
-    }
-
-    // Alternar para o próximo jogador
-    // switchPlayer();
-}
-
-function movePiece(fromPoint, toPoint) {
-    // Verificar se é a fase de movimentação
-    if (gameState.gamePhase !== "moving") {
-        console.log("Ainda estamos na fase de colocação!");
-        return;
-    }
-
-    // Verificar se o ponto de destino está vazio
-    if (gameState.board[toPoint]) {
-        console.log("Este ponto já está ocupado!");
-        return;
-    }
-
-    // Mover a peça
-    if (gameState.board[fromPoint] === gameState.currentPlayer) {
-        gameState.board[toPoint] = gameState.currentPlayer;
-        delete gameState.board[fromPoint];
-
-        // Verificar se uma trilha foi formada
-        if (checkMillFormed(toPoint, gameState.currentPlayer)) {
-            console.log(`${gameState.currentPlayer} formou uma trilha! Remova uma peça do adversário.`);
-            // Aqui entra a lógica para remover uma peça do adversário
+        else if (currentPlayerPhase === "flying"){
+            console.log("FlYING")
+        }
+        else{
+            console.log("DEU MERDA!");
         }
 
-        // Alternar para o próximo jogador
-        switchPlayer();
-    } else {
-        console.log("Não é a tua peça para mover!");
+        // Verificar se o ponto já está selecionado
+        // if (selectedPoints.has(index)) {
+        //     // Se já está selecionado, remove a seleção
+        //     point.classList.remove('selected-player1');
+        //     point.classList.remove('selected-player2');
+        //     selectedPoints.delete(index);
+        // } else {
+        //     // Se não está selecionado, marca como selecionado
+        //     if (this.currentState.board.currentPlayer == "1"){
+        //         point.classList.add('selected-player1');
+        //     }
+        //     else {
+        //         point.classList.add('selected-player2');
+        //     }
+        //     selectedPoints.add(index);
+        // }
     }
+
+    // startGame() {
+    //     // Obter o jogador inicial da configuração guardada
+    //     const firstPlayer = localStorage.getItem("firstPlayer");
+    
+    //     // Inicializar o estado do jogo
+    //     this.currentState.board.currentPlayer = firstPlayer;
+    // }
 }
 
-function removeOpponentPiece(point) {
-    const opponent = gameState.currentPlayer === "1" ? "2" : "1";
 
-    // Verificar se o ponto pertence ao adversário
-    if (gameState.board[point] === opponent) {
-        delete gameState.board[point];
-        gameState[`${opponent}Pieces`]--;
-
-        console.log(`Uma peça de ${opponent} foi removida!`);
-
-        // Verificar se o jogo acabou
-        if (gameState[`${opponent}Pieces`] < 3) {
-            console.log(`${gameState.currentPlayer} venceu! ${opponent} tem menos de 3 peças.`);
-        }
-    } else {
-        console.log("Este ponto não pertence ao adversário!");
-    }
-}
-
-function checkGameOver() {
-    if (gameState.Player1Pieces < 3 || gameState.Player2Pieces < 3) {
-        console.log(`${gameState.currentPlayer} venceu o jogo!`);
-        return true;
-    }
-    return false;
-}
+// board = Board(savedBoardSize, savedFirstPlayer)
+// gameState = State(board)
