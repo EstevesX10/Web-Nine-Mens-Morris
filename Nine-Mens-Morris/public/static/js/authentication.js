@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Login Form Submission
     const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
+        // Prevent the default form submission behavior
+        event.preventDefault();
     
         // Fetching the values from the login form
         const username = document.getElementById('loginUsername').value;
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register Form Submission
     const registerForm = document.getElementById('registerForm');
     registerForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
+        // Prevent the default form submission behavior
+        event.preventDefault();
     
         // Fetching the values from the register form
         const username = document.getElementById('registerUsername').value;
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: email,
             password: password,
         });
-
+        
         logregBox.classList.remove('login');
         logregBox.classList.remove('register');
         logregBox.classList.add('account');
@@ -75,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             password: password,
         });
 
+        // Reset forms and go back to the login
+        loginForm.reset();
+        registerForm.reset();
         logregBox.classList.remove('account');
         logregBox.classList.remove('register');
         logregBox.classList.add('login');
