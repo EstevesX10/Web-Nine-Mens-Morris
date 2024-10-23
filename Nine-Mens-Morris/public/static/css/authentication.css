@@ -1,5 +1,6 @@
 :root {
     --authenticationBackgroundImage: url('../images/Mountains.png');
+    --buttonColor: #6e82b7;
 }
 
 .containerAuthentication {
@@ -223,7 +224,7 @@
 .btn {
     width: 100%;
     height: 45px;
-    background: #6e82b7;
+    background: var(--buttonColor);
     border: none;
     outline: none;
     border-radius: 4px;
@@ -231,7 +232,11 @@
     font-size: 16px;
     color: #e4e4e4;
     font-weight: 500;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
+
+.btn:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .8);
 }
 
 .form-box .login-register {
@@ -250,34 +255,23 @@
 .login-register p a:hover {
     text-decoration: underline;
 }
-  
 
-/* .account-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    color: #e4e4e4;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: transform 0.6s ease, opacity 0.6s ease;
+.account-box {
+    display: block;
 }
 
+.account-box p {
+    background-color: #6e82b7;
+    border-radius: 8px;
+    text-align: left;
+    margin: 15px;
+    padding: 20px;
+}
 
-.form-box {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-} */
+.account-box p:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+.account-box button {
+    margin-top: 20px;
+}
