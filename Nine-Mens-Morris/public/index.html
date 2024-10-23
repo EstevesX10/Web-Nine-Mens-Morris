@@ -45,9 +45,9 @@
     </header>
 
     <main>
-      <!-- Rules -->
       <div class="content-box">
         <section id="section1" class="content">
+          <!-- Rules -->
           <div class="rules">
             <!-- Main Topic Slider -->
             <div class="main-slider-container">
@@ -334,20 +334,21 @@
               </div>
             </div>
 
-            <div class="logreg-box">
+            <div class="logreg-box login">
+              <!-- Login Section -->
               <div class="form-box login">
-                <form action="#">
+                <form id="loginForm" action="#">
                   <h2>Sign In</h2>
 
                   <div class="input-box">
                     <span class="icon"><i class="bx bxs-user"></i></span>
-                    <input type="text" required />
+                    <input type="text" id="loginUsername" required />
                     <label>Username</label>
                   </div>
 
                   <div class="input-box">
                     <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-                    <input type="password" required />
+                    <input type="password" id="loginPassword" required />
                     <label>Password</label>
                   </div>
 
@@ -356,7 +357,9 @@
                     <a href="#">Forgot password?</a>
                   </div>
 
-                  <button type="submit" class="btn">Sign In</button>
+                  <button type="submit" id="loginButton" class="btn">
+                    Sign In
+                  </button>
 
                   <div class="login-register">
                     <p>
@@ -367,25 +370,26 @@
                 </form>
               </div>
 
+              <!-- Register Section -->
               <div class="form-box register">
-                <form action="#">
+                <form id="registerForm" action="#">
                   <h2>Sign Up</h2>
 
                   <div class="input-box">
                     <span class="icon"><i class="bx bxs-user"></i></span>
-                    <input type="text" required />
+                    <input type="text" id="registerUsername" required />
                     <label>Username</label>
                   </div>
 
                   <div class="input-box">
                     <span class="icon"><i class="bx bxs-envelope"></i></span>
-                    <input type="email" required />
+                    <input type="email" id="registerEmail" required />
                     <label>Email</label>
                   </div>
 
                   <div class="input-box">
                     <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-                    <input type="password" required />
+                    <input type="password" id="registerPassword" required />
                     <label>Password</label>
                   </div>
 
@@ -396,7 +400,9 @@
                     >
                   </div>
 
-                  <button type="submit" class="btn">Sign In</button>
+                  <button type="submit" id="registerButton" class="btn">
+                    Sign Up
+                  </button>
 
                   <div class="login-register">
                     <p>
@@ -405,6 +411,16 @@
                     </p>
                   </div>
                 </form>
+              </div>
+
+              <!-- Account Details Section -->
+              <div class="form-box account">
+                <h2>Account Details</h2>
+                <p>Username: <span id="accountUsername"></span></p>
+                <p>Email: <span id="accountEmail"></span></p>
+                <button type="submit" id="logoutButton" class="btn">
+                  Logout
+                </button>
               </div>
             </div>
           </div>
