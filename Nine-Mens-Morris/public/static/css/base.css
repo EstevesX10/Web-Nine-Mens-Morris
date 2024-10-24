@@ -45,6 +45,8 @@
 
     /* Leaderboard */
     --leaderboardBackgroundImage: url('../images/River.jpg');
+    --tableRowEvenColor: #6e82b7;
+    --tableRowOddColor: #425371;
 
     /* Authentication  */
     --authenticationBackgroundImage: url('../images/Mountains.png');

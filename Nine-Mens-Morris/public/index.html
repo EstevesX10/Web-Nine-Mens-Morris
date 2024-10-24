@@ -3,10 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/css/base.css" />
     <link rel="stylesheet" href="static/css/style.css" />
     <link rel="stylesheet" href="static/css/rules.css" />
     <link rel="stylesheet" href="static/css/boardGame.css" />
     <link rel="stylesheet" href="static/css/configuration.css" />
+    <link rel="stylesheet" href="static/css/leaderboard.css" />
     <link rel="stylesheet" href="static/css/authentication.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
@@ -36,7 +38,10 @@
             </button>
           </li>
           <li>
-            <button class="nav-btn" data-target="section4">
+            <button class="nav-btn" data-target="section4">Leaderboard</button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="section5">
               Authentication
             </button>
           </li>
@@ -46,8 +51,8 @@
 
     <main>
       <div class="content-box">
+        <!-- Rules -->
         <section id="section1" class="content">
-          <!-- Rules -->
           <div class="rules">
             <!-- Main Topic Slider -->
             <div class="main-slider-container">
@@ -313,8 +318,51 @@
           </div>
         </section>
 
+        <!-- Leaderboard -->
+        <section id="section4" class="content">
+          <div class="leaderboard-container">
+            <h2>Leaderboard</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Username</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>John</td>
+                  <td>100</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Jane</td>
+                  <td>90</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Mark</td>
+                  <td>80</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Sarah</td>
+                  <td>70</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>David</td>
+                  <td>60</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <!-- Authenticaton -->
-        <section id="section4" class="content active">
+        <section id="section5" class="content active">
           <div class="containerAuthentication">
             <div class="contentAuthentication">
               <h2 class="logo"><i class="bx bxl-firebase"></i>Authenticaton</h2>
@@ -459,6 +507,7 @@
     <script src="static/js/boardGame.js"></script>
     <script src="static/js/logicGame.js"></script>
     <script src="static/js/configuration.js"></script>
+    <script src="static/js/leaderboard.js"></script>
     <script src="static/js/authentication.js"></script>
     <script
       type="module"
