@@ -1,8 +1,3 @@
-:root {
-    --authenticationBackgroundImage: url('../images/Mountains.png');
-    --buttonColor: #6e82b7;
-}
-
 .containerAuthentication {
     position: absolute;
     top: 50%;

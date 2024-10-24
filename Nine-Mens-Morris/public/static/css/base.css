@@ -1,0 +1,52 @@
+:root {
+    /* Main Styles */
+    --white: #ffffff;
+    --backgroundColor: #1f242d;
+    --lightBlue: #0ef;
+    --lightGreen: #0f0;
+    --pink: #e0f;
+    --yellow: #ff0;
+
+    --backgroundImage: url('../images/Dunes.jpg');
+    --spaceBetweenButtons: 20px;
+    --spaceEnd: 40px;
+
+    /* Rules */
+    --mainSliderBackgroundColor: #3e4f6d;
+    --mainSliderHeaderTextColor: #fff;
+    --mainSliderTextColor: #fff;
+    --mainArrowColor: #e4e4e4;
+    --mainArrowHighlightColor: #fff;
+    
+    --contentTextColor: #fff;
+    --subSlidersBackgroundColor: #8499ce;
+    --subSlidersHeaderTextColor: #fff;
+    --subSlidersIdleDotColor: #d3d3d3;
+    --subSlidersSelectedDotColor: #232a44;
+    --subSlidersSelectedBorderDotColor: #242b45;
+    --subSlidersHoverDotColor: #425371;
+    --subSlidersHoverBoxShadowDotColor: #242b45;
+
+    /* Game Board  */
+    --boardSide: 350px;
+    --pointRadius: 14px;
+    --pointColor: #e5e9f5;
+    --pointBorderColor: #8499ce;
+    --pointHighlightColor: green;
+    --lineThickness: 4px;
+    --lineColor: #8499ce;
+    --squareColor: #101f44;
+
+    --boardOffset: 25px;
+
+    /* Configuration */
+    --configBtnColor: #1f242d;
+    --configBtnColorHighlight: #1f242a;
+
+    /* Leaderboard */
+    --leaderboardBackgroundImage: url('../images/River.jpg');
+
+    /* Authentication  */
+    --authenticationBackgroundImage: url('../images/Mountains.png');
+    --buttonColor: #6e82b7;
+}

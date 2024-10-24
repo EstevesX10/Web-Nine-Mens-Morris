@@ -1,20 +1,3 @@
-:root {
-    --mainSliderBackgroundColor: #3e4f6d;
-    --mainSliderHeaderTextColor: #fff;
-    --mainSliderTextColor: #fff;
-    --mainArrowColor: #e4e4e4;
-    --mainArrowHighlightColor: #fff;
-    
-    --contentTextColor: #fff;
-    --subSlidersBackgroundColor: #8499ce;
-    --subSlidersHeaderTextColor: #fff;
-    --subSlidersIdleDotColor: #d3d3d3;
-    --subSlidersSelectedDotColor: #232a44;
-    --subSlidersSelectedBorderDotColor: #242b45;
-    --subSlidersHoverDotColor: #425371;
-    --subSlidersHoverBoxShadowDotColor: #242b45;
-}
-
 .rules {
     padding: 40px;
     color: #101f44;
