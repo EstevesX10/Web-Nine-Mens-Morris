@@ -36,7 +36,9 @@
     --lineThickness: 4px;
     --lineColor: #8499ce;
     --squareColor: #101f44;
-
+    --player1Color: #3B82F6;
+    --player2Color: crimson;
+    
     --boardOffset: 25px;
 
     /* Configuration */

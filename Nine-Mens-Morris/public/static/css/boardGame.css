@@ -11,13 +11,33 @@
     --boardOffset: 25px;
 }
 
+.game-board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    background: var(--leaderboardBackgroundImage) no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .board-container {
     position: relative;
     width: var(--boardSide);
     height: var(--boardSide);
     margin: var(--boardOffset) auto;
     display: flex;
-    justify-content: center;
     align-items: center;
     border-radius: 50%;
 }
@@ -44,19 +64,19 @@
     box-shadow: 0 0 20px var(--pointColor);
 }
 
-.player-game-board {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    width: 70%;
-}
+.player1-info {
+    position: absolute;
+    top: 35%;
+    right: 70%;
+    border-radius: 10px;
 
-.player-info {
-    width: max-content;
+    /* REMOVE LATER - MAYBE */
+    /* margin-top: 50px; */
+    /* margin-bottom: 20px; */
+    /* transform: translate(-50%, -50%); */
+    
     text-align: center;
     padding: 10px;
-    margin-top: -25%;
     color: var(--squareColor);
     background-color: var(--pointColor);
     border-radius: 10px;
@@ -64,9 +84,33 @@
     border-width: calc(var(--lineThickness) / 1.5);
     border-style: ridge;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    z-index: 1;
 }
 
-.player-info:hover {
+.player2-info {
+    position: absolute;
+    top: 35%;
+    left: 70%;
+    border-radius: 10px;
+
+    /* REMOVE LATER - MAYBE */
+    /* margin-top: 50px; */
+    /* margin-bottom: 20px; */
+    /* transform: translate(-50%, -50%); */
+    
+    text-align: center;
+    padding: 10px;
+    color: var(--squareColor);
+    background-color: var(--pointColor);
+    border-radius: 10px;
+    border-color: var(--lineColor);
+    border-width: calc(var(--lineThickness) / 1.5);
+    border-style: ridge;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    z-index: 1;
+}
+
+.player1-info:hover, .player2-info:hover {
     background-color: #e4e4e4;
     font-weight: bold;
     cursor: pointer;
@@ -95,13 +139,13 @@
 }
 
 .point.selected-player1 {
-    background-color: #3B82F6; /* Cor diferente para o ponto selecionado */
-    border: 2px solid #FFFFFF; /* Adiciona uma borda branca ao ponto selecionado */
+    background-color: var(--player1Color);
+    border: 3px solid var(--pointColor);
 }
 
 .point.selected-player2 {
-    background-color: crimson; /* Cor diferente para o ponto selecionado */
-    border: 2px solid #FFFFFF; /* Adiciona uma borda branca ao ponto selecionado */
+    background-color: var(--player2Color);
+    border: 3px solid var(--pointColor);
 }
 
 .line {
