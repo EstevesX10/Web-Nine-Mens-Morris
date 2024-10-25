@@ -6,15 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const buttons = document.querySelectorAll('.nav-btn');
       buttons.forEach(button => {
         button.addEventListener('click', function () {
-            const target = button.getAttribute('data-target');
-
             // Remove all active classes from the buttons
             sections.forEach(section => {
                 section.classList.remove('active');
             });
-
-            // Add the active class to the section currently selected
-            document.getElementById(target).classList.add('active');
         });
      });
   
