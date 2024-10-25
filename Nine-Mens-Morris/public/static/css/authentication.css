@@ -1,4 +1,4 @@
-.containerAuthentication {
+.container-authentication {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -13,7 +13,7 @@
     margin-bottom: 20px;
 }
 
-.containerAuthentication .contentAuthentication {
+.container-authentication .content-authentication {
     position: absolute;
     top: 0;
     left: 0;
@@ -27,7 +27,7 @@
     flex-direction: column;
 }
 
-.contentAuthentication .logo {
+.content-authentication .logo {
     font-size: 30px;
     color: #e4e4e4e4;
 }
@@ -60,7 +60,7 @@
     transform: scale(1.2);
 }
 
-.containerAuthentication .logreg-box {
+.container-authentication .logreg-box {
     position: absolute;
     top: 0;
     right: 0;
