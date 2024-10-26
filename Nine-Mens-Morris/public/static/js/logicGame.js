@@ -91,7 +91,7 @@ class MoveAction {
         gameBoard.board[this.to] = this.player;
 
         // Check for mills [If there is a mill we do not change player. We do it otherwise]
-        if (!gameBoard.checkMillFormed(this.pos, this.player)) {
+        if (!gameBoard.checkMillFormed(this.to, this.player)) {
             gameBoard.switchPlayer();
         } else {
             gameBoard.millFormed = true;
