@@ -293,7 +293,8 @@ class Game {
 
                         // Perform the action
                         var action = new MoveAction(
-                            index,
+                            initialIndex,
+                            newIndex,
                             this.currentState.board.currentPlayer
                         );
                         this.currentState.execute(action);
