@@ -258,10 +258,14 @@ class Game {
             }
         }
 
+        // TODO: is this todo?
         // [IN PROGRESS]
         // [TODO] THERE IS A PROBLEM WHEN WE REMOVE A PIECE FROM A PREVIOUS MILL, IF THE ENEMY PUTS ONE BACK IN ITS PLACE, THE GAME
         // IS NOT ALLOWING TO REMOVE A PIECE AS IT SHOULD
-        else if (currentPlayerPhase === "moving") {
+        else if (
+            currentPlayerPhase === "moving" ||
+            currentPlayerPhase === "flying"
+        ) {
             // Check if any piece was previously selected
             if (selectedPoints.length > 0) {
                 // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
@@ -279,7 +283,8 @@ class Game {
                         this.currentState.board.isAdjacent(
                             initialIndex,
                             newIndex
-                        )
+                        ) ||
+                        currentPlayerPhase === "flying"
                     ) {
                         // Remove point from previous place [In the HTML]
                         initialPoint.classList.remove(
@@ -318,8 +323,6 @@ class Game {
                     console.log("WRONG Point SELECTED!");
                 }
             }
-        } else if (currentPlayerPhase === "flying") {
-            console.log("FlYING");
         } else {
             console.log("DEU MERDA!");
         }
