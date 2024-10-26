@@ -72,8 +72,8 @@ class DestroyAction {
         gameBoard.playerPieces[3 - this.player]--;
         gameBoard.placedPieces[3 - this.player]--;
         gameBoard.switchPlayer();
-        if (gameBoard.placedPieces[gameBoard.currentPlayer] === 3) {
-            gameBoard.gamePhase[gameBoard.currentPlayer] = "moving";
+        if (gameBoard.playerPieces[gameBoard.currentPlayer] === 3) {
+            gameBoard.gamePhase[gameBoard.currentPlayer] = "flying";
         }
         gameBoard.millFormed = false;
     }
