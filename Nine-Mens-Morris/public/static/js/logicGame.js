@@ -1,4 +1,4 @@
-// BY chatGPT
+// Adjancency List for the possible moves
 const NEIGHBOR_TABLE = {
     0: [1, 3],
     1: [0, 2, 9],
@@ -17,17 +17,25 @@ const NEIGHBOR_TABLE = {
     14: [6, 13, 15, 22],
     15: [12, 14],
     16: [17, 19],
-    17: [9, 16, 18],
+    17: [9, 16, 18, 25],
     18: [17, 20],
-    19: [11, 16, 21],
-    20: [12, 18, 23],
+    19: [11, 16, 21, 27],
+    20: [12, 18, 23, 28],
     21: [19, 22],
-    22: [14, 21, 23],
+    22: [14, 21, 23, 30],
     23: [20, 22],
+    24: [25, 27],
+    25: [17, 24, 26],
+    26: [25, 28],
+    27: [19, 24, 29],
+    28: [20, 26, 31],
+    29: [27, 30],
+    30: [22, 29, 31],
+    31: [30, 28],
 };
 
 // TODO: thy this here?
-let boardSize = document.getElementById("board-size").value;
+// let boardSize = document.getElementById("board-size").value;
 let selectedPoints = []; // Using a Array with a singular position in order to store the previously selected point
 let game = null;
 
@@ -39,13 +47,19 @@ class PlaceAction {
     }
 
     execute(gameBoard) {
+        // Place a Piece
         gameBoard.board[this.pos] = this.player;
+        // Update the number of placed pieces of the player
         gameBoard.placedPieces[this.player]++;
-        if (
+        if ( // Checks if we changed from the current phase
             gameBoard.placedPieces[this.player] >=
             gameBoard.playerPieces[this.player]
         ) {
+            // Update the game phase
             gameBoard.gamePhase[this.player] = "moving";
+
+            // Update the HTML text content for the current phase
+            document.getElementById(`player${this.player}-phase`).textContent = 'Moving Phase';
         }
         console.log(this.pos);
 
@@ -68,12 +82,23 @@ class DestroyAction {
     }
 
     execute(gameBoard) {
+        // Remove piece from the selected position
         gameBoard.board[this.pos] = 0;
+
+        // Update player pieces
         gameBoard.playerPieces[3 - this.player]--;
         gameBoard.placedPieces[3 - this.player]--;
+
+        // Switch Player
         gameBoard.switchPlayer();
+
+        // Check if the current player has transitioned into the flying phase
         if (gameBoard.playerPieces[gameBoard.currentPlayer] === 3) {
+            // Update the game phase
             gameBoard.gamePhase[gameBoard.currentPlayer] = "flying";
+
+            // Update the HTML text content for the current phase
+            document.getElementById(`player${gameBoard.currentPlayer}-phase`).textContent = 'Flying Phase';
         }
         gameBoard.millFormed = false;
     }
@@ -131,25 +156,86 @@ class Board {
     }
 
     checkMillFormed(point, player) {
-        // Exemplo básico: Verifica linhas horizontais e verticais
-        const mills = [
-            // ["A1", "A4", "A7"],  // Exemplo de linha horizontal
-            // ["D1", "D4", "D7"],  // Outra linha horizontal
-            // ["A1", "D1", "G1"],  // Exemplo de linha vertical
-            // Adicionar todas as possíveis combinações de trilhas
+        var mills;
+        // Possible mills for a 2 square game
+        if (this.boardSize === 2) {
+            mills = [
 
-            // Horizontal
-            [0, 1, 2],
-            [5, 6, 7],
-            [8, 9, 10],
-            [13, 14, 15],
+                // Horizontal
+                [0, 1, 2],
+                [5, 6, 7],
+                [8, 9, 10],
+                [13, 14, 15],
 
-            // Vertical
-            [0, 3, 5],
-            [2, 4, 7],
-            [8, 11, 13],
-            [10, 12, 15],
-        ];
+                // Vertical
+                [0, 3, 5],
+                [2, 4, 7],
+                [8, 11, 13],
+                [10, 12, 15],
+            ];
+        }
+
+        // Possible mills for a 3 square game
+        else if (this.boardSize === 3) {
+            mills = [
+
+                // Horizontal
+                [0, 1, 2],
+                [5, 6, 7],
+                [8, 9, 10],
+                [13, 14, 15],
+                [16, 17, 18],
+                [21, 22, 23],
+                [3, 11, 19],
+                [4, 12, 20],
+
+                // Vertical
+                [0, 3, 5],
+                [2, 4, 7],
+                [8, 11, 13],
+                [10, 12, 15],
+                [16, 19, 21],
+                [18, 20, 23],
+                [1, 9, 17],
+                [6, 14, 22],
+            ];
+        }
+
+        // Possible mills for a 4 square game
+        else {
+            mills = [
+
+                // Horizontal
+                [0, 1, 2],
+                [5, 6, 7],
+                [8, 9, 10],
+                [13, 14, 15],
+                [16, 17, 18],
+                [21, 22, 23],
+                [3, 11, 19],
+                [4, 12, 20],
+                [24, 25, 26],
+                [29, 30, 31],
+                [11, 19, 27],
+                [12, 20, 28],
+
+                // Vertical
+                [0, 3, 5],
+                [2, 4, 7],
+                [8, 11, 13],
+                [10, 12, 15],
+                [16, 19, 21],
+                [18, 20, 23],
+                [1, 9, 17],
+                [6, 14, 22],
+                [24, 27, 29],
+                [26, 28, 31],
+                [9, 17, 25],
+                [14, 22, 30],
+            ];
+        }
+
+        console.log(mills);
 
         return mills.some(
             (mill) =>
@@ -163,8 +249,16 @@ class Board {
     }
 
     switchPlayer() {
+        // Update background Color of the previous player
+        const previousPlayerInfo = document.querySelector(`.player${this.currentPlayer}-info`);
+        previousPlayerInfo.classList.remove('active-player');
+
+        // Update Current Player
         this.currentPlayer = 3 - this.currentPlayer;
-        console.log(`É a vez de ${this.currentPlayer}`);
+        
+        // Update background Color of the current player
+        const currentPlayerInfo = document.querySelector(`.player${this.currentPlayer}-info`);
+        currentPlayerInfo.classList.add('active-player');
     }
 
     toString() {
@@ -328,6 +422,3 @@ class Game {
         }
     }
 }
-
-// board = Board(savedBoardSize, savedFirstPlayer)
-// gameState = State(board)

@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Crate a new Board [On the FrontEnd] based on the board size
         generateBoard(savedBoardSize);
 
+        // Update background Color of the first player
+        const firstPlayerInfo = document.querySelector(`.player${savedFirstPlayer}-info`);
+        firstPlayerInfo.classList.add('active-player');
+
+        // Set the initial movement phases for both players
+        const player1Phase = document.querySelector(`#player1-phase`);
+        player1Phase.textContent = 'Placing Phase';
+
+        const player2Phase = document.querySelector(`#player2-phase`);
+        player1Phase.textContent = 'Placing Phase';
+
         // Update the game state
         board = new Board(savedBoardSize, savedFirstPlayer);
         gameState = new State(board);

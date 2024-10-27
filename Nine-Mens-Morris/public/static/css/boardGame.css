@@ -41,7 +41,7 @@
     border-radius: 50%;
 }
 
-.game-phase {
+.game-winner {
     align-items: center;
     justify-content: center;
     width: max-content;
@@ -49,58 +49,68 @@
     font-size: 20px;
     padding: 10px;
     margin: 0 auto;
+    opacity: 0;
     border: var(--squareColor);
     border-style: ridge;
     border-width: calc(var(--lineThickness) / 1.5);
     border-radius: 8px;
     background-color: var(--pointBorderColor);
+    transition: opacity 0.5s ease-in-out;
 }
 
-.game-phase:hover{
+.game-winner.active {
+    opacity: 1;
+}
+
+.game-winner:hover{
     color: #e4e4e4;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 0 20px var(--pointColor);
 }
 
-.player1-info {
+.player1-info, .player2-info {
     position: absolute;
     top: 35%;
-    right: 70%;
     border-radius: 10px;
-
-    /* REMOVE LATER - MAYBE */
-    /* margin-top: 50px; */
-    /* margin-bottom: 20px; */
-    /* transform: translate(-50%, -50%); */
-    
     text-align: center;
     padding: 10px;
-    color: var(--squareColor);
-    background-color: var(--pointColor);
+    color: var(--pointColor);
+    background-color: #A7C7E7;
     border-radius: 10px;
     border-color: var(--lineColor);
     border-width: calc(var(--lineThickness) / 1.5);
     border-style: ridge;
     transition: background-color 0.3s ease, border-color 0.3s ease;
     z-index: 1;
+}
+
+.player1-info {
+    right: 70%;
 }
 
 .player2-info {
-    position: absolute;
-    top: 35%;
     left: 70%;
-    border-radius: 10px;
+}
 
-    /* REMOVE LATER - MAYBE */
-    /* margin-top: 50px; */
-    /* margin-bottom: 20px; */
-    /* transform: translate(-50%, -50%); */
-    
+.player1-info:hover, .player2-info:hover {
+    cursor: pointer;
+}
+
+.active-player {
+    color: var(--pointColor);
+    background-color: var(--activePlayerColor);
+    box-shadow: 0 0 40px var(--pointBorderColor);
+}
+
+.player1-current-phase, .player2-current-phase {
+    position: absolute;
+    top: 45%;
+    border-radius: 10px;
     text-align: center;
     padding: 10px;
-    color: var(--squareColor);
-    background-color: var(--pointColor);
+    color: var(--pointColor);
+    background-color: var(--pointBorderColor);
     border-radius: 10px;
     border-color: var(--lineColor);
     border-width: calc(var(--lineThickness) / 1.5);
@@ -109,15 +119,12 @@
     z-index: 1;
 }
 
-.player1-info:hover, .player2-info:hover {
-    background-color: #e4e4e4;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 0 10px var(--pointBorderColor);
+.player1-current-phase {
+    right: 68.5%;
 }
 
-.current-player {
-    background-color: rgb(0, 255, 42);
+.player2-current-phase {
+    left: 68.5%;
 }
 
 .point {
