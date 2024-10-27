@@ -2,10 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get Config Form
     const form = document.getElementById('config-form');
 
-    // Load initial configs
-    loadSavedSettings();
+    // For Testing Purposes
+    // localStorage.clear();
 
-    // Save the configuration when submiting the form
+    // Load initial board configuration
+    loadBoard();
+
+    // Save the configuration when submiting the form and loading a new board based on those new parameters
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Previne o comportamento padrão de submissão
 
@@ -22,23 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('aiLevel', aiLevel);
 
         // Load a previous configuration when loading the page
-        loadSavedSettings();
+        loadBoard();
 
         alert('Configuration saved successfuly!');
     });
 
-    // Load previously saved configuration
-    function loadSavedSettings() {
-        const savedBoardSize = parseInt(localStorage.getItem('boardSize'));
-        const savedOpponent = parseInt(localStorage.getItem('opponent'));
-        const savedFirstPlayer = parseInt(localStorage.getItem('firstPlayer'));
-        const savedAiLevel = parseInt(localStorage.getItem('aiLevel'));
+    // Load a Board based on the configuration (Default or previously saved)
+    function loadBoard() {
+        const savedBoardSize = parseInt(localStorage.getItem('boardSize') || '2');
+        const savedOpponent = parseInt(localStorage.getItem('opponent', 'ai') || 'ai');
+        const savedFirstPlayer = parseInt(localStorage.getItem('firstPlayer', '1') || '1');
+        const savedAiLevel = parseInt(localStorage.getItem('aiLevel', '1') || '1');
 
         // Fill the brackets with the saved values
         if (savedBoardSize) document.getElementById('board-size').value = savedBoardSize;
         if (savedOpponent) document.getElementById('opponent').value = savedOpponent;
         if (savedFirstPlayer) document.getElementById('first-player').value = savedFirstPlayer;
         if (savedAiLevel) document.getElementById('ai-level').value = savedAiLevel;
+
+        // Crate a new Board [On the FrontEnd] based on the board size
+        generateBoard(savedBoardSize);
 
         // Update the game state
         board = new Board(savedBoardSize, savedFirstPlayer);
@@ -47,18 +53,3 @@ document.addEventListener('DOMContentLoaded', function() {
         // console.log(gameState)
     }
 });
-
-// const selectBtn = document.getElementById('select-btn');
-// const text = document.getElementById('text');
-// const option = document.getElementsByClassName('option');
-
-// selectBtn.addEventListener('click', function() {
-//     selectBtn.classList.toggle('active');
-// });
-
-// for (options of option) {
-//     options.onclick = function() {
-//         text.innerHTML = this.textContent;
-//         selectBtn.classList.remove('active')
-//     }
-// }
