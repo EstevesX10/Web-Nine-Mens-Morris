@@ -129,3 +129,20 @@ function createSquare(size, boardCenter) {
     square.style.top = `${boardCenter - size / 2}px`; 
     return square;
 }
+
+function generatePlayerPieces(numberOfPieces) {
+    // Get both players pieces container
+    var player1PiecesContainer = document.getElementById("player1-pieces");
+    var player2PiecesContainer = document.getElementById("player2-pieces");
+
+    // Loop to add multiple pieces
+    for (let i = 1; i <= numberOfPieces; i++) {
+        // Create a new pieces
+        var newPiecePlayer1 = document.createElement("div");
+        var newPiecePlayer2 = document.createElement("div");
+
+        // Add the pieces
+        player1PiecesContainer.appendChild(newPiecePlayer1);
+        player2PiecesContainer.appendChild(newPiecePlayer2);
+    }
+}

@@ -51,6 +51,11 @@ class PlaceAction {
         gameBoard.board[this.pos] = this.player;
         // Update the number of placed pieces of the player
         gameBoard.placedPieces[this.player]++;
+
+        // Remove a piece from the pieces container
+        var piecesContainer = document.getElementById(`player${this.player}-pieces`);
+        piecesContainer.removeChild(piecesContainer.firstElementChild);
+
         if ( // Checks if we changed from the current phase
             gameBoard.placedPieces[this.player] >=
             gameBoard.playerPieces[this.player]
