@@ -65,6 +65,8 @@
   box-shadow: 0 0 20px var(--pointColor);
 }
 
+/* Player Sections inside the Game Layout */
+
 .player1,
 .player2 {
   position: absolute;
@@ -76,23 +78,16 @@
   align-items: center;
 }
 
-.player1 {
-  left: 0;
-}
-
-.player2 {
-  right: 0;
-}
+/* Player Informations */
 
 .player1-info,
 .player2-info {
   position: absolute;
   display: flex;
-  top: 35%;
+  top: 15%;
   text-align: center;
   justify-content: center;
   padding: 10px;
-  color: var(--pointColor);
   background-color: #a7c7e7;
   border-radius: 10px;
   border-color: var(--lineColor);
@@ -102,9 +97,22 @@
   z-index: 1;
 }
 
+.player1-info h3,
+.player2-info h3 {
+  color: var(--pointColor);
+}
+
 .player1-info:hover,
 .player2-info:hover {
   cursor: pointer;
+}
+
+.player1 {
+  left: 0;
+}
+
+.player2 {
+  right: 0;
 }
 
 .active-player {
@@ -116,10 +124,10 @@
 .player1-current-phase,
 .player2-current-phase {
   position: absolute;
-  top: 45%;
-  text-align: center;
+  top: 25%;
+  width: 35%;
   padding: 10px;
-  color: var(--pointColor);
+  text-align: center;
   background-color: var(--pointBorderColor);
   border-radius: 10px;
   border-color: var(--lineColor);
@@ -129,6 +137,50 @@
   z-index: 1;
 }
 
+.player1-current-phase h3,
+.player2-current-phase h3 {
+  font-size: 12px;
+  color: var(--pointColor);
+}
+
+/* Player Messages */
+
+.player1-messages,
+.player2-messages {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  top: 35%;
+  height: max-content;
+  width: 45%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  white-space: pre;
+  background-color: var(--pointBorderColor);
+  border-radius: 10px;
+  border-color: var(--lineColor);
+  border-width: calc(var(--lineThickness) / 1.5);
+  border-style: ridge;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  z-index: 3;
+}
+
+.player1-messages h3,
+.player2-messages h3 {
+  color: var(--pointColor);
+  font-size: 12px;
+}
+
+.active-message {
+  color: var(--pointColor);
+  background-color: var(--activePlayerColor);
+  box-shadow: 0 0 40px var(--pointBorderColor);
+}
+
+/* Player Pieces Containers */
+
 .player1-pieces-container,
 .player2-pieces-container {
   position: absolute;
@@ -136,7 +188,7 @@
   align-items: center;
   justify-content: space-around;
   flex-flow: row wrap;
-  top: 55%;
+  top: 48%;
   height: fit-content;
   max-width: 45%;
   text-align: center;
@@ -154,8 +206,8 @@
 
 .player1-pieces-container div,
 .player2-pieces-container div {
-  width: calc(var(--pointRadius) * 2);
-  height: calc(var(--pointRadius) * 2);
+  width: calc(var(--pointRadius) * 7 / 4);
+  height: calc(var(--pointRadius) * 7 / 4);
   border: 3px solid var(--pointColor);
   border-radius: 100%;
   margin: 10px;
@@ -168,6 +220,8 @@
 .player2-pieces-container div {
   background-color: var(--player2Color);
 }
+
+/* Board Related Elements */
 
 .point {
   position: absolute;
@@ -186,14 +240,22 @@
   background-color: var(--pointHighlightColor);
 }
 
-.point.selected-player1 {
+.point.point-player1 {
   background-color: var(--player1Color);
   border: 3px solid var(--pointColor);
 }
 
-.point.selected-player2 {
+.point.selected-point-player1 {
+  background-color: purple;
+}
+
+.point.point-player2 {
   background-color: var(--player2Color);
   border: 3px solid var(--pointColor);
+}
+
+.point.selected-point-player2 {
+  background-color: violet;
 }
 
 .line {

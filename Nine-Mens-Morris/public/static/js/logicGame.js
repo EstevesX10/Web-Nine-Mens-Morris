@@ -37,6 +37,10 @@ const NEIGHBOR_TABLE = {
 // Using a Array with a singular position in order to store the previously selected point
 let selectedPoints = [];
 
+// Define some strings to help keep track of the last directive of the player before he eliminates a enemy's piece
+var lastPlayer1Note = "Place a Piece";
+var lastPlayer2Note = "Place a Piece";
+
 // Actions to be performed in he first phase of the game (Placing pieces)
 class PlaceAction {
   constructor(pos, player) {
@@ -47,14 +51,9 @@ class PlaceAction {
   execute(gameBoard) {
     // Place a Piece
     gameBoard.board[this.pos] = this.player;
+
     // Update the number of placed pieces of the player
     gameBoard.placedPieces[this.player]++;
-
-    // Remove a piece from the pieces container
-    var piecesContainer = document.getElementById(
-      `player${this.player}-pieces`
-    );
-    piecesContainer.removeChild(piecesContainer.firstElementChild);
 
     if (
       // Checks if we changed from the current phase
@@ -62,19 +61,13 @@ class PlaceAction {
     ) {
       // Update the game phase
       gameBoard.gamePhase[this.player] = "moving";
-
-      // Update the HTML text content for the current phase
-      document.getElementById(`player${this.player}-phase`).textContent =
-        "Moving Phase";
     }
-    console.log(this.pos);
 
     // Check for mills [If there is a mill we do not change player. We do it otherwise]
     if (!gameBoard.checkMillFormed(this.pos, this.player)) {
       gameBoard.switchPlayer();
     } else {
       gameBoard.millFormed = true;
-      console.log("Mill Formed");
     }
   }
 }
@@ -92,8 +85,8 @@ class DestroyAction {
     gameBoard.board[this.pos] = 0;
 
     // Update player pieces
-    gameBoard.playerPieces[3 - this.player]--;
-    gameBoard.placedPieces[3 - this.player]--;
+    gameBoard.playerPieces[gameBoard.getOpponent(this.player)]--;
+    gameBoard.placedPieces[gameBoard.getOpponent(this.player)]--;
 
     // Switch Player
     gameBoard.switchPlayer();
@@ -102,11 +95,6 @@ class DestroyAction {
     if (gameBoard.playerPieces[gameBoard.currentPlayer] === 3) {
       // Update the game phase
       gameBoard.gamePhase[gameBoard.currentPlayer] = "flying";
-
-      // Update the HTML text content for the current phase
-      document.getElementById(
-        `player${gameBoard.currentPlayer}-phase`
-      ).textContent = "Flying Phase";
     }
     gameBoard.millFormed = false;
   }
@@ -252,6 +240,10 @@ class Board {
     return NEIGHBOR_TABLE[initialIndex].some((pos) => pos == newIndex);
   }
 
+  getOpponent(player) {
+    return 3 - player;
+  }
+
   switchPlayer() {
     // Update background Color of the previous player
     const previousPlayerInfo = document.querySelector(
@@ -267,10 +259,6 @@ class Board {
       `.player${this.currentPlayer}-info`
     );
     currentPlayerInfo.classList.add("active-player");
-  }
-
-  toString() {
-    console.log("PRINT CENAS BONITAS");
   }
 }
 
@@ -317,40 +305,96 @@ class Game {
 
     // Check if a Mill was formed
     if (this.currentState.board.millFormed) {
-      if (
-        this.currentState.board.board[index] ===
-        3 - this.currentState.board.currentPlayer
-      ) {
-        // Se já está selecionado, remove a seleção
-        point.classList.remove("selected-player1");
-        point.classList.remove("selected-player2");
+      // Get Current Player
+      var currentPlayer = this.currentState.board.currentPlayer;
+
+      // Get Opponent
+      var opponent = this.currentState.board.getOpponent(currentPlayer);
+
+      // Check if the piece to remove corresponds to a opponent piece
+      if (this.currentState.board.board[index] === opponent) {
+        // If selected, remove the selection
+        point.classList.remove("point-player1");
+        point.classList.remove("point-player2");
 
         // Perform the action
-        var action = new DestroyAction(
-          index,
-          this.currentState.board.currentPlayer
-        );
+        var action = new DestroyAction(index, currentPlayer);
         this.currentState.execute(action);
+        console.log("executed");
+
+        // Go back to the player's previous directive since a piece was already removed
+        if (currentPlayer === 1) {
+          document.getElementById(`player${currentPlayer}-notes`).textContent =
+            lastPlayer1Note;
+        } else {
+          document.getElementById(`player${currentPlayer}-notes`).textContent =
+            lastPlayer2Note;
+        }
+
+        // Check if the opponent has 3 pieces [Has transitioned into a flying phase]
+        if (this.currentState.board.gamePhase[opponent] === "flying") {
+          // Update the HTML text content for the current phase
+          document.getElementById(`player${opponent}-phase`).textContent =
+            "Flying Phase";
+
+          // Update the HTML text content for the player messages
+          document.getElementById(`player${opponent}-notes`).textContent =
+            "Fly a Piece";
+
+          // Update the last movement directive the player has received
+          if (opponent === 1) {
+            lastPlayer1Note = "Fly a Piece";
+          } else {
+            lastPlayer2Note = "Fly a Piece";
+          }
+        }
       }
       console.log("THERE IS A MILL");
     }
 
     // Separate the movements based on the current game phase of the player
     else if (currentPlayerPhase === "placing") {
-      if (this.currentState.board.getPiece(index) === 0) {
-        // Adds the selected player class to the HTML
-        point.classList.add(
-          `selected-player${this.currentState.board.currentPlayer}`
-        );
+      // Get the current Player - The one to perform a action
+      var currentPlayer = this.currentState.board.currentPlayer;
 
-        // Perform the action
-        var action = new PlaceAction(
-          index,
-          this.currentState.board.currentPlayer
+      if (this.currentState.board.getPiece(index) === 0) {
+        // Remove a piece from the pieces container
+        var piecesContainer = document.getElementById(
+          `player${currentPlayer}-pieces`
         );
+        piecesContainer.removeChild(piecesContainer.firstElementChild);
+
+        // Adds the selected player class to the HTML
+        point.classList.add(`point-player${currentPlayer}`);
+
+        // Perform the placing action
+        var action = new PlaceAction(index, currentPlayer);
         this.currentState.execute(action);
 
-        console.log("cur player:", this.currentState.board.currentPlayer);
+        // Check if the game phase was changed
+        if (this.currentState.board.gamePhase[currentPlayer] === "moving") {
+          // Update the HTML text content for the current phase
+          document.getElementById(`player${currentPlayer}-phase`).textContent =
+            "Moving Phase";
+
+          // Update the HTML text content for the player messages
+          document.getElementById(`player${currentPlayer}-notes`).textContent =
+            "Move a Piece";
+
+          // Update the last movement directive the player has received
+          if (currentPlayer === 1) {
+            lastPlayer1Note = "Move a Piece";
+          } else {
+            lastPlayer2Note = "Move a Piece";
+          }
+        }
+
+        // Check if a mill was formed
+        if (this.currentState.board.millFormed) {
+          // Update the HTML text content for the player messages - Inform that he has made a mill
+          document.getElementById(`player${currentPlayer}-notes`).textContent =
+            "[MILL FORMED]\nRemove a Enemy Piece";
+        }
       } else {
         console.log("OCUPADO MEUUU!!!");
         console.log(this.currentState.board.board);
@@ -361,6 +405,9 @@ class Game {
       currentPlayerPhase === "moving" ||
       currentPlayerPhase === "flying"
     ) {
+      // Get Current Player
+      var currentPlayer = this.currentState.board.currentPlayer;
+
       // Check if any piece was previously selected
       if (selectedPoints.length > 0) {
         // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
@@ -378,23 +425,26 @@ class Game {
             this.currentState.board.isAdjacent(initialIndex, newIndex) ||
             currentPlayerPhase === "flying"
           ) {
-            // Remove point from previous place [In the HTML]
+            // Remove the styling of the initial point [In the HTML]
             initialPoint.classList.remove(
-              `selected-player${this.currentState.board.currentPlayer}`
+              `point-player${currentPlayer}`,
+              `selected-point-player${currentPlayer}`
             );
 
             // Adds the point to the new place [In the HTML]
-            newPoint.classList.add(
-              `selected-player${this.currentState.board.currentPlayer}`
-            );
+            newPoint.classList.add(`point-player${currentPlayer}`);
 
             // Perform the action
-            var action = new MoveAction(
-              initialIndex,
-              newIndex,
-              this.currentState.board.currentPlayer
-            );
+            var action = new MoveAction(initialIndex, newIndex, currentPlayer);
             this.currentState.execute(action);
+
+            // Check if a mill was formed
+            if (this.currentState.board.millFormed) {
+              // Update the HTML text content for the player messages - Inform that he has made a mill
+              document.getElementById(
+                `player${currentPlayer}-notes`
+              ).textContent = "[MILL FORMED]\nRemove a Enemy Piece";
+            }
 
             // Define a new and clean Array
             selectedPoints = [];
@@ -414,7 +464,13 @@ class Game {
           this.currentState.board.currentPlayer ===
           this.currentState.board.getPiece(index)
         ) {
+          // Saves the selected point
           selectedPoints.push([point, index]);
+
+          // Adds a highlight to the piece to better visualize the one selected
+          point.classList.add(
+            `selected-point-player${this.currentState.board.currentPlayer}`
+          );
         } else {
           // Clear Previously Selected Piece
           selectedPoints = [];
@@ -424,6 +480,5 @@ class Game {
     } else {
       console.log("DEU MERDA!");
     }
-    console.log("[SELECTED POINTS]", selectedPoints);
   }
 }
