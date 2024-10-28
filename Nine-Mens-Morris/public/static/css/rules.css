@@ -134,8 +134,11 @@
 }
 
 .slide {
-  display: none;
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -144,25 +147,69 @@
 }
 
 .slide.active {
-  display: block;
   opacity: 1;
 }
 
 .slide p {
+  font-size: 16px;
   padding: 3px;
 }
 
 .slide img {
   width: 18%;
   height: auto;
-  display: block;
-  margin: 20px auto;
 }
 
 .slider-dots {
   display: flex;
   justify-content: center;
   margin-top: 15px;
+}
+
+.logo-basic-info {
+  margin: 15px;
+}
+
+.board-size-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+
+.pieces-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+
+.mill-showcase {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.initial-board-layout img {
+  margin: 10px;
+}
+
+.place-pieces-showcase img {
+  width: 70%;
+}
+
+.move-pieces-showcase img {
+  width: 35%;
+  margin: 5px;
+}
+
+.fly-pieces-showcase img {
+  width: 35%;
+  margin: 10px;
 }
 
 .dot {
