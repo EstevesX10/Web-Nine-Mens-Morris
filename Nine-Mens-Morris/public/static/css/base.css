@@ -36,8 +36,14 @@
   --lineThickness: 4px;
   --lineColor: #8499ce;
   --squareColor: #101f44;
+
   --player1Color: #3b82f6;
+  --player1PossibleMovesColor: slateblue;
+  --player1SelectedPoint: purple;
+
   --player2Color: crimson;
+  --player2PossibleMovesColor: slateblue;
+  --player2SelectedPoint: violet;
   --activePlayerColor: #6082b6;
   --boardOffset: 25px;
 

@@ -298,6 +298,52 @@ class Game {
 
   // Check valid movement
 
+  highlightPossibleMoves(currentPlayer, index) {
+    // Highlight possible moves
+    // Query all elements with the class point
+    const points = document.querySelectorAll(".point");
+
+    // We are in a moving phase and can only go to the adjacent positions
+    if (this.currentState.board.gamePhase[currentPlayer] == "moving") {
+      // Iterate through the adjacent points
+      NEIGHBOR_TABLE[index].forEach((pointIndex) => {
+        if (points[pointIndex].classList.length === 1) {
+          points[pointIndex].classList.add(
+            `possible-move-player${currentPlayer}`
+          );
+        }
+      });
+    } else {
+      // We can Fly and therefore go into any available position
+      points.forEach((point) => {
+        if (point.classList.length === 1) {
+          point.classList.add(`possible-move-player${currentPlayer}`);
+        }
+      });
+    }
+  }
+
+  removeHighlightPossibleMoves(currentPlayer, index) {
+    // Remove highlight possible moves
+    // Query all elements with the class point
+    const points = document.querySelectorAll(".point");
+
+    // We are in a moving phase and could have only gone to the adjacent positions
+    if (this.currentState.board.gamePhase[currentPlayer] == "moving") {
+      // Iterate through the adjacent points
+      NEIGHBOR_TABLE[index].forEach((pointIndex) => {
+        points[pointIndex].classList.remove(
+          `possible-move-player${currentPlayer}`
+        );
+      });
+    } else {
+      // We could have fled and therefore we need to take into consideration the previously available positions
+      points.forEach((point) => {
+        point.classList.remove(`possible-move-player${currentPlayer}`);
+      });
+    }
+  }
+
   handlePointClick(point, index) {
     // Get the phase of the current player
     var currentPlayerPhase =
@@ -416,13 +462,9 @@ class Game {
 
         // Check if the final place is empty
         if (this.currentState.board.getPiece(index) === 0) {
-          // Define the new position
-          var newIndex = index;
-          var newPoint = point;
-
           // Check if a movement is valid
           if (
-            this.currentState.board.isAdjacent(initialIndex, newIndex) ||
+            this.currentState.board.isAdjacent(initialIndex, index) ||
             currentPlayerPhase === "flying"
           ) {
             // Remove the styling of the initial point [In the HTML]
@@ -432,10 +474,10 @@ class Game {
             );
 
             // Adds the point to the new place [In the HTML]
-            newPoint.classList.add(`point-player${currentPlayer}`);
+            point.classList.add(`point-player${currentPlayer}`);
 
             // Perform the action
-            var action = new MoveAction(initialIndex, newIndex, currentPlayer);
+            var action = new MoveAction(initialIndex, index, currentPlayer);
             this.currentState.execute(action);
 
             // Check if a mill was formed
@@ -448,10 +490,21 @@ class Game {
 
             // Define a new and clean Array
             selectedPoints = [];
+
+            // Remove highlight from the possible moves
+            this.removeHighlightPossibleMoves(currentPlayer, initialIndex);
           } else {
             // The target place is not considered to be a valid move
             // Clear Previously Selected Piece
             selectedPoints = [];
+
+            // Removes a highlight of the selected piece
+            initialPoint.classList.remove(
+              `selected-point-player${currentPlayer}`
+            );
+
+            // Remove highlight from the possible moves
+            this.removeHighlightPossibleMoves(currentPlayer, initialIndex);
           }
         } else {
           console.log("OCUPADO MEUUU!!!");
@@ -460,20 +513,19 @@ class Game {
       } else {
         // We are selecting the initial piece
         // Check if the selected piece is valid
-        if (
-          this.currentState.board.currentPlayer ===
-          this.currentState.board.getPiece(index)
-        ) {
+        if (currentPlayer === this.currentState.board.getPiece(index)) {
           // Saves the selected point
           selectedPoints.push([point, index]);
 
           // Adds a highlight to the piece to better visualize the one selected
-          point.classList.add(
-            `selected-point-player${this.currentState.board.currentPlayer}`
-          );
+          point.classList.add(`selected-point-player${currentPlayer}`);
+
+          // Add a highlight for every possible move
+          this.highlightPossibleMoves(currentPlayer, index);
         } else {
           // Clear Previously Selected Piece
           selectedPoints = [];
+
           console.log("WRONG Point SELECTED!");
         }
       }

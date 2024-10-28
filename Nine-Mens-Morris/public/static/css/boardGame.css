@@ -246,7 +246,7 @@
 }
 
 .point.selected-point-player1 {
-  background-color: purple;
+  background-color: var(--player1SelectedPoint);
 }
 
 .point.point-player2 {
@@ -255,7 +255,15 @@
 }
 
 .point.selected-point-player2 {
-  background-color: violet;
+  background-color: var(--player2SelectedPoint);
+}
+
+.point.possible-move-player1 {
+  background-color: var(--player1PossibleMovesColor);
+}
+
+.point.possible-move-player2 {
+  background-color: var(--player2PossibleMovesColor);
 }
 
 .line {
