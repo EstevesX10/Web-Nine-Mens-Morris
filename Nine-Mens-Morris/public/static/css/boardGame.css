@@ -88,13 +88,21 @@
   text-align: center;
   justify-content: center;
   padding: 10px;
-  background-color: #a7c7e7;
   border-radius: 10px;
-  border-color: var(--lineColor);
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   z-index: 1;
+}
+
+.player1-info {
+  background-color: var(--player1Color);
+  border-color: var(--player1SelectedPoint);
+}
+
+.player2-info {
+  background-color: var(--player2Color);
+  border-color: var(--player2SelectedPoint);
 }
 
 .player1-info h3,
@@ -115,10 +123,16 @@
   right: 0;
 }
 
-.active-player {
+.active-player1 {
   color: var(--pointColor);
-  background-color: var(--activePlayerColor);
-  box-shadow: 0 0 40px var(--pointBorderColor);
+  background-color: var(--player1SelectedPoint);
+  box-shadow: 0 0 20px var(--player1SelectedPoint);
+}
+
+.active-player2 {
+  color: var(--pointColor);
+  background-color: var(--player2SelectedPoint);
+  box-shadow: 0 0 20px var(--player2SelectedPoint);
 }
 
 .player1-current-phase,
@@ -128,13 +142,21 @@
   width: 35%;
   padding: 10px;
   text-align: center;
-  background-color: var(--pointBorderColor);
   border-radius: 10px;
-  border-color: var(--lineColor);
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   z-index: 1;
+}
+
+.player1-current-phase {
+  background-color: var(--player1Color);
+  border-color: var(--player1SelectedPoint);
+}
+
+.player2-current-phase {
+  background-color: var(--player2Color);
+  border-color: var(--player2SelectedPoint);
 }
 
 .player1-current-phase h3,
@@ -158,13 +180,21 @@
   justify-content: center;
   padding: 10px;
   white-space: pre;
-  background-color: var(--pointBorderColor);
   border-radius: 10px;
-  border-color: var(--lineColor);
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   z-index: 3;
+}
+
+.player1-messages {
+  background-color: var(--player1Color);
+  border-color: var(--player1SelectedPoint);
+}
+
+.player2-messages {
+  background-color: var(--player2Color);
+  border-color: var(--player2SelectedPoint);
 }
 
 .player1-messages h3,
@@ -260,10 +290,12 @@
 
 .point.possible-move-player1 {
   background-color: var(--player1PossibleMovesColor);
+  box-shadow: 0 0 10px var(--player1PossibleMovesColor);
 }
 
 .point.possible-move-player2 {
   background-color: var(--player2PossibleMovesColor);
+  box-shadow: 0 0 10px var(--player2PossibleMovesColor);
 }
 
 .line {

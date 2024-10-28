@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const firstPlayerInfo = document.querySelector(
       `.player${savedFirstPlayer}-info`
     );
-    firstPlayerInfo.classList.add("active-player");
+    firstPlayerInfo.classList.add(`active-player${savedFirstPlayer}`);
 
     // Set the initial movement phases for both players
     const player1Phase = document.querySelector(`#player1-phase`);

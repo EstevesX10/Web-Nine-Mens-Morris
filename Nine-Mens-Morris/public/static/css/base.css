@@ -32,19 +32,19 @@
   --pointRadius: 14px;
   --pointColor: #e5e9f5;
   --pointBorderColor: #8499ce;
-  --pointHighlightColor: green;
+  --pointHighlightColor: #bbbbbb;
   --lineThickness: 4px;
   --lineColor: #8499ce;
   --squareColor: #101f44;
 
-  --player1Color: #3b82f6;
-  --player1PossibleMovesColor: slateblue;
-  --player1SelectedPoint: purple;
+  --player1Color: #34649c;
+  --player1PossibleMovesColor: #a0c9e8;
+  --player1SelectedPoint: #0e376d;
+  --activePlayer1Color: #6082b6;
 
-  --player2Color: crimson;
-  --player2PossibleMovesColor: slateblue;
-  --player2SelectedPoint: violet;
-  --activePlayerColor: #6082b6;
+  --player2Color: #cc3336;
+  --player2PossibleMovesColor: #f08080;
+  --player2SelectedPoint: #990303;
   --boardOffset: 25px;
 
   /* Configuration */

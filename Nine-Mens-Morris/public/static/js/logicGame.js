@@ -249,7 +249,7 @@ class Board {
     const previousPlayerInfo = document.querySelector(
       `.player${this.currentPlayer}-info`
     );
-    previousPlayerInfo.classList.remove("active-player");
+    previousPlayerInfo.classList.remove(`active-player${this.currentPlayer}`);
 
     // Update Current Player
     this.currentPlayer = 3 - this.currentPlayer;
@@ -258,7 +258,7 @@ class Board {
     const currentPlayerInfo = document.querySelector(
       `.player${this.currentPlayer}-info`
     );
-    currentPlayerInfo.classList.add("active-player");
+    currentPlayerInfo.classList.add(`active-player${this.currentPlayer}`);
   }
 }
 
@@ -295,8 +295,6 @@ class Game {
   constructor(state) {
     this.currentState = state;
   }
-
-  // Check valid movement
 
   highlightPossibleMoves(currentPlayer, index) {
     // Highlight possible moves
@@ -344,6 +342,7 @@ class Game {
     }
   }
 
+  // Check valid movement
   handlePointClick(point, index) {
     // Get the phase of the current player
     var currentPlayerPhase =
