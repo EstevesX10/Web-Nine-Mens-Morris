@@ -34,7 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
     logregBox.classList.remove("register");
     logregBox.classList.add("account");
 
-    // Here, you could make an AJAX call or fetch request to send the data to a server.
+    // Here, we could make an AJAX call or fetch request to send the data to a server.
+
+    // Add the data into the account details section
+    var accountUsername = document.getElementById("accountUsername");
+    console.log(username);
+    accountUsername.textContent = username;
+
+    // Fetch EMAIL IN BACKEND
+
+    var accountPassword = document.getElementById("accountPassword");
+    accountPassword.textContent = password;
   });
 
   // Register Form Submission
@@ -54,6 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
       password: password,
     });
 
+    // Add the data into the account details section
+    var accountUsername = document.getElementById("accountUsername");
+    accountUsername.textContent = username;
+    var accountEmail = document.getElementById("accountEmail");
+    accountEmail.textContent = email;
+    var accountPassword = document.getElementById("accountPassword");
+    accountPassword.textContent = password;
+
     logregBox.classList.remove("login");
     logregBox.classList.remove("register");
     logregBox.classList.add("account");
@@ -61,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Similarly, you could send the data to a server here.
   });
 
-  // Register Form Submission
+  // [Logout] Register Form Submission
   const logoutButton = document.getElementById("logoutButton");
   logoutButton.addEventListener("click", (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -84,6 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
     logregBox.classList.remove("register");
     logregBox.classList.add("login");
 
-    // Similarly, you could send the data to a server here.
+    // Remove the account details from the HTML when logging out
+    document.getElementById("accountUsername").textContent = "";
+    document.getElementById("accountEmail").textContent = "";
+    document.getElementById("accountPassword").textContent = "";
+
+    // Send the data to a server here.
   });
 });
