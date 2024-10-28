@@ -1,134 +1,135 @@
 .config-section {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 70%;
-    background: var(--leaderboardBackgroundImage)  no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  background: var(--leaderboardBackgroundImage) no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .config-section h2 {
-    font-size: 28px;
-    margin-bottom: 25px;
-    color: #fff;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .config-section p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 25px;
-    color: #ddd;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+  color: #ddd;
 }
 
 .config-form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .label-config {
-    font-size: 16px;
-    color: #f0f0f0;
-    margin-bottom: 10px;
-    text-align: center;
+  font-size: 16px;
+  color: #f0f0f0;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .select-group {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .select-config {
-    appearance: none; /* Remove o estilo padrão */
-    -webkit-appearance: none; /* Para navegadores Webkit */
-    padding: 12px 15px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #333;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 16px;
+  appearance: none; /* Remove o estilo padrão */
+  -webkit-appearance: none; /* Para navegadores Webkit */
+  padding: 12px 15px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
 }
 
-.select-config:hover, .select-config:focus {
-    background-color: rgba(255, 255, 255, 1);
-    border-color: #aaa;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+.select-config:hover,
+.select-config:focus {
+  background-color: rgba(255, 255, 255, 1);
+  border-color: #aaa;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 .select-config option {
-    padding: 12px;
-    background: white;
-    color: #333;
-    transition: background-color 0.3s ease;
+  padding: 12px;
+  background: white;
+  color: #333;
+  transition: background-color 0.3s ease;
 }
 
 .select-config option:hover {
-    background-color: rgba(100, 100, 100, 0.1);
+  background-color: rgba(100, 100, 100, 0.1);
 }
 
 .select-config {
-    animation: dropdownOpen 0.4s ease-in-out;
+  animation: dropdownOpen 0.4s ease-in-out;
 }
 
 @keyframes dropdownOpen {
-    0% {
-        transform: scaleY(0);
-        opacity: 0;
-    }
-    100% {
-        transform: scaleY(1);
-        opacity: 1;
-    }
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 .btn-config {
-    grid-column: span 2;
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: var(--configBtnColor);
-    color: #e4e4e4;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 15px;
-    transition: transform 0.5s ease-in-out;
+  grid-column: span 2;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: var(--configBtnColor);
+  color: #e4e4e4;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 15px;
+  transition: transform 0.5s ease-in-out;
 }
 
 .btn-config:hover {
-    color: white;
-    background-color: var(--configBtnColorHighlight);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
+  color: white;
+  background-color: var(--configBtnColorHighlight);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
 }
 
 .btn-config:active {
-    transform: translateY(1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }

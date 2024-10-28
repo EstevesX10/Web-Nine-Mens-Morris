@@ -1,22 +1,22 @@
 .leaderboard-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 70%;
-    background: var(--leaderboardBackgroundImage)  no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  background: var(--leaderboardBackgroundImage) no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centers content vertically */
-    align-items: center; /* Centers content horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers content vertically */
+  align-items: center; /* Centers content horizontally */
 }
 
 /* .content.active .leaderboard-container {
@@ -24,47 +24,48 @@
 } */
 
 .leaderboard-container h2 {
-    text-align: center;
-    color: white;
-}
- 
-.leaderboard-container table {
-    width: 50%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    border-spacing: 0;
+  text-align: center;
+  color: white;
 }
 
-.leaderboard-container th, .leaderboard-container td {
-    padding: 10px;
-    text-align: left;
-    border: none;
+.leaderboard-container table {
+  width: 50%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.leaderboard-container th,
+.leaderboard-container td {
+  padding: 10px;
+  text-align: left;
+  border: none;
 }
 
 .leaderboard-container th {
-    color: #e4e4e4;
-    transition: color .5s ease-in-out, transform .4s ease-in-out;
+  color: #e4e4e4;
+  transition: color 0.5s ease-in-out, transform 0.4s ease-in-out;
 }
 
 .leaderboard-container th:hover {
-    padding: 10px;
-    text-align: left;
-    color: white;
-    transform: scale(1.1);
+  padding: 10px;
+  text-align: left;
+  color: white;
+  transform: scale(1.1);
 }
 
 .leaderboard-container tbody tr {
-    color: #e4e4e4;
-    padding: 10px;
-    background-color: var(--tableRowOddColor);
-    transition: transform .3s ease-in-out;
+  color: #e4e4e4;
+  padding: 10px;
+  background-color: var(--tableRowOddColor);
+  transition: transform 0.3s ease-in-out;
 }
 
 .leaderboard-container tbody tr:hover {
-    color: white;
-    transform: scale(1.05);
+  color: white;
+  transform: scale(1.05);
 }
 
 .leaderboard-container tbody tr:nth-child(even) {
-    background-color: var(--tableRowEvenColor);
+  background-color: var(--tableRowEvenColor);
 }

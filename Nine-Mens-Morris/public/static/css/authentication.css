@@ -1,272 +1,276 @@
 .container-authentication {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 72%;
-    background: var(--authenticationBackgroundImage)  no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    margin-top: 50px;
-    margin-bottom: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 72%;
+  background: var(--authenticationBackgroundImage) no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .container-authentication .content-authentication {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 58%;
-    height: 100%;
-    background: transparent;
-    padding: 80px;
-    color: #e4e4e4;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 58%;
+  height: 100%;
+  background: transparent;
+  padding: 80px;
+  color: #e4e4e4;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .content-authentication .logo {
-    font-size: 30px;
-    color: #e4e4e4e4;
+  font-size: 30px;
+  color: #e4e4e4e4;
 }
 
 .text-sci h2 {
-    font-size: 40px;
-    line-height: 1;
-    color: #e4e4e4e4;
+  font-size: 40px;
+  line-height: 1;
+  color: #e4e4e4e4;
 }
 
 .text-sci h2 span {
-    font-size: 25px;
-    color: #e4e4e4e4;
+  font-size: 25px;
+  color: #e4e4e4e4;
 }
 
 .text-sci p {
-    font-size: 16px;
-    margin: 20px 0;
-    color: #e4e4e4e4;
+  font-size: 16px;
+  margin: 20px 0;
+  color: #e4e4e4e4;
 }
 
 .social-icons a i {
-    font-size: 22px;
-    color: #fff;
-    margin-right: 10px;
-    transition: .5s ease;
+  font-size: 22px;
+  color: #fff;
+  margin-right: 10px;
+  transition: 0.5s ease;
 }
 
 .social-icons a:hover i {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .container-authentication .logreg-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: calc(100% - 58%);
-    height: 100%;
-    overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(100% - 58%);
+  height: 100%;
+  overflow: hidden;
 }
 
 .logreg-box .form-box {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    backdrop-filter: blur(20px);
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    color: #e4e4e4;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: #e4e4e4;
 }
 
-.logreg-box .form-box.login, .logreg-box .form-box.register, .logreg-box .form-box.account {
-    transform: translateX(600px);
-    transition: transform .6s ease;
-    transition-delay: 0s;
+.logreg-box .form-box.login,
+.logreg-box .form-box.register,
+.logreg-box .form-box.account {
+  transform: translateX(600px);
+  transition: transform 0.6s ease;
+  transition-delay: 0s;
 }
 
-.logreg-box.login .form-box.login, .logreg-box.register .form-box.register, .logreg-box.account .form-box.account {
-    transform: translateX(0);
-    transition-delay: .7s;
+.logreg-box.login .form-box.login,
+.logreg-box.register .form-box.register,
+.logreg-box.account .form-box.account {
+  transform: translateX(0);
+  transition-delay: 0.7s;
 }
 
 .form-box h2 {
-    font-size: 32px;
-    text-align: center;
-    color: #e4e4e4e4;
+  font-size: 32px;
+  text-align: center;
+  color: #e4e4e4e4;
 }
 
 .form-box .input-box {
-    position: relative;
-    width: 340px;
-    height: 50px;
-    border-bottom: 2px solid #e4e4e4;
-    margin: 30px 0;
+  position: relative;
+  width: 340px;
+  height: 50px;
+  border-bottom: 2px solid #e4e4e4;
+  margin: 30px 0;
 }
 
 .input-box input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: #e4e4e4;
-    font-weight: 500;
-    padding-right: 28px;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #e4e4e4;
+  font-weight: 500;
+  padding-right: 28px;
 }
 
 .input-box label {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-size: 16px;
-    font-weight: 500;
-    pointer-events: none;
-    transition: .5s ease;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s ease;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
-    top: -5px;
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -5px;
 }
 
 .input-box .icon {
-    position: absolute;
-    top: 13px;
-    right: 0;
-    font-size: 19px;
+  position: absolute;
+  top: 13px;
+  right: 0;
+  font-size: 19px;
 }
 
 .form-box .remember-forgot {
-    font-size: 14.5px;
-    font-weight: 500;
-    margin: -15px 0 15px;
-    display: flex;
-    justify-content: space-between;
+  font-size: 14.5px;
+  font-weight: 500;
+  margin: -15px 0 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .remember-forgot label input {
-    accent-color: #e4e4e4;
-    margin-right: 3px;
+  accent-color: #e4e4e4;
+  margin-right: 3px;
 }
 
 .remember-forgot input[type="checkbox"] {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background-color: transparent;
-    border: 2px solid #e4e4e4;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-    vertical-align: middle;
-    margin-right: 5px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: 2px solid #e4e4e4;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  vertical-align: middle;
+  margin-right: 5px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .remember-forgot input[type="checkbox"]:checked {
-    background-color: #6e82b7;
-    border-color: #6e82b7;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+  background-color: #6e82b7;
+  border-color: #6e82b7;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .remember-forgot input[type="checkbox"]:checked::after {
-    content: '✓';
-    font-size: 12px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -15%) scale(0);
-    color: #fff;
-    animation: tickAnimation 0.3s ease forwards;
+  content: "✓";
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -15%) scale(0);
+  color: #fff;
+  animation: tickAnimation 0.3s ease forwards;
 }
 
 @keyframes tickAnimation {
-    0% {
-        transform: translate(-50%, -15%) scale(0);
-        opacity: 0;
-    }
-    50% {
-        transform: translate(-50%, -15%) scale(1.4);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -15%) scale(1);
-        opacity: 1;
-    }
+  0% {
+    transform: translate(-50%, -15%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -15%) scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -15%) scale(1);
+    opacity: 1;
+  }
 }
 
 .remember-forgot input[type="checkbox"]:hover {
-    border-color: #fff;
+  border-color: #fff;
 }
 
 .remember-forgot a {
-    color: #e4e4e4;
-    text-decoration: none;
+  color: #e4e4e4;
+  text-decoration: none;
 }
 
 .remember-forgot a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .btn {
-    width: 100%;
-    height: 45px;
-    background: var(--buttonColor);
-    border: none;
-    outline: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #e4e4e4;
-    font-weight: 500;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+  width: 100%;
+  height: 45px;
+  background: var(--buttonColor);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #e4e4e4;
+  font-weight: 500;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .btn:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .8);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 .form-box .login-register {
-    font-size: 14.5px;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 25px;
+  font-size: 14.5px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 25px;
 }
 
 .login-register p a {
-    color: #e4e4e4;
-    font-weight: 600;
-    text-decoration: none;
+  color: #e4e4e4;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .login-register p a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .account-box {
-    display: block;
+  display: block;
 }
 
 .account-box p {
-    background-color: #6e82b7;
-    border-radius: 8px;
-    text-align: left;
-    margin: 15px;
-    padding: 20px;
+  background-color: #6e82b7;
+  border-radius: 8px;
+  text-align: left;
+  margin: 15px;
+  padding: 20px;
 }
 
 .account-box p:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .account-box button {
-    margin-top: 20px;
+  margin-top: 20px;
 }

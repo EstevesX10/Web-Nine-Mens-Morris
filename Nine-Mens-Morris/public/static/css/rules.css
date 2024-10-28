@@ -1,191 +1,191 @@
 .rules {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 70%;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    text-align: center;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .rules h3 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: var(--mainSliderHeaderTextColor);
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: var(--mainSliderHeaderTextColor);
 }
 
 .rules h4 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: var(--subSlidersHeaderTextColor);
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: var(--subSlidersHeaderTextColor);
 }
 
 .main-slider-container {
-    position: relative;
-    width: 75%;
-    margin: 0 auto;
-    overflow: hidden;
-    background-color: var(--mainSliderBackgroundColor);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+  position: relative;
+  width: 75%;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: var(--mainSliderBackgroundColor);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
 .main-slider {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .topic-slide {
-    min-width: 100%;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    opacity: 0;
-    position: absolute;
+  min-width: 100%;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+  position: absolute;
 }
 
 .topic-slide.active {
-    opacity: 1;
-    position: relative;
-    z-index: 2;
+  opacity: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .topic-slide.prev {
-    left: 0;
-    transform: translateX(-100%);
-    opacity: 0;
+  left: 0;
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 .topic-slide.next {
-    transform: translateX(100%);
-    opacity: 0;
+  transform: translateX(100%);
+  opacity: 0;
 }
 
 .arrow {
-    position: absolute;
-    margin: 0 0 auto;
-    width: 12%;
-    background-color: transparent;
-    cursor: pointer;
-    z-index: 10;
-    justify-content: center;
-    align-items: center;
-    font-size: 80px;
-    color: var(--mainArrowColor);
-    border: none;
-    box-shadow: none;
+  position: absolute;
+  margin: 0 0 auto;
+  width: 12%;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  color: var(--mainArrowColor);
+  border: none;
+  box-shadow: none;
 }
 
 .arrow::before {
-    content: '\203A';
-    transition: transform 0.3s ease, color 0.3s ease;
-    display: inline-block;
+  content: "\203A";
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-block;
 }
 
 .arrow:hover::before {
-    transform: scale(1.2);
-    color: var(--mainArrowHighlightColor);
+  transform: scale(1.2);
+  color: var(--mainArrowHighlightColor);
 }
 
 .left-arrow {
-    top: 54%;
-    left: calc((100% - 800px) / 4);
-    transform: translateY(-50%) rotate(180deg);
+  top: 54%;
+  left: calc((100% - 800px) / 4);
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .right-arrow {
-    top: 50%;
-    right: calc((100% - 800px) / 4);
-    transform: translateY(-50%);
+  top: 50%;
+  right: calc((100% - 800px) / 4);
+  transform: translateY(-50%);
 }
 
 .arrow:focus {
-    outline: none;
+  outline: none;
 }
 
 .slider-container {
-    position: relative;
-    max-width: 600px;
-    margin: 0 auto;
-    overflow: hidden;
-    color: var(--contentTextColor);
-    background-color: var(--subSlidersBackgroundColor);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    height: 100%;
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+  color: var(--contentTextColor);
+  background-color: var(--subSlidersBackgroundColor);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 100%;
 }
 
 .slider {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 320px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
 }
 
 .slide {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out, display 0.5s ease-in-out;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, display 0.5s ease-in-out;
 }
 
 .slide.active {
-    display: block;
-    opacity: 1;
+  display: block;
+  opacity: 1;
 }
 
 .slide p {
-    padding: 3px;
+  padding: 3px;
 }
 
 .slide img {
-    width: 18%;
-    height: auto;
-    display: block;
-    margin: 20px auto;
+  width: 18%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
 }
 
 .slider-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }
 
 .dot {
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: var(--subSlidersIdleDotColor);
-    z-index: 5;
-    transition: background-color 0.5s ease-in-out;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: var(--subSlidersIdleDotColor);
+  z-index: 5;
+  transition: background-color 0.5s ease-in-out;
 }
 
 .dot.active {
-    background-color: var(--subSlidersSelectedDotColor);
-    border-color: var(--subSlidersSelectedBorderDotColor);
-    border-style: hidden;
-    border-width: 1px;
+  background-color: var(--subSlidersSelectedDotColor);
+  border-color: var(--subSlidersSelectedBorderDotColor);
+  border-style: hidden;
+  border-width: 1px;
 }
 
 .dot:hover {
-    background-color: var(--subSlidersHoverDotColor);
-    box-shadow: 0 0 3px var(--subSlidersHoverBoxShadowDotColor)
+  background-color: var(--subSlidersHoverDotColor);
+  box-shadow: 0 0 3px var(--subSlidersHoverBoxShadowDotColor);
 }
