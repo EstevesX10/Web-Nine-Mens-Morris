@@ -378,6 +378,22 @@ class Game {
     }
   }
 
+  checkGameOver() {
+    // Check if the game is over
+    if (this.currentState.board.gameOver()) {
+      // Remove current player highlight
+      this.removePlayerHighlight(this.currentState.board.currentPlayer);
+
+      // Get Winner
+      const winner = this.currentState.board.getWinner();
+
+      // Toogle the game winner box
+      this.triggerWinnerContainer(winner);
+
+      console.log("[WINNER]", winner);
+    }
+  }
+
   usePiece(player) {
     // Remove a piece from the pieces container
     var piecesContainer = document.getElementById(`player${player}-pieces`);
@@ -409,6 +425,9 @@ class Game {
       // Inform that he has made a mill [Change player notes]
       this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
     }
+
+    // Check if the game is over
+    this.checkGameOver();
   }
 
   removeEnemyPiece(player, indexToRemove, pointToRemove) {
@@ -436,6 +455,9 @@ class Game {
         // Update the opponent game phase
         this.updatePlayerInfo(opponent, "Flying Phase", "Fly a Piece");
       }
+
+      // Check if the game is over
+      this.checkGameOver();
     }
   }
 
@@ -480,6 +502,9 @@ class Game {
 
           // Remove highlight from the possible moves
           this.removeHighlightPossibleMoves(player, initialIndex);
+
+          // Check if the game is over
+          this.checkGameOver();
         } else {
           // The target place is not considered to be a valid move
           // Clear Previously Selected Piece
@@ -665,19 +690,6 @@ class Game {
       } else {
         console.log("DEU MERDA!");
       }
-    } else {
-      // -> Update Winner Stats on the HTML
-
-      // Remove current player highlight
-      this.removePlayerHighlight(this.currentState.board.currentPlayer);
-
-      // Get Winner
-      const winner = this.currentState.board.getWinner();
-
-      // Toogle the game winner box
-      this.triggerWinnerContainer(winner);
-
-      console.log("[WINNER]", winner);
     }
   }
 }
