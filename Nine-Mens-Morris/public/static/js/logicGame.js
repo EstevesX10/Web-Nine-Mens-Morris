@@ -395,9 +395,16 @@ class Game {
   }
 
   usePiece(player) {
-    // Remove a piece from the pieces container
-    var piecesContainer = document.getElementById(`player${player}-pieces`);
-    piecesContainer.removeChild(piecesContainer.firstElementChild);
+    // Select all the pieces from inside their container
+    const pieces = document.querySelectorAll(`#player${player}-pieces > div`);
+
+    // Loop through the pieces in order to hide the last one each time we place a new piece on the board
+    for (let i = pieces.length - 1; i >= 0; i--) {
+      if (!pieces[i].classList.contains("hidden-piece")) {
+        pieces[i].classList.add("hidden-piece");
+        return;
+      }
+    }
   }
 
   addPiece(player, indexToAdd, pointToAdd) {
