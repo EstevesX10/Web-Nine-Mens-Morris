@@ -166,36 +166,39 @@
   margin-top: 15px;
 }
 
-.logo-basic-info {
-  margin: 15px;
+.logo-basic-info img {
+  width: 20%;
+  margin: 4%;
 }
 
 .board-size-showcase {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin: 10px;
+  margin: 2%;
 }
 
 .pieces-showcase {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin: 10px;
 }
 
-.mill-showcase {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.pieces-showcase img {
+  width: 25%;
+  margin: 2%;
+}
+
+.mill-showcase img {
+  width: 25%;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 4%;
 }
 
 .initial-board-layout img {
-  margin: 10px;
+  width: 20%;
+  margin: 4%;
 }
 
 .place-pieces-showcase img {
@@ -204,12 +207,22 @@
 
 .move-pieces-showcase img {
   width: 35%;
-  margin: 5px;
+  margin: 2%;
+}
+
+.capture-pieces-showcase img {
+  width: 35%;
+  margin: 3%;
 }
 
 .fly-pieces-showcase img {
   width: 35%;
-  margin: 10px;
+  margin: 4%;
+}
+
+.end-game-showcase img {
+  width: 30%;
+  margin: 1.5%;
 }
 
 .dot {
