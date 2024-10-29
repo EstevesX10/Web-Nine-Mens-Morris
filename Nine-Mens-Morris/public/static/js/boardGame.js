@@ -2,7 +2,7 @@
 const boardContainer = document.getElementById("board");
 
 // Define some variables related to the points
-const pointRadius = 14;
+const pointRadius = 12;
 const pointSize = 2 * pointRadius;
 
 function generateBoard(numSquares) {
@@ -10,7 +10,7 @@ function generateBoard(numSquares) {
   boardContainer.innerHTML = "";
 
   // Define some board parameters
-  const boardSize = 350;
+  const boardSize = 280;
   const boardCenter = boardSize / 2;
   const lineWidth = 10;
 
