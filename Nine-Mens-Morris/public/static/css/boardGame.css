@@ -22,6 +22,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
+  top: 0;
   left: 35%;
   width: 30%;
   height: 100%;
@@ -76,9 +77,12 @@
 
 .board-container {
   position: absolute;
-  width: var(--boardSide);
-  height: var(--boardSide);
-  margin: var(--boardOffset) auto;
+  display: flex;
+  top: 28%;
+  left: 6.725%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
 }
 
@@ -89,10 +93,10 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 0;
   width: 35%;
   height: 100%;
   align-items: center;
+  justify-content: space-between;
 }
 
 /* Player Informations */
@@ -101,7 +105,7 @@
 .player2-info {
   position: absolute;
   display: flex;
-  top: 15%;
+  top: 13%;
   text-align: center;
   justify-content: center;
   padding: 10px;
@@ -235,18 +239,15 @@
   align-items: center;
   justify-content: space-around;
   flex-flow: row wrap;
-  top: 48%;
+  top: 44%;
   height: fit-content;
   max-width: 45%;
   text-align: center;
-  padding: 10px;
+  padding: 2px;
   color: var(--pointColor);
-  /* background-color: var(--pointBorderColor); */
   background-color: transparent;
   border-radius: 10px;
-  border-color: var(--lineColor);
   border-width: calc(var(--lineThickness) / 1.5);
-  border-style: ridge;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   z-index: 3;
 }
@@ -291,6 +292,53 @@
   border-color: var(--lineColor) !important;
   background-color: var(--pointColor) !important;
   box-shadow: 0 0 15px var(--pointColor) !important;
+}
+
+/* Players Buttons to Give Up */
+
+.player1-give-up-btn,
+.player2-give-up-btn {
+  position: absolute;
+  display: flex;
+  top: 85%;
+  height: max-content;
+  width: 45%;
+  color: var(--pointColor);
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  white-space: pre;
+  border-radius: 10px;
+  border-width: calc(var(--lineThickness) / 1.5);
+  border-style: ridge;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  z-index: 3;
+}
+
+.player1-give-up-btn {
+  background-color: var(--player1Color);
+  border-color: var(--player1SelectedPoint);
+}
+
+.player1-give-up-btn:hover {
+  transform: scale(1.05);
+  /* background-color: var(--player1SelectedPoint); */
+  box-shadow: 0 0 10px var(--player1PossibleMovesColor);
+}
+
+.player2-give-up-btn {
+  background-color: var(--player2Color);
+  border-color: var(--player2SelectedPoint);
+}
+
+.player2-give-up-btn:hover {
+  transform: scale(1.05);
+  /* background-color: var(--player2SelectedPoint); */
+  box-shadow: 0 0 10px var(--player2PossibleMovesColor);
 }
 
 /* Board Related Elements */
