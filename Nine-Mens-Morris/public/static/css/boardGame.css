@@ -112,7 +112,8 @@
   border-radius: 10px;
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.75s ease-in-out;
   z-index: 1;
 }
 
@@ -131,9 +132,12 @@
   color: var(--pointColor);
 }
 
-.player1-info:hover,
+.player1-info:hover {
+  box-shadow: 0 0 20px var(--player1PossibleMovesColor);
+}
+
 .player2-info:hover {
-  cursor: pointer;
+  box-shadow: 0 0 20px var(--player2PossibleMovesColor);
 }
 
 .player1 {
@@ -166,7 +170,8 @@
   border-radius: 10px;
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.6s ease-in-out;
   z-index: 1;
 }
 
@@ -178,6 +183,14 @@
 .player2-current-phase {
   background-color: var(--player2Color);
   border-color: var(--player2SelectedPoint);
+}
+
+.player1-current-phase:hover {
+  box-shadow: 0 0 20px var(--player1PossibleMovesColor);
+}
+
+.player2-current-phase:hover {
+  box-shadow: 0 0 20px var(--player2PossibleMovesColor);
 }
 
 .player1-current-phase h3,
@@ -204,7 +217,8 @@
   border-radius: 10px;
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.6s ease-in-out;
   z-index: 3;
 }
 
@@ -216,6 +230,14 @@
 .player2-messages {
   background-color: var(--player2Color);
   border-color: var(--player2SelectedPoint);
+}
+
+.player1-messages:hover {
+  box-shadow: 0 0 20px var(--player1PossibleMovesColor);
+}
+
+.player2-messages:hover {
+  box-shadow: 0 0 20px var(--player2PossibleMovesColor);
 }
 
 .player1-messages h3,
@@ -293,15 +315,15 @@
 }
 
 .player1-pieces-container {
-  border-color: var(--player1SelectedPoint);
-  background-color: var(--player1SelectedPoint);
-  box-shadow: 0 0 10px var(--player1PossibleMovesColor);
+  border: 50px var(--player1PossibleMovesColor);
+  background-color: var(--player1Color);
+  box-shadow: 0 0 20px var(--player1SelectedPoint);
 }
 
 .player2-pieces-container {
-  border-color: var(--player2SelectedPoint);
-  background-color: var(--player2SelectedPoint);
-  box-shadow: 0 0 10px var(--player2PossibleMovesColor);
+  border: 50px var(--player2PossibleMovesColor);
+  background-color: var(--player2Color);
+  box-shadow: 0 0 20px var(--player2SelectedPoint);
 }
 
 .player1-pieces-container div,
@@ -374,7 +396,8 @@
   border-width: calc(var(--lineThickness) / 1.5);
   border-style: ridge;
   cursor: pointer;
-  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out,
+    box-shadow 0.5s ease-in-out;
   z-index: 3;
 }
 
