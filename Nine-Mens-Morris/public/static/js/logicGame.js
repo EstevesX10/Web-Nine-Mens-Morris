@@ -156,7 +156,6 @@ class Board {
           for (const adjacentPoint of NEIGHBOR_TABLE[index]) {
             // There is at least a possible move for one of the pieces
             if (this.board[adjacentPoint] === 0) {
-              console.log("[POSSIBLE MOVE @]", index);
               // Empty Space
               return true;
             }
@@ -281,20 +280,8 @@ class Board {
   }
 
   switchPlayer() {
-    // Update background Color of the previous player
-    const previousPlayerInfo = document.querySelector(
-      `.player${this.currentPlayer}-info`
-    );
-    previousPlayerInfo.classList.remove(`active-player${this.currentPlayer}`);
-
     // Update Current Player
     this.currentPlayer = 3 - this.currentPlayer;
-
-    // Update background Color of the current player
-    const currentPlayerInfo = document.querySelector(
-      `.player${this.currentPlayer}-info`
-    );
-    currentPlayerInfo.classList.add(`active-player${this.currentPlayer}`);
   }
 }
 
@@ -342,6 +329,14 @@ class Game {
     // Remove current player highlight
     const currentPlayerInfo = document.querySelector(`.player${player}-info`);
     currentPlayerInfo.classList.remove(`active-player${player}`);
+  }
+
+  switchPlayerHighlight(player) {
+    // Updates the opponent - It's his turn
+    this.addPlayerHighlight(3 - player);
+
+    // The player's turn is over
+    this.removePlayerHighlight(player);
   }
 
   informPlayer(player, message) {
@@ -431,6 +426,9 @@ class Game {
 
       // Inform that he has made a mill [Change player notes]
       this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
+    } else {
+      // A Mill was not formed and therefore the current player switches
+      this.switchPlayerHighlight(player);
     }
 
     // Check if the game is over
@@ -502,6 +500,9 @@ class Game {
 
             // Inform that he has made a mill [Change player notes]
             this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
+          } else {
+            // A Mill was not formed and therefore the current player switches
+            this.switchPlayerHighlight(player);
           }
 
           // Define a new and clean Array
