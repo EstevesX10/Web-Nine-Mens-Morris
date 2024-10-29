@@ -378,6 +378,7 @@ class Game {
     if (this.currentState.board.gameOver()) {
       // Remove current player highlight
       this.removePlayerHighlight(this.currentState.board.currentPlayer);
+      this.removePlayerHighlight(3 - this.currentState.board.currentPlayer);
 
       // Get Winner
       const winner = this.currentState.board.getWinner();
@@ -443,6 +444,9 @@ class Game {
     if (this.currentState.board.board[indexToRemove] === opponent) {
       // Remove highlights of the pieces that could have been removed
       this.removeHighlightPossiblePieceRemovals(player);
+
+      // Update the current player highlighting
+      this.switchPlayerHighlight(player);
 
       // If selected, remove the selection
       pointToRemove.classList.remove("point-player1");
