@@ -46,6 +46,9 @@ class PlaceAction {
   constructor(pos, player) {
     this.pos = pos;
     this.player = player;
+
+    this.switchedPlayer = false;
+    this.previousPhase = "place";
   }
 
   execute(gameBoard) {
@@ -55,6 +58,7 @@ class PlaceAction {
     // Update the number of placed pieces of the player
     gameBoard.placedPieces[this.player]++;
 
+    this.previousPhase = gameBoard.playerPieces[this.player];
     if (
       // Checks if we changed from the current phase
       gameBoard.placedPieces[this.player] >= gameBoard.playerPieces[this.player]
@@ -70,6 +74,23 @@ class PlaceAction {
       gameBoard.millFormed = true;
     }
   }
+
+  undo(gameBoard) {
+    // Place a Piece
+    gameBoard.board[this.pos] = 0;
+
+    // Update the number of placed pieces of the player
+    gameBoard.placedPieces[this.player]--;
+
+    // Update player phase
+    gameBoard.gamePhase[this.player] = this.previousPhase;
+
+    // Check for mills [If there is a mill we do not change player. We do it otherwise]
+    if (this.switchedPlayer) {
+      gameBoard.switchPlayer();
+    }
+    gameBoard.millFormed = false;
+  }
 }
 
 // We suppose that the action is valid and good to be performed
@@ -78,6 +99,8 @@ class DestroyAction {
   constructor(pos, player) {
     this.pos = pos;
     this.player = player;
+
+    this.previousPhase = "destroy";
   }
 
   execute(gameBoard) {
@@ -92,11 +115,31 @@ class DestroyAction {
     gameBoard.switchPlayer();
 
     // Check if the current player has transitioned into the flying phase
+    this.previousPhase = gameBoard.gamePhase[gameBoard.currentPlayer];
     if (gameBoard.playerPieces[gameBoard.currentPlayer] === 3) {
       // Update the game phase
       gameBoard.gamePhase[gameBoard.currentPlayer] = "flying";
     }
     gameBoard.millFormed = false;
+  }
+
+  undo(gameBoard) {
+    // Remove piece from the selected position
+    gameBoard.board[this.pos] = gameBoard.getOpponent(this.player);
+
+    // Update player pieces
+    gameBoard.playerPieces[gameBoard.getOpponent(this.player)]++;
+    gameBoard.placedPieces[gameBoard.getOpponent(this.player)]++;
+
+    // Update player phase
+    gameBoard.gamePhase[
+      gameBoard.getOpponent(this.player)
+    ] = this.previousPhase;
+
+    // Switch Player
+    gameBoard.switchPlayer();
+
+    gameBoard.millFormed = true;
   }
 }
 
@@ -105,6 +148,8 @@ class MoveAction {
     this.from = from;
     this.to = to;
     this.player = player;
+
+    this.switchedPlayer = false;
   }
 
   execute(gameBoard) {
@@ -114,10 +159,20 @@ class MoveAction {
     // Check for mills [If there is a mill we do not change player. We do it otherwise]
     if (!gameBoard.checkMillFormed(this.to, this.player)) {
       gameBoard.switchPlayer();
+      this.switchedPlayer = true;
     } else {
       gameBoard.millFormed = true;
-      console.log("Mill Formed");
     }
+  }
+
+  undo(gameBoard) {
+    gameBoard.board[this.from] = this.player;
+    gameBoard.board[this.to] = 0;
+
+    if (this.switchedPlayer) {
+      gameBoard.switchPlayer();
+    }
+    gameBoard.millFormed = false;
   }
 }
 
@@ -191,6 +246,7 @@ class Board {
   }
 
   checkMillFormed(point, player) {
+    // TODO: tenho *quase* a certeza q basta usar o mills de tamanho 4 e vai funcionar na msm
     var mills;
     // Possible mills for a 2 square game
     if (this.boardSize === 2) {
@@ -283,6 +339,10 @@ class Board {
     // Update Current Player
     this.currentPlayer = 3 - this.currentPlayer;
   }
+
+  getValidActions() {
+    throw new Error("TODO: return valid actions");
+  }
 }
 
 // Holds the board state and history
@@ -365,11 +425,13 @@ class Game {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(`player${player}-notes`).textContent =
-        lastPlayer1Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = lastPlayer1Note;
     } else {
-      document.getElementById(`player${player}-notes`).textContent =
-        lastPlayer2Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = lastPlayer2Note;
     }
   }
 
