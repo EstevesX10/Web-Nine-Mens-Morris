@@ -132,9 +132,8 @@ class DestroyAction {
     gameBoard.placedPieces[gameBoard.getOpponent(this.player)]++;
 
     // Update player phase
-    gameBoard.gamePhase[
-      gameBoard.getOpponent(this.player)
-    ] = this.previousPhase;
+    gameBoard.gamePhase[gameBoard.getOpponent(this.player)] =
+      this.previousPhase;
 
     // Switch Player
     gameBoard.switchPlayer();
@@ -410,8 +409,31 @@ class State {
 }
 
 class Game {
-  constructor(state) {
+  constructor(state, levelAI) {
     this.currentState = state;
+    this.levelAI = levelAI;
+    this.player1GaveUp = false;
+    this.player2GaveUp = false;
+
+    // Get Give Up Buttons
+    const player1GiveUpButton = document.querySelector(".player1-give-up-btn");
+    const player2GiveUpButton = document.querySelector(".player2-give-up-btn");
+
+    player1GiveUpButton.addEventListener("click", () => {
+      if (!this.player1GaveUp && !this.player2GaveUp) {
+        this.player1GaveUp = true;
+        this.triggerWinnerContainer(2);
+        console.log("PLAYER 1 GAVE UP");
+      }
+    });
+
+    player2GiveUpButton.addEventListener("click", () => {
+      if (!this.player1GaveUp && !this.player2GaveUp) {
+        this.player2GaveUp = true;
+        this.triggerWinnerContainer(1);
+        console.log("PLAYER 2 GAVE UP");
+      }
+    });
   }
 
   addPlayerHighlight(player) {
@@ -460,19 +482,21 @@ class Game {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(
-        `player${player}-notes`
-      ).textContent = lastPlayer1Note;
+      document.getElementById(`player${player}-notes`).textContent =
+        lastPlayer1Note;
     } else {
-      document.getElementById(
-        `player${player}-notes`
-      ).textContent = lastPlayer2Note;
+      document.getElementById(`player${player}-notes`).textContent =
+        lastPlayer2Note;
     }
   }
 
   checkGameOver() {
     // Check if the game is over
-    if (this.currentState.board.gameOver()) {
+    if (
+      this.currentState.board.gameOver() ||
+      this.player1GaveUp ||
+      this.player2GaveUp
+    ) {
       // Remove current player highlight
       this.removePlayerHighlight(this.currentState.board.currentPlayer);
       this.removePlayerHighlight(3 - this.currentState.board.currentPlayer);
@@ -755,7 +779,10 @@ class Game {
     console.log("[GAME OVER?]", this.currentState.board.gameOver());
 
     // Storing a Variable to determine if the game is over (Might be helpful for the forfeit scenarios)
-    var isGameOver = this.currentState.board.gameOver();
+    var isGameOver =
+      this.currentState.board.gameOver() ||
+      this.player1GaveUp ||
+      this.player2GaveUp;
 
     if (!isGameOver) {
       // Get the phase of the current player

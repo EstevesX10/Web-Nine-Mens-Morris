@@ -41,38 +41,47 @@
   border-style: ridge;
   border-width: calc(var(--lineThickness) / 1.5);
   border-radius: 8px;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.6s ease-in-out;
   z-index: 1;
 }
 
 .game-winner.active-player0 {
   background-color: var(--pointBorderColor);
-  border: var(--squareColor);
+  border: 2px solid transparent;
   opacity: 1;
+  transition: all 0.5s ease-in-out;
 }
 
 .game-winner.active-player0:hover {
   box-shadow: 0 0 30px var(--pointColor);
+  border-color: var(--squareColor);
+  border-width: 2px;
 }
 
 .game-winner.active-player1 {
   background-color: var(--player1Color);
-  border: var(--player1SelectedPoint);
+  border: 2px solid transparent;
   opacity: 1;
+  transition: all 0.5s ease-in-out;
 }
 
 .game-winner.active-player1:hover {
   box-shadow: 0 0 30px var(--player1PossibleMovesColor);
+  border-color: var(--player1SelectedPoint);
+  border-width: 2px;
 }
 
 .game-winner.active-player2 {
   background-color: var(--player2Color);
-  border: var(--player2SelectedPoint);
+  border: 2px solid transparent;
   opacity: 1;
+  transition: all 0.5s ease-in-out;
 }
 
-.game-winner.active-player2 {
+.game-winner.active-player2:hover {
   box-shadow: 0 0 30px var(--player2PossibleMovesColor);
+  border-color: var(--player2SelectedPoint);
+  border-width: 2px;
 }
 
 .board-container {
@@ -384,21 +393,21 @@
   top: 85%;
   height: max-content;
   width: 45%;
-  color: var(--pointColor);
-  font-weight: bold;
-  letter-spacing: 0.1rem;
-  text-align: center;
   align-items: center;
   justify-content: center;
   padding: 10px;
   white-space: pre;
   border-radius: 10px;
-  border-width: calc(var(--lineThickness) / 1.5);
-  border-style: ridge;
+  border: 2px solid transparent;
+  opacity: 1;
   cursor: pointer;
-  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out,
-    box-shadow 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   z-index: 3;
+}
+
+.player1-give-up-btn:hover,
+.player2-give-up-btn:hover {
+  width: 48%;
 }
 
 .player1-give-up-btn {
@@ -407,8 +416,6 @@
 }
 
 .player1-give-up-btn:hover {
-  transform: scale(1.05);
-  /* background-color: var(--player1SelectedPoint); */
   box-shadow: 0 0 10px var(--player1PossibleMovesColor);
 }
 
@@ -418,9 +425,14 @@
 }
 
 .player2-give-up-btn:hover {
-  transform: scale(1.05);
-  /* background-color: var(--player2SelectedPoint); */
-  box-shadow: 0 0 10px var(--player2PossibleMovesColor);
+  box-shadow: 0 0 10px var(--player1PossibleMovesColor);
+}
+
+.give-up-text {
+  color: var(--pointColor);
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  text-align: center;
 }
 
 /* Board Related Elements */

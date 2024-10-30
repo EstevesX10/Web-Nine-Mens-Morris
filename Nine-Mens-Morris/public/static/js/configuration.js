@@ -78,7 +78,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Update the game state
     board = new Board(savedBoardSize, savedFirstPlayer);
     gameState = new State(board);
-    game = new Game(gameState);
+
+    // Check for the Game Opponent
+    if (savedOpponent === "ai") {
+      game = new Game(gameState, savedAiLevel);
+    } else {
+      game = new Game(gameState, 0);
+    }
     // console.log(gameState)
   }
 });
