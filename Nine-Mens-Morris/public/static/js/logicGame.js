@@ -341,7 +341,42 @@ class Board {
   }
 
   getValidActions() {
-    throw new Error("TODO: return valid actions");
+    if (this.millFormed) {
+      // Every enemy piece can be destroyed
+      return this.board
+        .map((v, i) =>
+          // This is ridiculous...
+          v === this.getOpponent(this.currentPlayer)
+            ? new DestroyAction(i, this.currentPlayer)
+            : null
+        )
+        .filter((item) => item !== null); // Filter out null values
+    }
+
+    if (this.getPlayerPhase(this.currentPlayer) === "placing") {
+      // Can place piece in every available slot
+      return this.board
+        .map((v, i) =>
+          v === 0 ? new PlaceAction(i, this.currentPlayer) : null
+        )
+        .filter((item) => item !== null); // Filter out null values
+    }
+
+    return this.board
+      .map((v, i) => {
+        if (v === this.currentPlayer) {
+          const candidateDestinations =
+            this.getPlayerPhase(this.currentPlayer) === "flying"
+              ? this.board // Can move anywhere
+              : NEIGHBOR_TABLE[i]; // Can move to neighbors
+          return candidateDestinations
+            .filter((neighbor_i) => this.board[neighbor_i] == 0)
+            .map((to) => new MoveAction(i, to, this.currentPlayer));
+        } else {
+          return null;
+        }
+      })
+      .filter((item) => item !== null); // Filter out null values
   }
 }
 
