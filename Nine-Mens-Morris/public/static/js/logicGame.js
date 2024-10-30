@@ -70,6 +70,7 @@ class PlaceAction {
     // Check for mills [If there is a mill we do not change player. We do it otherwise]
     if (!gameBoard.checkMillFormed(this.pos, this.player)) {
       gameBoard.switchPlayer();
+      this.switchedPlayer = true;
     } else {
       gameBoard.millFormed = true;
     }
@@ -367,16 +368,33 @@ class Board {
         if (v === this.currentPlayer) {
           const candidateDestinations =
             this.getPlayerPhase(this.currentPlayer) === "flying"
-              ? this.board // Can move anywhere
+              ? Array.from({ length: this.board.length }, (_, index) => index) // Can move anywhere
               : NEIGHBOR_TABLE[i]; // Can move to neighbors
           return candidateDestinations
-            .filter((neighbor_i) => this.board[neighbor_i] == 0)
+            .filter((neighbor_i) => this.board[neighbor_i] === 0)
             .map((to) => new MoveAction(i, to, this.currentPlayer));
         } else {
           return null;
         }
       })
-      .filter((item) => item !== null); // Filter out null values
+      .filter((item) => item !== null) // Filter out null values
+      .flat();
+  }
+
+  /// Get game result
+  /// 0 - Not terminal continue game
+  /// 1 - Player_1 wins
+  /// 2 - Player_2 wins
+  /// 3 - Draw
+  isTerminal() {
+    if (this.gameOver()) {
+      let winner = this.getWinner();
+      if (winner === 0) {
+        winner = 3;
+      }
+      return winner;
+    }
+    return 0;
   }
 }
 
@@ -400,12 +418,12 @@ class State {
   // Returns False if there was no previous action
   undo(action) {
     if (this.cur_hist == 0) {
-      return False;
+      return false;
     }
 
     this.cur_hist -= 1;
     this.history[this.cur_hist].undo(this.board);
-    return True;
+    return true;
   }
 }
 
