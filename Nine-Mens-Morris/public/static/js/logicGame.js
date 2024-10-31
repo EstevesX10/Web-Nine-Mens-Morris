@@ -58,7 +58,7 @@ class PlaceAction {
     // Update the number of placed pieces of the player
     gameBoard.placedPieces[this.player]++;
 
-    this.previousPhase = gameBoard.playerPieces[this.player];
+    this.previousPhase = gameBoard.gamePhase[this.player];
     if (
       // Checks if we changed from the current phase
       gameBoard.placedPieces[this.player] >= gameBoard.playerPieces[this.player]
@@ -133,8 +133,9 @@ class DestroyAction {
     gameBoard.placedPieces[gameBoard.getOpponent(this.player)]++;
 
     // Update player phase
-    gameBoard.gamePhase[gameBoard.getOpponent(this.player)] =
-      this.previousPhase;
+    gameBoard.gamePhase[
+      gameBoard.getOpponent(this.player)
+    ] = this.previousPhase;
 
     // Switch Player
     gameBoard.switchPlayer();
@@ -500,11 +501,13 @@ class Game {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(`player${player}-notes`).textContent =
-        lastPlayer1Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = lastPlayer1Note;
     } else {
-      document.getElementById(`player${player}-notes`).textContent =
-        lastPlayer2Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = lastPlayer2Note;
     }
   }
 
