@@ -1,3 +1,33 @@
+MILLS = [
+  // Horizontal
+  [0, 1, 2],
+  [5, 6, 7],
+  [8, 9, 10],
+  [13, 14, 15],
+  [16, 17, 18],
+  [21, 22, 23],
+  [3, 11, 19],
+  [4, 12, 20],
+  [24, 25, 26],
+  [29, 30, 31],
+  [11, 19, 27],
+  [12, 20, 28],
+
+  // Vertical
+  [0, 3, 5],
+  [2, 4, 7],
+  [8, 11, 13],
+  [10, 12, 15],
+  [16, 19, 21],
+  [18, 20, 23],
+  [1, 9, 17],
+  [6, 14, 22],
+  [24, 27, 29],
+  [26, 28, 31],
+  [9, 17, 25],
+  [14, 22, 30],
+];
+
 // Adjancency List for the possible moves
 const NEIGHBOR_TABLE = {
   0: [1, 3],
@@ -247,86 +277,7 @@ class Board {
   }
 
   checkMillFormed(point, player) {
-    // TODO: tenho *quase* a certeza q basta usar o mills de tamanho 4 e vai funcionar na msm
-    var mills;
-    // Possible mills for a 2 square game
-    if (this.boardSize === 2) {
-      mills = [
-        // Horizontal
-        [0, 1, 2],
-        [5, 6, 7],
-        [8, 9, 10],
-        [13, 14, 15],
-
-        // Vertical
-        [0, 3, 5],
-        [2, 4, 7],
-        [8, 11, 13],
-        [10, 12, 15],
-      ];
-    }
-
-    // Possible mills for a 3 square game
-    else if (this.boardSize === 3) {
-      mills = [
-        // Horizontal
-        [0, 1, 2],
-        [5, 6, 7],
-        [8, 9, 10],
-        [13, 14, 15],
-        [16, 17, 18],
-        [21, 22, 23],
-        [3, 11, 19],
-        [4, 12, 20],
-
-        // Vertical
-        [0, 3, 5],
-        [2, 4, 7],
-        [8, 11, 13],
-        [10, 12, 15],
-        [16, 19, 21],
-        [18, 20, 23],
-        [1, 9, 17],
-        [6, 14, 22],
-      ];
-    }
-
-    // Possible mills for a 4 square game
-    else {
-      mills = [
-        // Horizontal
-        [0, 1, 2],
-        [5, 6, 7],
-        [8, 9, 10],
-        [13, 14, 15],
-        [16, 17, 18],
-        [21, 22, 23],
-        [3, 11, 19],
-        [4, 12, 20],
-        [24, 25, 26],
-        [29, 30, 31],
-        [11, 19, 27],
-        [12, 20, 28],
-
-        // Vertical
-        [0, 3, 5],
-        [2, 4, 7],
-        [8, 11, 13],
-        [10, 12, 15],
-        [16, 19, 21],
-        [18, 20, 23],
-        [1, 9, 17],
-        [6, 14, 22],
-        [24, 27, 29],
-        [26, 28, 31],
-        [9, 17, 25],
-        [14, 22, 30],
-      ];
-    }
-
-    console.log(mills);
-
-    return mills.some(
+    return MILLS.some(
       (mill) =>
         mill.includes(point) && mill.every((pos) => this.board[pos] === player)
     );
