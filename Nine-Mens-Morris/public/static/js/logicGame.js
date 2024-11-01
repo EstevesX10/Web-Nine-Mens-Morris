@@ -293,6 +293,8 @@ class Board {
   }
 
   getValidActions() {
+    if (this.gameOver()) return [];
+
     if (this.millFormed) {
       // Every enemy piece can be destroyed
       return this.board
@@ -496,16 +498,16 @@ class Game {
     }
   }
 
-  addPiece(player, indexToAdd, pointToAdd) {
+  addPiece(action) {
+    const player = action.player;
+    const indexToAdd = action.pos;
+    const pointToAdd = this.getPointFromIndex(indexToAdd);
+
     // Remove a piece from the pieces container
     this.usePiece(player);
 
     // Adds the selected player class to the HTML
     pointToAdd.classList.add(`point-player${player}`);
-
-    // Perform the placing action
-    var action = new PlaceAction(indexToAdd, player);
-    this.currentState.execute(action);
 
     // Check if the game phase was changed
     if (this.currentState.board.getPlayerPhase(player) === "moving") {
@@ -529,121 +531,73 @@ class Game {
     this.checkGameOver();
   }
 
-  removeEnemyPiece(player, indexToRemove, pointToRemove) {
-    // Get Opponent
-    var opponent = this.currentState.board.getOpponent(player);
+  removeEnemyPiece(action) {
+    // Get player and Opponent
+    const player = action.player;
+    const opponent = this.currentState.board.getOpponent(player);
 
-    // Check if the piece to remove corresponds to a opponent piece
-    if (this.currentState.board.board[indexToRemove] === opponent) {
-      // Remove highlights of the pieces that could have been removed
-      this.removeHighlightPossiblePieceRemovals(player);
+    let pointToRemove = this.getPointFromIndex(action.pos);
 
-      // Update the current player highlighting
-      this.switchPlayerHighlight(player);
+    // Remove highlights of the pieces that could have been removed
+    this.removeHighlightPossiblePieceRemovals(player);
 
-      // If selected, remove the selection
-      pointToRemove.classList.remove("point-player1");
-      pointToRemove.classList.remove("point-player2");
+    // Update the current player highlighting
+    this.switchPlayerHighlight(player);
 
-      // Perform the action
-      var action = new DestroyAction(indexToRemove, player);
-      this.currentState.execute(action);
+    // If selected, remove the selection
+    pointToRemove.classList.remove("point-player1");
+    pointToRemove.classList.remove("point-player2");
 
-      // Go back to the player's previous directive since a piece was already removed
-      this.getPlayerLastMessage(player);
+    // Go back to the player's previous directive since a piece was already removed
+    this.getPlayerLastMessage(player);
 
-      // Check if the opponent has 3 pieces [Has transitioned into a flying phase]
-      if (this.currentState.board.getPlayerPhase(opponent) === "flying") {
-        // Update the opponent game phase
-        this.updatePlayerInfo(opponent, "Flying Phase", "Fly a Piece");
-      }
-
-      // Check if the game is over
-      this.checkGameOver();
+    // Check if the opponent has 3 pieces [Has transitioned into a flying phase]
+    if (this.currentState.board.getPlayerPhase(opponent) === "flying") {
+      // Update the opponent game phase
+      this.updatePlayerInfo(opponent, "Flying Phase", "Fly a Piece");
     }
+
+    // Check if the game is over
+    this.checkGameOver();
   }
 
-  movePiece(player, playerPhase, indexToMoveTo, pointToMoveTo) {
-    // Check if any piece was previously selected
-    if (selectedPoints.length > 0) {
-      // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
-      var initialIndex = selectedPoints[0][1];
-      var initialPoint = selectedPoints[0][0];
+  movePiece(action) {
+    const player = action.player;
+    const initialIndex = action.from;
+    const indexToMoveTo = action.to;
 
-      // Check if the final place is empty
-      if (this.currentState.board.getPiece(indexToMoveTo) === 0) {
-        // Check if a movement is valid
-        if (
-          this.currentState.board.isAdjacent(initialIndex, indexToMoveTo) ||
-          playerPhase === "flying"
-        ) {
-          // Remove the styling of the initial point [In the HTML]
-          initialPoint.classList.remove(
-            `point-player${player}`,
-            `selected-point-player${player}`
-          );
+    const initialPoint = selectedPoints[0][0];
+    const pointToMoveTo = this.getPointFromIndex(indexToMoveTo);
 
-          // Adds the point to the new place [In HTML]
-          pointToMoveTo.classList.add(`point-player${player}`);
+    // Remove the styling of the initial point [In the HTML]
+    initialPoint.classList.remove(
+      `point-player${player}`,
+      `selected-point-player${player}`
+    );
 
-          // Perform the action
-          var action = new MoveAction(initialIndex, indexToMoveTo, player);
-          this.currentState.execute(action);
+    // Adds the point to the new place [In HTML]
+    pointToMoveTo.classList.add(`point-player${player}`);
 
-          // Check if a mill was formed
-          if (this.currentState.board.millFormed) {
-            // Highlight possible pieces to remove
-            this.highlightPossiblePieceRemovals(player);
+    // Check if a mill was formed
+    if (this.currentState.board.millFormed) {
+      // Highlight possible pieces to remove
+      this.highlightPossiblePieceRemovals(player);
 
-            // Inform that he has made a mill [Change player notes]
-            this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
-          } else {
-            // A Mill was not formed and therefore the current player switches
-            this.switchPlayerHighlight(player);
-          }
-
-          // Define a new and clean Array
-          selectedPoints = [];
-
-          // Remove highlight from the possible moves
-          this.removeHighlightPossibleMoves(player, initialIndex);
-
-          // Check if the game is over
-          this.checkGameOver();
-        } else {
-          // The target place is not considered to be a valid move
-          // Clear Previously Selected Piece
-          selectedPoints = [];
-
-          // Removes a highlight of the selected piece
-          initialPoint.classList.remove(`selected-point-player${player}`);
-
-          // Remove highlight from the possible moves
-          this.removeHighlightPossibleMoves(player, initialIndex);
-        }
-      } else {
-        console.log("OCUPADO MEUUU!!!");
-        console.log(this.currentState.board.board);
-      }
+      // Inform that he has made a mill [Change player notes]
+      this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
     } else {
-      // We are selecting the initial piece
-      // Check if the selected piece is valid
-      if (player === this.currentState.board.getPiece(indexToMoveTo)) {
-        // Saves the selected point
-        selectedPoints.push([pointToMoveTo, indexToMoveTo]);
-
-        // Adds a highlight to the piece to better visualize the one selected
-        pointToMoveTo.classList.add(`selected-point-player${player}`);
-
-        // Add a highlight for every possible move
-        this.highlightPossibleMoves(player, indexToMoveTo);
-      } else {
-        // Clear Previously Selected Piece
-        selectedPoints = [];
-
-        console.log("WRONG Point SELECTED!");
-      }
+      // A Mill was not formed and therefore the current player switches
+      this.switchPlayerHighlight(player);
     }
+
+    // Define a new and clean Array
+    selectedPoints = [];
+
+    // Remove highlight from the possible moves
+    this.removeHighlightPossibleMoves(player, initialIndex);
+
+    // Check if the game is over
+    this.checkGameOver();
   }
 
   highlightPossibleMoves(player, indexToHighlight) {
@@ -747,7 +701,7 @@ class Game {
   }
 
   // Check valid movement
-  handlePointClick(point, index) {
+  handlePointClick2(point, index) {
     console.log("[GAME OVER?]", this.currentState.board.gameOver());
 
     // Storing a Variable to determine if the game is over (Might be helpful for the forfeit scenarios)
@@ -799,5 +753,145 @@ class Game {
         console.log("DEU MERDA!");
       }
     }
+  }
+
+  chooseAction(index) {
+    const currentPlayer = this.currentState.board.getCurrentPlayer();
+
+    // Get the phase of the current player
+    const currentPlayerPhase = this.currentState.board.getPlayerPhase(
+      currentPlayer
+    );
+
+    // Check if a Mill was formed
+    if (this.currentState.board.millFormed) {
+      // Get Current Player
+      return new DestroyAction(index, currentPlayer);
+    }
+
+    // Separate the movements based on the current game phase of the player
+    else if (currentPlayerPhase === "placing") {
+      // Check if it is a empty space
+      if (this.currentState.board.getPiece(index) === 0) {
+        // Add a piece
+        return new PlaceAction(index, currentPlayer);
+      } else {
+        console.log("OCUPADO MEUUU!!!");
+        console.log(this.currentState.board.board);
+      }
+    }
+    // Check if the current player phase corresponds to moving or flying
+    else if (
+      currentPlayerPhase === "moving" ||
+      currentPlayerPhase === "flying"
+    ) {
+      // Check if any piece was previously selected
+      if (selectedPoints.length > 0) {
+        // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
+        const initialPoint = selectedPoints[0][0];
+        const initialIndex = selectedPoints[0][1];
+
+        // Check if the final place is empty
+        if (this.currentState.board.getPiece(index) === 0) {
+          // Check if a movement is valid
+          if (
+            this.currentState.board.isAdjacent(initialIndex, index) ||
+            currentPlayerPhase === "flying"
+          ) {
+            // Perform the action
+            return new MoveAction(initialIndex, index, currentPlayer);
+          } else {
+            // The target place is not considered to be a valid move
+            // Clear Previously Selected Piece
+            selectedPoints = [];
+
+            // Removes a highlight of the selected piece
+            initialPoint.classList.remove(
+              `selected-point-player${currentPlayer}`
+            );
+
+            // Remove highlight from the possible moves
+            this.removeHighlightPossibleMoves(currentPlayer, initialIndex);
+          }
+        } else {
+          console.log("OCUPADO MEUUU!!!");
+          console.log(this.currentState.board.board);
+        }
+      } else {
+        // We are selecting the initial piece
+        // Check if the selected piece is valid
+        if (currentPlayer === this.currentState.board.getPiece(index)) {
+          // Saves the selected point
+          const pointToMoveTo = this.getPointFromIndex(index);
+          selectedPoints.push([pointToMoveTo, index]);
+
+          // Adds a highlight to the piece to better visualize the one selected
+          pointToMoveTo.classList.add(`selected-point-player${currentPlayer}`);
+
+          // Add a highlight for every possible move
+          this.highlightPossibleMoves(currentPlayer, index);
+        } else {
+          // Clear Previously Selected Piece
+          selectedPoints = [];
+
+          console.log("WRONG Point SELECTED!");
+        }
+      }
+    } else {
+      console.log("DEU MERDA!");
+    }
+
+    return null;
+  }
+
+  updateDOM(action) {
+    if (action instanceof DestroyAction) {
+      this.removeEnemyPiece(action);
+    } else if (action instanceof MoveAction) {
+      this.movePiece(action);
+    } else if (action instanceof PlaceAction) {
+      this.addPiece(action);
+    } else {
+      console.log("[!] invalid action", action);
+    }
+  }
+
+  async handlePointClick(point, index) {
+    const isGameOver =
+      this.currentState.board.gameOver() ||
+      this.player1GaveUp ||
+      this.player2GaveUp;
+
+    if (isGameOver) {
+      return;
+    }
+
+    const action = this.chooseAction(index);
+    if (action === null) {
+      return;
+    }
+    this.currentState.execute(action);
+
+    this.updateDOM(action);
+
+    // Dont block everything
+    await new Promise((r) => setTimeout(r, 0));
+
+    if (this.levelAI != 0) {
+      const aiAction = executeMinimaxMove(
+        heuristic1,
+        this.levelAI
+      )(this.currentState);
+      this.currentState.execute(aiAction);
+
+      this.updateDOM(action);
+    }
+  }
+
+  getPointFromIndex(index) {
+    return boardContainer.childNodes
+      .values()
+      .filter((v) => v.classList[0] === "point")
+      .toArray()[index];
   }
 }
