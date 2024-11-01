@@ -47,7 +47,7 @@ Nine men's morris [Strategy board game for two players] Implementation
 ## Authorship
 
 - **Authors** &#8594; [Gonçalo Esteves](https://github.com/EstevesX10), [Nuno Gomes](https://github.com/NightF0x26) and [Pedro Afonseca](https://github.com/PsuperX)
-- **Course** &#8594; Web Technologies [[CC3043](https://sigarra.up.pt/fcup/en/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=548310)]
+- **Course** &#8594; Web Technologies [[CC3008](https://sigarra.up.pt/fcup/en/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=548310)]
 - **University** &#8594; Faculty of Sciences, University of Porto
 
 <div align="right">
