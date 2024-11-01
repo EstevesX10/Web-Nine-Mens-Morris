@@ -73,6 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const player2Phase = document.querySelector(`#player2-phase`);
     player2Phase.textContent = "Placing Phase";
 
+    const winnerContainer = document.querySelector(".game-winner");
+    winnerContainer.classList.remove(`active-player1`);
+    winnerContainer.classList.remove(`active-player2`);
+
     // Update the game state
     board = new Board(savedBoardSize, savedFirstPlayer);
     gameState = new State(board);
