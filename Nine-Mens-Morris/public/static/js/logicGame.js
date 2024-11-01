@@ -147,7 +147,10 @@ class DestroyAction {
 
     // Check if the current player has transitioned into the flying phase
     this.previousPhase = gameBoard.gamePhase[gameBoard.currentPlayer];
-    if (gameBoard.playerPieces[gameBoard.currentPlayer] === 3) {
+    if (
+      gameBoard.playerPieces[gameBoard.currentPlayer] === 3 &&
+      gameBoard.getPlayerPhase(gameBoard.currentPlayer) !== "placing"
+    ) {
       // Update the game phase
       gameBoard.gamePhase[gameBoard.currentPlayer] = "flying";
     }
@@ -566,7 +569,7 @@ class Game {
     const initialIndex = action.from;
     const indexToMoveTo = action.to;
 
-    const initialPoint = selectedPoints[0][0];
+    const initialPoint = this.getPointFromIndex(initialIndex);
     const pointToMoveTo = this.getPointFromIndex(indexToMoveTo);
 
     // Remove the styling of the initial point [In the HTML]
@@ -701,6 +704,7 @@ class Game {
   }
 
   // Check valid movement
+  // TODO: remove
   handlePointClick2(point, index) {
     console.log("[GAME OVER?]", this.currentState.board.gameOver());
 
@@ -764,8 +768,10 @@ class Game {
     );
 
     // Check if a Mill was formed
-    if (this.currentState.board.millFormed) {
-      // Get Current Player
+    if (
+      this.currentState.board.millFormed &&
+      this.currentState.board.getPiece(index) === 3 - currentPlayer
+    ) {
       return new DestroyAction(index, currentPlayer);
     }
 
@@ -866,6 +872,10 @@ class Game {
       return;
     }
 
+    if (this.levelAI !== 0 && this.currentState.board.currentPlayer === 2) {
+      return;
+    }
+
     const action = this.chooseAction(index);
     if (action === null) {
       return;
@@ -875,16 +885,16 @@ class Game {
     this.updateDOM(action);
 
     // Dont block everything
-    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 750));
 
-    if (this.levelAI != 0) {
+    if (this.levelAI != 0 && this.currentState.board.currentPlayer === 2) {
       const aiAction = executeMinimaxMove(
         heuristic1,
         this.levelAI
       )(this.currentState);
       this.currentState.execute(aiAction);
 
-      this.updateDOM(action);
+      this.updateDOM(aiAction);
     }
   }
 

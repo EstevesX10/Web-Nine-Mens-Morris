@@ -33,9 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Load a Board based on the configuration (Default or previously saved)
   function loadBoard() {
     const savedBoardSize = parseInt(localStorage.getItem("boardSize") || "2");
-    const savedOpponent = parseInt(
-      localStorage.getItem("opponent", "ai") || "ai"
-    );
+    const savedOpponent = localStorage.getItem("opponent", "ai") || "ai";
     const savedFirstPlayer = parseInt(
       localStorage.getItem("firstPlayer", "1") || "1"
     );

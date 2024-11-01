@@ -40,8 +40,7 @@ function executeMinimaxMove(evaluateFunc, depth) {
     }
 
     const randomMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
-    state.execute(randomMove);
-    return true;
+    return randomMove;
   };
 }
 
