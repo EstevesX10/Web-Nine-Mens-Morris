@@ -12,7 +12,7 @@ function executeMinimaxMove(evaluateFunc, depth) {
       return actions[0];
     }
 
-    const player = state.board.nextPlayer;
+    const player = state.board.currentPlayer;
     for (const move of actions) {
       state.execute(move);
       const newStateEval = minimax(
