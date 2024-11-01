@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     winnerContainer.classList.remove(`active-player2`);
 
     const player2GiveUp = document.querySelector(".player2-give-up-btn");
+    const player2Name = document.querySelector("#player2-name");
 
     // Update the game state
     board = new Board(savedBoardSize, savedFirstPlayer);
@@ -88,10 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
       game = new Game(gameState, savedAiLevel);
 
       player2GiveUp.style.display = "none";
+      if (savedFirstPlayer === 2) {
+        game.doAiMove(); // Trigger AI first move
+      }
+
+      player2Name.textContent = "AI";
     } else {
       game = new Game(gameState, 0);
 
       player2GiveUp.style.display = "";
+      player2Name.textContent = "Player 2";
     }
     // console.log(gameState)
   }

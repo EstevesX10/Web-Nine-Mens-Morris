@@ -835,6 +835,10 @@ class Game {
 
     this.updateDOM(action);
 
+    await this.doAiMove();
+  }
+
+  async doAiMove() {
     while (this.levelAI !== 0 && this.currentState.board.currentPlayer === 2) {
       const isGameOver =
         this.currentState.board.gameOver() ||

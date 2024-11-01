@@ -9,8 +9,7 @@ function executeMinimaxMove(evaluateFunc, depth) {
 
     if (actions.length === 1) {
       // There isn't much to do and this can take a long time
-      state.execute(actions[0]);
-      return true;
+      return actions[0];
     }
 
     const player = state.board.nextPlayer;
