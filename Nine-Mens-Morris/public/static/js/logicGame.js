@@ -884,10 +884,19 @@ class Game {
 
     this.updateDOM(action);
 
-    // Dont block everything
-    await new Promise((r) => setTimeout(r, 750));
-
     while (this.levelAI !== 0 && this.currentState.board.currentPlayer === 2) {
+      const isGameOver =
+        this.currentState.board.gameOver() ||
+        this.player1GaveUp ||
+        this.player2GaveUp;
+
+      if (isGameOver) {
+        return;
+      }
+
+      // wait a bit but dont block everything
+      await new Promise((r) => setTimeout(r, 750));
+
       const aiAction = executeMinimaxMove(
         heuristic1,
         this.levelAI
@@ -895,9 +904,6 @@ class Game {
       this.currentState.execute(aiAction);
 
       this.updateDOM(aiAction);
-
-      // Dont block everything
-      await new Promise((r) => setTimeout(r, 750));
     }
   }
 
