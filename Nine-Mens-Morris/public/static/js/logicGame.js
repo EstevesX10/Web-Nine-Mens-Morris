@@ -887,7 +887,7 @@ class Game {
     // Dont block everything
     await new Promise((r) => setTimeout(r, 750));
 
-    if (this.levelAI != 0 && this.currentState.board.currentPlayer === 2) {
+    while (this.levelAI !== 0 && this.currentState.board.currentPlayer === 2) {
       const aiAction = executeMinimaxMove(
         heuristic1,
         this.levelAI
@@ -895,6 +895,9 @@ class Game {
       this.currentState.execute(aiAction);
 
       this.updateDOM(aiAction);
+
+      // Dont block everything
+      await new Promise((r) => setTimeout(r, 750));
     }
   }
 
