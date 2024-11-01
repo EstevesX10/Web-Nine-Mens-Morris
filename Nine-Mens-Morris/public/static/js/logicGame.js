@@ -395,7 +395,11 @@ class Game {
     const player2GiveUpButton = document.querySelector(".player2-give-up-btn");
 
     player1GiveUpButton.addEventListener("click", () => {
-      if (!this.player1GaveUp && !this.player2GaveUp) {
+      if (
+        !this.player1GaveUp &&
+        !this.player2GaveUp &&
+        !this.currentState.board.gameOver()
+      ) {
         this.player1GaveUp = true;
         this.triggerWinnerContainer(2);
         console.log("PLAYER 1 GAVE UP");
@@ -403,7 +407,11 @@ class Game {
     });
 
     player2GiveUpButton.addEventListener("click", () => {
-      if (!this.player1GaveUp && !this.player2GaveUp) {
+      if (
+        !this.player1GaveUp &&
+        !this.player2GaveUp &&
+        !this.currentState.board.gameOver()
+      ) {
         this.player2GaveUp = true;
         this.triggerWinnerContainer(1);
         console.log("PLAYER 2 GAVE UP");
@@ -703,62 +711,6 @@ class Game {
     winnerTxt.textContent = Txt;
   }
 
-  // Check valid movement
-  // TODO: remove
-  handlePointClick2(point, index) {
-    console.log("[GAME OVER?]", this.currentState.board.gameOver());
-
-    // Storing a Variable to determine if the game is over (Might be helpful for the forfeit scenarios)
-    var isGameOver =
-      this.currentState.board.gameOver() ||
-      this.player1GaveUp ||
-      this.player2GaveUp;
-
-    if (!isGameOver) {
-      // Get the phase of the current player
-      var currentPlayerPhase = this.currentState.board.getPlayerPhase(
-        this.currentState.board.currentPlayer
-      );
-
-      // Check if a Mill was formed
-      if (this.currentState.board.millFormed) {
-        // Get Current Player
-        var currentPlayer = this.currentState.board.getCurrentPlayer();
-
-        // Remove Enemy Piece with the necessary adjustments to the UI
-        this.removeEnemyPiece(currentPlayer, index, point);
-      }
-
-      // Separate the movements based on the current game phase of the player
-      else if (currentPlayerPhase === "placing") {
-        // Get the current Player - The one to perform a action
-        var currentPlayer = this.currentState.board.currentPlayer;
-
-        // Check if it is a empty space
-        if (this.currentState.board.getPiece(index) === 0) {
-          // Add a piece
-          this.addPiece(currentPlayer, index, point);
-        } else {
-          console.log("OCUPADO MEUUU!!!");
-          console.log(this.currentState.board.board);
-        }
-      }
-      // Check if the current player phase corresponds to moving or flying
-      else if (
-        currentPlayerPhase === "moving" ||
-        currentPlayerPhase === "flying"
-      ) {
-        // Get Current Player
-        var currentPlayer = this.currentState.board.currentPlayer;
-
-        // Move Piece
-        this.movePiece(currentPlayer, currentPlayerPhase, index, point);
-      } else {
-        console.log("DEU MERDA!");
-      }
-    }
-  }
-
   chooseAction(index) {
     const currentPlayer = this.currentState.board.getCurrentPlayer();
 
@@ -768,11 +720,10 @@ class Game {
     );
 
     // Check if a Mill was formed
-    if (
-      this.currentState.board.millFormed &&
-      this.currentState.board.getPiece(index) === 3 - currentPlayer
-    ) {
-      return new DestroyAction(index, currentPlayer);
+    if (this.currentState.board.millFormed) {
+      if (this.currentState.board.getPiece(index) === 3 - currentPlayer) {
+        return new DestroyAction(index, currentPlayer);
+      }
     }
 
     // Separate the movements based on the current game phase of the player
