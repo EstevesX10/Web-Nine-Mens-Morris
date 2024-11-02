@@ -86,13 +86,12 @@
 
 .board-container {
   position: absolute;
-  display: flex;
-  top: 28%;
-  left: 6.725%;
+  height: auto;
   width: 100%;
+  top: calc((100% - var(--largestSquareSize)) / 2 + 2%);
+  left: calc((100% - var(--largestSquareSize)) / 2);
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
 }
 
 /* Player Sections inside the Game Layout */
@@ -512,19 +511,4 @@
   border: var(--lineThickness) solid var(--lineColor);
   background-color: var(--squareColor);
   align-self: center;
-}
-
-.small-square {
-  width: 150px;
-  height: 150px;
-}
-
-.medium-square {
-  width: 300px;
-  height: 300px;
-}
-
-.large-square {
-  width: 450px;
-  height: 450px;
 }

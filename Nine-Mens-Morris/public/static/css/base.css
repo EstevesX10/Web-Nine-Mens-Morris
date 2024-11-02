@@ -10,6 +10,7 @@
   --backgroundImage: url("../images/Dunes.jpg");
   --spaceBetweenButtons: 20px;
   --spaceEnd: 40px;
+  --largestSquareSize: 280px;
 
   /* Rules */
   --mainSliderBackgroundColor: #3e4f6d;
