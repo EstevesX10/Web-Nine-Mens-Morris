@@ -232,10 +232,11 @@
   color: #e4e4e4;
   font-weight: 500;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.5s ease-in-out;
 }
 
 .btn:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
 .form-box .login-register {
@@ -265,10 +266,11 @@
   text-align: left;
   margin: 15px;
   padding: 20px;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .account-box p:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .account-box button {

@@ -30,18 +30,29 @@ document.addEventListener("DOMContentLoaded", () => {
       password: password,
     });
 
+    // Update the name of the authentication button in the navigation bar
+    var authNavBtnName = document.getElementById("nav-btn-authentication");
+    authNavBtnName.classList.add("hidden");
+
+    // Set a timeout to proper showcase the animation of the username appearing in the nav bar
+    setTimeout(() => {
+      authNavBtnName.textContent = username;
+      authNavBtnName.classList.remove("hidden");
+    }, 750);
+
     logregBox.classList.remove("login");
     logregBox.classList.remove("register");
     logregBox.classList.add("account");
 
-    // Here, we could make an AJAX call or fetch request to send the data to a server.
+    // Here, we could make an AJAX call to request the data from a server.
 
     // Add the data into the account details section
     var accountUsername = document.getElementById("accountUsername");
-    console.log(username);
     accountUsername.textContent = username;
 
-    // Fetch EMAIL IN BACKEND
+    // [TODO] Fetch EMAIL IN BACKEND
+    var accountEmail = document.getElementById("accountEmail");
+    accountEmail.textContent = "None";
 
     var accountPassword = document.getElementById("accountPassword");
     accountPassword.textContent = password;
@@ -72,11 +83,21 @@ document.addEventListener("DOMContentLoaded", () => {
     var accountPassword = document.getElementById("accountPassword");
     accountPassword.textContent = password;
 
+    // Update the name of the authentication button in the navigation bar
+    var authNavBtnName = document.getElementById("nav-btn-authentication");
+    authNavBtnName.classList.add("hidden");
+
+    // Set a timeout to proper showcase the animation of the username appearing in the nav bar
+    setTimeout(() => {
+      authNavBtnName.textContent = username;
+      authNavBtnName.classList.remove("hidden");
+    }, 750);
+
     logregBox.classList.remove("login");
     logregBox.classList.remove("register");
     logregBox.classList.add("account");
 
-    // Similarly, you could send the data to a server here.
+    // [TODO] Send the data to a server here.
   });
 
   // [Logout] Register Form Submission
@@ -101,6 +122,16 @@ document.addEventListener("DOMContentLoaded", () => {
     logregBox.classList.remove("account");
     logregBox.classList.remove("register");
     logregBox.classList.add("login");
+
+    // Update the name of the authentication button in the navigation bar back to the original state
+    var authNavBtnName = document.getElementById("nav-btn-authentication");
+    authNavBtnName.classList.add("hidden");
+
+    // Set a timeout to show the nav button going back to the original state
+    setTimeout(() => {
+      authNavBtnName.textContent = "Sign In";
+      authNavBtnName.classList.remove("hidden");
+    }, 750);
 
     // Remove the account details from the HTML when logging out
     document.getElementById("accountUsername").textContent = "";

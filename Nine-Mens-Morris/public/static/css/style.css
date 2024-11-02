@@ -56,6 +56,15 @@ ul li:last-child {
 }
 
 .nav-btn {
+  opacity: 1;
+}
+
+.nav-btn.hidden {
+  opacity: 0;
+}
+
+.nav-btn,
+.nav-btn.hidden {
   position: relative;
   color: #fff;
   background-color: transparent;
@@ -64,9 +73,11 @@ ul li:last-child {
   border: none;
   cursor: pointer;
   z-index: 1;
+  transition: opacity 0.5s ease-in-out;
 }
 
-.nav-btn::after {
+.nav-btn::after,
+.nav-btn.hidden::after {
   content: "";
   position: absolute;
   left: 0;
@@ -80,7 +91,8 @@ ul li:last-child {
   transition: transform 0.3s;
 }
 
-.nav-btn:hover::after {
+.nav-btn:hover::after,
+.nav-btn.hidden:hover::after {
   transform-origin: left;
   transform: scaleX(1);
 }
