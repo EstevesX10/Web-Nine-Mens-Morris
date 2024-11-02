@@ -15,6 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
     logregBox.classList.add("login");
   });
 
+  function capitalize(input) {
+    return input.replace(/\b\w/g, function (match) {
+      return match.toUpperCase();
+    });
+  }
+
   // Login Form Submission
   const loginForm = document.getElementById("loginForm");
   loginForm.addEventListener("submit", (event) => {
@@ -36,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set a timeout to proper showcase the animation of the username appearing in the nav bar
     setTimeout(() => {
-      authNavBtnName.textContent = username;
+      authNavBtnName.textContent = capitalize(username);
       authNavBtnName.classList.remove("hidden");
     }, 750);
 
@@ -89,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set a timeout to proper showcase the animation of the username appearing in the nav bar
     setTimeout(() => {
-      authNavBtnName.textContent = username;
+      authNavBtnName.textContent = capitalize(username);
       authNavBtnName.classList.remove("hidden");
     }, 750);
 
