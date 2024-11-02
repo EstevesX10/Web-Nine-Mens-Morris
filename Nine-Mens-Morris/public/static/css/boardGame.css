@@ -114,6 +114,7 @@
   position: absolute;
   display: flex;
   top: 12%;
+  min-width: 15%;
   text-align: center;
   justify-content: center;
   padding: 10px;
