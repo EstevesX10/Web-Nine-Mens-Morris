@@ -33,15 +33,39 @@ class Leaderboard {
     });
   }
 
-  update_singleplayer(winner, difficulty, size) {
-    this.singleplayer[`${difficulty}_${size}`][winner - 1]++;
+  updateSingleplayer(winner, difficulty, size) {
+    const id = `${difficulty}_${size}`;
+    if (this.singleplayer[id] === undefined) {
+      this.singleplayer[id] = [0, 0];
+    }
+    this.singleplayer[id][winner - 1]++;
 
-    cell = document.query(".leaderboard-singleplayer");
-    cell.textContent = this.singleplayer[`${difficulty}_${size}`][winner - 1];
+    const cell =
+      document.getElementById(id) ||
+      this.generateRow(difficulty, size, ".leaderboard-singleplayer tbody");
+    cell.children[winner + 1].textContent = this.singleplayer[id][winner - 1];
   }
 
-  generate_row() {
-    // TODO: this
+  generateRow(difficulty, size, parentId) {
+    const rowElem = document.createElement("tr");
+    const confElem = document.createElement("td");
+    const aiElem = document.createElement("td");
+    const winElem = document.createElement("td");
+    const lossElem = document.createElement("td");
+
+    const children = [confElem, aiElem, winElem, lossElem];
+    children.forEach((element) => {
+      rowElem.appendChild(element);
+    });
+    const parent = document.querySelector(parentId);
+    parent.appendChild(rowElem);
+
+    rowElem.id = `${difficulty}_${size}`;
+    confElem.textContent = `${size} squares`;
+    aiElem.textContent = difficulty !== 0 ? difficulty : "pvp";
+    winElem.textContent = 0;
+    lossElem.textContent = 0;
+    return rowElem;
   }
 }
 
