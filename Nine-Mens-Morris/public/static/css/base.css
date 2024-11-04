@@ -41,11 +41,15 @@
   --player1Color: #34649c;
   --player1PossibleMovesColor: #a0c9e8;
   --player1SelectedPoint: #0e376d;
-  --activePlayer1Color: #6082b6;
+  --activePlayer1Color: #fff;
+  --player1BoardPieces: #0e376d;
 
   --player2Color: #cc3336;
   --player2PossibleMovesColor: #f08080;
   --player2SelectedPoint: #990303;
+  --activePlayer2Color: #990303;
+  --player2BoardPieces: #990303;
+
   --boardOffset: 25px;
 
   /* Configuration */

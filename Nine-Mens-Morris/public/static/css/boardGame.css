@@ -160,13 +160,15 @@
 .active-player1 {
   color: var(--pointColor);
   background-color: var(--player1SelectedPoint);
-  box-shadow: 0 0 20px var(--player1SelectedPoint);
+  box-shadow: -3px 3px 3px 3px var(--player1SelectedPoint),
+    0 0 40px var(--activePlayer1Color);
 }
 
 .active-player2 {
   color: var(--pointColor);
   background-color: var(--player2SelectedPoint);
-  box-shadow: 0 0 20px var(--player2SelectedPoint);
+  box-shadow: 0 0 20px var(--activePlayer2Color),
+    0 0 40px var(--activePlayer2Color);
 }
 
 .player1-current-phase,
@@ -326,13 +328,13 @@
 .player1-pieces-container {
   border: 50px var(--player1PossibleMovesColor);
   background-color: var(--player1Color);
-  box-shadow: 0 0 20px var(--player1SelectedPoint);
+  box-shadow: 0 0 20px var(--player1BoardPieces);
 }
 
 .player2-pieces-container {
   border: 50px var(--player2PossibleMovesColor);
   background-color: var(--player2Color);
-  box-shadow: 0 0 20px var(--player2SelectedPoint);
+  box-shadow: 0 0 20px var(--player2BoardPieces);
 }
 
 .player1-pieces-container div,
