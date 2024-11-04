@@ -46,3 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function enableNavItems(show) {
+  // Get all the Navigation Buttons
+  const navButtons = document.querySelectorAll(".nav-btn");
+
+  // Add event listeners to each one to keep track of their behaviour and which one is selected
+  navButtons.forEach((button) => {
+    if (button.getAttribute("data-target") !== "authentication") {
+      button.style.display = show ? "" : "none";
+    }
+  });
+}

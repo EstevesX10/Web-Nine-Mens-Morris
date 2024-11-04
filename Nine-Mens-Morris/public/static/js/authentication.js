@@ -62,6 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     var accountPassword = document.getElementById("accountPassword");
     accountPassword.textContent = password;
+
+    enableNavItems(true);
   });
 
   // Register Form Submission
@@ -143,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("accountUsername").textContent = "";
     document.getElementById("accountEmail").textContent = "";
     document.getElementById("accountPassword").textContent = "";
+
+    enableNavItems(false);
 
     // Send the data to a server here.
   });
