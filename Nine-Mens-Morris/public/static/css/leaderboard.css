@@ -117,7 +117,7 @@
 .leaderboard-multiplayer th,
 .leaderboard-multiplayer td {
   padding: 10px;
-  text-align: left;
+  text-align: center;
   border: none;
 }
 
@@ -129,7 +129,7 @@
 .leaderboard-singleplayer th:hover,
 .leaderboard-multiplayer th:hover {
   padding: 10px;
-  text-align: left;
+  text-align: center;
   color: white;
   transform: scale(1.1);
 }
