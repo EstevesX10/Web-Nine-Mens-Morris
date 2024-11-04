@@ -85,16 +85,36 @@
   transform: scaleX(1);
 }
 
+.leaderboard-multiplayer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.leaderboard-multiplayer::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 4px;
+}
+
+.leaderboard-multiplayer::-webkit-scrollbar-track {
+  background: red;
+}
+
+.leaderboard-multiplayer {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
 .leaderboard-singleplayer,
 .leaderboard-multiplayer {
   position: absolute;
   width: 100%;
-  top: 25%;
+  top: 30%;
+  max-height: 50%;
   border-radius: 10px;
   margin-top: 50px;
   margin-bottom: 20px;
   transition: opacity 0.5s ease-in-out;
   z-index: 3;
+  overflow-y: auto;
 }
 
 .leaderboard-singleplayer.hidden,
@@ -112,22 +132,37 @@
   border-spacing: 0;
 }
 
-.leaderboard-singleplayer th,
+.leaderboard-singleplayer thead,
+.leaderboard-multiplayer thead {
+  top: 0;
+  position: sticky;
+  background-color: var(--tableHeaderColor);
+  border-radius: 1em;
+  z-index: 1;
+}
+
+.leaderboard-singleplayer thead th,
+.leaderboard-multiplayer thead th {
+  font-size: 1.3em;
+}
+
+.leaderboard-singleplayer thead th,
 .leaderboard-singleplayer td,
-.leaderboard-multiplayer th,
+.leaderboard-multiplayer thead th,
 .leaderboard-multiplayer td {
   padding: 10px;
   text-align: center;
   border: none;
 }
 
-.leaderboard-singleplayer th,
-.leaderboard-multiplayer th {
+.leaderboard-singleplayer thead th,
+.leaderboard-multiplayer thead th {
+  position: sticky;
   color: #e4e4e4;
   transition: color 0.5s ease-in-out, transform 0.4s ease-in-out;
 }
-.leaderboard-singleplayer th:hover,
-.leaderboard-multiplayer th:hover {
+.leaderboard-singleplayer thead th:hover,
+.leaderboard-multiplayer thead th:hover {
   padding: 10px;
   text-align: center;
   color: white;

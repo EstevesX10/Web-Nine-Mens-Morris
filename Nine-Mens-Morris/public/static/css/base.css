@@ -58,8 +58,9 @@
 
   /* Leaderboard */
   --leaderboardBackgroundImage: url("../images/River.jpg");
-  --tableRowEvenColor: #6e82b7;
-  --tableRowOddColor: #425371;
+  --tableRowEvenColor: #93aed2;
+  --tableRowOddColor: #3d6aa4;
+  --tableHeaderColor: #2b507d;
 
   /* Authentication  */
   --authenticationBackgroundImage: url("../images/Mountains.png");
