@@ -85,19 +85,6 @@
   transform: scaleX(1);
 }
 
-.leaderboard-multiplayer::-webkit-scrollbar {
-  width: 8px;
-}
-
-.leaderboard-multiplayer::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  border-radius: 4px;
-}
-
-.leaderboard-multiplayer::-webkit-scrollbar-track {
-  background: red;
-}
-
 .leaderboard-multiplayer {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
@@ -121,6 +108,17 @@
 .leaderboard-multiplayer.hidden {
   opacity: 0;
   z-index: -1;
+}
+
+.leaderboard-singleplayer::-webkit-scrollbar,
+.leaderboard-multiplayer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.leaderboard-singleplayer::-webkit-scrollbar-thumb,
+.leaderboard-multiplayer::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 4px;
 }
 
 .leaderboard-singleplayer table,
