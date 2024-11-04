@@ -52,6 +52,20 @@
 
   --boardOffset: 25px;
 
+  /* NEW COLORS */
+
+  --player1Color: #3695a3;
+  --piece1Color: #0a5c70;
+  --player1PossibleMovesColor: #a0c9e8;
+  --player1SelectedPoint: #64abbb;
+  --activePlayer1Color: #6082b6;
+
+  --player2Color: #c81d25;
+  --piece2Color: #e43c42;
+  --player2PossibleMovesColor: #f08080;
+  --player2SelectedPoint: #ff5a5f;
+  --boardOffset: 25px;
+
   /* Configuration */
   --configBtnColor: #1f242d;
   --configBtnColorHighlight: #1f242a;

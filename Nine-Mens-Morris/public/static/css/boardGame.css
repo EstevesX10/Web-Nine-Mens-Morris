@@ -287,7 +287,6 @@
 
 .bottom-separatory-line-player1,
 .bottom-separatory-line-player2 {
-  /* top: 78%; */
   bottom: 18%;
 }
 
@@ -295,14 +294,14 @@
 .bottom-separatory-line-player1 {
   border-color: var(--player1SelectedPoint);
   background-color: var(--player1SelectedPoint);
-  box-shadow: 0 0 10px var(--player1PossibleMovesColor);
+  box-shadow: 0 0 10px var(--player1Color);
 }
 
 .top-separatory-line-player2,
 .bottom-separatory-line-player2 {
   border-color: var(--player2lectedPoint);
   background-color: var(--player2SelectedPoint);
-  box-shadow: 0 0 10px var(--player2PossibleMovesColor);
+  box-shadow: 0 0 10px var(--player2Color);
 }
 
 /* Player Pieces Containers */
@@ -354,11 +353,11 @@
 }
 
 .player1-pieces-container div {
-  background-color: var(--player1Color);
+  background-color: var(--piece1Color);
 }
 
 .player2-pieces-container div {
-  background-color: var(--player2Color);
+  background-color: var(--piece2Color);
 }
 
 .player1-removable-pieces,
@@ -413,7 +412,7 @@
 }
 
 .player1-give-up-btn {
-  background-color: var(--player1Color);
+  background-color: var(--piece1Color);
   border-color: var(--player1SelectedPoint);
 }
 
@@ -457,7 +456,7 @@
 }
 
 .point.point-player1 {
-  background-color: var(--player1Color);
+  background-color: var(--piece1Color);
   border: 3px solid var(--pointColor);
 }
 
@@ -466,7 +465,7 @@
 }
 
 .point.point-player2 {
-  background-color: var(--player2Color);
+  background-color: var(--piece2Color);
   border: 3px solid var(--pointColor);
 }
 
