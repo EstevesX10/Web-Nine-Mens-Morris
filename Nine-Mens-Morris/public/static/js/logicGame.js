@@ -709,6 +709,8 @@ class Game {
 
     // Update text inside the winner box according to the winner of the game
     winnerTxt.textContent = Txt;
+
+    g_leaderboard.update_singleplayer(winner);
   }
 
   chooseAction(index) {
