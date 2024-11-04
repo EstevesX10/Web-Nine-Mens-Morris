@@ -294,7 +294,7 @@
 
               <!-- Player 1 - Give Up Button -->
               <button class="player1-give-up-btn">
-                <div class="give-up-text">GIVE UP</div>
+                <div class="give-up-text">RESIGN</div>
               </button>
             </div>
 
@@ -337,7 +337,7 @@
 
               <!-- Player 2 - Give Up Button -->
               <button class="player2-give-up-btn">
-                <div class="give-up-text">GIVE UP</div>
+                <div class="give-up-text">RESIGN</div>
               </button>
             </div>
           </div>
@@ -399,43 +399,77 @@
         <!-- Leaderboard -->
         <section id="leaderboard" class="content">
           <div class="leaderboard-container">
-            <h2>Leaderboard</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Username</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>John</td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jane</td>
-                  <td>90</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Mark</td>
-                  <td>80</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Sarah</td>
-                  <td>70</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>David</td>
-                  <td>60</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="leaderboard-name"><h2>Leaderboard</h2></div>
+            <div class="leaderboard-modes">
+              <button class="leaderboard-btn">Single-Player</button>
+              <button class="leaderboard-btn">Multi-Player</button>
+            </div>
+            <div class="leaderboard-singleplayer hidden">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>100</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>100</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>100</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="leaderboard-multiplayer">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>100</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jane</td>
+                    <td>90</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Mark</td>
+                    <td>80</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Sarah</td>
+                    <td>70</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>David</td>
+                    <td>60</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
