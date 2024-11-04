@@ -62,7 +62,7 @@ class Leaderboard {
 
     rowElem.id = `${difficulty}_${size}`;
     confElem.textContent = `${size} squares`;
-    aiElem.textContent = difficulty !== 0 ? difficulty : "pvp";
+    aiElem.textContent = DIFFICULTY_NAMES[difficulty];
     winElem.textContent = 0;
     lossElem.textContent = 0;
     return rowElem;

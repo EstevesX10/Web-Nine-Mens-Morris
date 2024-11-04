@@ -1,3 +1,5 @@
+DIFFICULTY_NAMES = { 0: "pvp", 2: "Easy", 3: "Medium", 5: "Hard" };
+
 class Configuration {
   constructor() {
     // Get Config Form
