@@ -1,4 +1,4 @@
-MILLS = [
+const MILLS = [
   // Horizontal
   [0, 1, 2],
   [5, 6, 7],
@@ -63,13 +63,6 @@ const NEIGHBOR_TABLE = {
   30: [22, 29, 31],
   31: [30, 28],
 };
-
-// Using a Array with a singular position in order to store the previously selected point
-let selectedPoints = [];
-
-// Define some strings to help keep track of the last directive of the player before he eliminates a enemy's piece
-var lastPlayer1Note = "Place a Piece";
-var lastPlayer2Note = "Place a Piece";
 
 // Actions to be performed in he first phase of the game (Placing pieces)
 class PlaceAction {
@@ -166,9 +159,8 @@ class DestroyAction {
     gameBoard.placedPieces[gameBoard.getOpponent(this.player)]++;
 
     // Update player phase
-    gameBoard.gamePhase[
-      gameBoard.getOpponent(this.player)
-    ] = this.previousPhase;
+    gameBoard.gamePhase[gameBoard.getOpponent(this.player)] =
+      this.previousPhase;
 
     // Switch Player
     gameBoard.switchPlayer();
@@ -390,6 +382,13 @@ class Game {
     this.player1GaveUp = false;
     this.player2GaveUp = false;
 
+    // Using a Array with a singular position in order to store the previously selected point
+    this.selectedPoints = [];
+
+    // Define some strings to help keep track of the last directive of the player before he eliminates a enemy's piece
+    this.lastPlayer1Note = "Place a Piece";
+    this.lastPlayer2Note = "Place a Piece";
+
     // Get Give Up Buttons
     const player1GiveUpButton = document.querySelector(".player1-give-up-btn");
     const player2GiveUpButton = document.querySelector(".player2-give-up-btn");
@@ -446,9 +445,9 @@ class Game {
 
   updatePlayerLastMessage(player, newMessage) {
     if (player === 1) {
-      lastPlayer1Note = newMessage;
+      this.lastPlayer1Note = newMessage;
     } else {
-      lastPlayer2Note = newMessage;
+      this.lastPlayer2Note = newMessage;
     }
   }
 
@@ -465,13 +464,11 @@ class Game {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(
-        `player${player}-notes`
-      ).textContent = lastPlayer1Note;
+      document.getElementById(`player${player}-notes`).textContent =
+        this.lastPlayer1Note;
     } else {
-      document.getElementById(
-        `player${player}-notes`
-      ).textContent = lastPlayer2Note;
+      document.getElementById(`player${player}-notes`).textContent =
+        this.lastPlayer2Note;
     }
   }
 
@@ -602,7 +599,7 @@ class Game {
     }
 
     // Define a new and clean Array
-    selectedPoints = [];
+    this.selectedPoints = [];
 
     // Remove highlight from the possible moves
     this.removeHighlightPossibleMoves(player, initialIndex);
@@ -717,9 +714,8 @@ class Game {
     const currentPlayer = this.currentState.board.getCurrentPlayer();
 
     // Get the phase of the current player
-    const currentPlayerPhase = this.currentState.board.getPlayerPhase(
-      currentPlayer
-    );
+    const currentPlayerPhase =
+      this.currentState.board.getPlayerPhase(currentPlayer);
 
     // Check if a Mill was formed
     if (this.currentState.board.millFormed) {
@@ -745,10 +741,10 @@ class Game {
       currentPlayerPhase === "flying"
     ) {
       // Check if any piece was previously selected
-      if (selectedPoints.length > 0) {
+      if (this.selectedPoints.length > 0) {
         // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
-        const initialPoint = selectedPoints[0][0];
-        const initialIndex = selectedPoints[0][1];
+        const initialPoint = this.selectedPoints[0][0];
+        const initialIndex = this.selectedPoints[0][1];
 
         // Check if the final place is empty
         if (this.currentState.board.getPiece(index) === 0) {
@@ -762,7 +758,7 @@ class Game {
           } else {
             // The target place is not considered to be a valid move
             // Clear Previously Selected Piece
-            selectedPoints = [];
+            this.selectedPoints = [];
 
             // Removes a highlight of the selected piece
             initialPoint.classList.remove(
@@ -782,7 +778,7 @@ class Game {
         if (currentPlayer === this.currentState.board.getPiece(index)) {
           // Saves the selected point
           const pointToMoveTo = this.getPointFromIndex(index);
-          selectedPoints.push([pointToMoveTo, index]);
+          this.selectedPoints.push([pointToMoveTo, index]);
 
           // Adds a highlight to the piece to better visualize the one selected
           pointToMoveTo.classList.add(`selected-point-player${currentPlayer}`);
@@ -791,7 +787,7 @@ class Game {
           this.highlightPossibleMoves(currentPlayer, index);
         } else {
           // Clear Previously Selected Piece
-          selectedPoints = [];
+          this.selectedPoints = [];
 
           console.log("WRONG Point SELECTED!");
         }

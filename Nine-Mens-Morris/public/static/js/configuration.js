@@ -1,37 +1,38 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Get Config Form
-  const form = document.getElementById("config-form");
+class Configuration {
+  constructor() {
+    // Get Config Form
+    const form = document.getElementById("config-form");
 
-  // For Testing Purposes
-  // localStorage.clear();
+    // For Testing Purposes
+    // localStorage.clear();
 
-  // Load initial board configuration
-  loadBoard();
+    // Load initial board configuration
+    this.loadBoard();
 
-  // Save the configuration when submiting the form and loading a new board based on those new parameters
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Previne o comportamento padrão de submissão
+    // Save the configuration when submiting the form and loading a new board based on those new parameters
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    // Capturar os valores dos campos de configuração
-    const boardSize = document.getElementById("board-size").value;
-    const opponent = document.getElementById("opponent").value;
-    const firstPlayer = document.getElementById("first-player").value;
-    const aiLevel = document.getElementById("ai-level").value;
+      // Save board configuration parameters
+      const boardSize = document.getElementById("board-size").value;
+      const opponent = document.getElementById("opponent").value;
+      const firstPlayer = document.getElementById("first-player").value;
+      const aiLevel = document.getElementById("ai-level").value;
 
-    // Save parameters in the local storage
-    localStorage.setItem("boardSize", boardSize);
-    localStorage.setItem("opponent", opponent);
-    localStorage.setItem("firstPlayer", firstPlayer);
-    localStorage.setItem("aiLevel", aiLevel);
+      // Save parameters in the local storage
+      localStorage.setItem("boardSize", boardSize);
+      localStorage.setItem("opponent", opponent);
+      localStorage.setItem("firstPlayer", firstPlayer);
+      localStorage.setItem("aiLevel", aiLevel);
 
-    // Load a previous configuration when loading the page
-    loadBoard();
+      // Load a previous configuration when loading the page
+      this.loadBoard();
 
-    alert("Configuration saved successfuly!");
-  });
+      alert("Configuration saved successfuly!");
+    });
+  }
 
-  // Load a Board based on the configuration (Default or previously saved)
-  function loadBoard() {
+  loadBoard() {
     const savedBoardSize = parseInt(localStorage.getItem("boardSize") || "2");
     const savedOpponent = localStorage.getItem("opponent", "ai") || "ai";
     const savedFirstPlayer = parseInt(
@@ -67,11 +68,18 @@ document.addEventListener("DOMContentLoaded", function () {
     firstPlayerInfo.classList.add(`active-player${savedFirstPlayer}`);
 
     // Set the initial movement phases for both players
-    const player1Phase = document.querySelector(`#player1-phase`);
+    const player1Phase = document.getElementById(`player1-phase`);
     player1Phase.textContent = "Placing Phase";
 
-    const player2Phase = document.querySelector(`#player2-phase`);
+    const player2Phase = document.getElementById(`player2-phase`);
     player2Phase.textContent = "Placing Phase";
+
+    // Set the initial players messages
+    const player1Message = document.getElementById(`player1-notes`);
+    player1Message.textContent = "Place a Piece";
+
+    const player2Message = document.getElementById(`player2-notes`);
+    player2Message.textContent = "Place a Piece";
 
     const winnerContainer = document.querySelector(".game-winner");
     winnerContainer.classList.remove(`active-player1`);
@@ -81,8 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const player2Name = document.querySelector("#player2-name");
 
     // Update the game state
-    board = new Board(savedBoardSize, savedFirstPlayer);
-    gameState = new State(board);
+    var board = new Board(savedBoardSize, savedFirstPlayer);
+    var gameState = new State(board);
 
     // Check for the Game Opponent
     if (savedOpponent === "ai") {
@@ -102,4 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // console.log(gameState)
   }
-});
+}
+
+game = null;
+g_config = new Configuration();
