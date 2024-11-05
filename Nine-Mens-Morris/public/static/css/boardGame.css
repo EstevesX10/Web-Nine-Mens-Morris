@@ -160,7 +160,7 @@
 .active-player1 {
   color: var(--pointColor);
   background-color: var(--player1SelectedPoint);
-  box-shadow: -3px 3px 3px 3px var(--player1SelectedPoint),
+  box-shadow: 0 0 0 var(--player1SelectedPoint),
     0 0 40px var(--activePlayer1Color);
 }
 
