@@ -148,6 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     enableNavItems(false);
 
+    // Restart game board whenever the player logs out so that the next user does not have messy data
+    g_config.loadBoard();
+
     // Send the data to a server here.
   });
 });
