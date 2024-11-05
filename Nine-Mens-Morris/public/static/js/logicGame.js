@@ -400,6 +400,10 @@ class Game {
         !this.currentState.board.gameOver()
       ) {
         this.player1GaveUp = true;
+
+        // Clean UI elements
+        this.cleanUI();
+
         this.triggerWinnerContainer(2);
         console.log("PLAYER 1 GAVE UP");
       }
@@ -412,10 +416,35 @@ class Game {
         !this.currentState.board.gameOver()
       ) {
         this.player2GaveUp = true;
+
+        // Clean UI elements
+        this.cleanUI();
+
         this.triggerWinnerContainer(1);
         console.log("PLAYER 2 GAVE UP");
       }
     });
+
+    // Define a Event for a game restart
+    // Get the restart button
+    const restartButton = document.getElementById("restart-button");
+    restartButton.onclick = () => {
+      g_config.loadBoard();
+    };
+  }
+
+  cleanUI() {
+    // Remove pieces removal highlights
+    this.removeHighlightPossiblePieceRemovals(1);
+    this.removeHighlightPossiblePieceRemovals(2);
+
+    // Remove Player Highlights
+    this.removePlayerHighlight(1);
+    this.removePlayerHighlight(2);
+
+    // Remove Player Possible Moves
+    this.removeAllHighlightPossibleMoves(1);
+    this.removeAllHighlightPossibleMoves(2);
   }
 
   addPlayerHighlight(player) {
@@ -479,9 +508,8 @@ class Game {
       this.player1GaveUp ||
       this.player2GaveUp
     ) {
-      // Remove current player highlight
-      this.removePlayerHighlight(this.currentState.board.currentPlayer);
-      this.removePlayerHighlight(3 - this.currentState.board.currentPlayer);
+      // Clean the UI
+      this.cleanUI();
 
       // Get Winner
       const winner = this.currentState.board.getWinner();
@@ -656,6 +684,18 @@ class Game {
         point.classList.remove(`possible-move-player${player}`);
       });
     }
+  }
+
+  removeAllHighlightPossibleMoves(player) {
+    // Fetch all the Points
+    const points = document.querySelectorAll(`.point`);
+
+    // Remove all the possible moves highlighting from the given player
+    points.forEach((point) => {
+      if (point.classList.contains(`possible-move-player${player}`)) {
+        point.classList.remove(`possible-move-player${player}`);
+      }
+    });
   }
 
   highlightPossiblePieceRemovals(player) {
