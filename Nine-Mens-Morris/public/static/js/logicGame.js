@@ -429,7 +429,14 @@ class Game {
     // Get the restart button
     const restartButton = document.getElementById("restart-button");
     restartButton.onclick = () => {
-      g_config.loadBoard();
+      // Playing against the AI, only the user can reset the game and on his turn
+      if (this.levelAI > 0 && this.currentState.board.currentPlayer === 1) {
+        g_config.loadBoard();
+      }
+      // Playing PVP either player may be capable of restarting the game
+      else if (this.levelAI === 0) {
+        g_config.loadBoard();
+      }
     };
   }
 
@@ -747,6 +754,17 @@ class Game {
     // Update text inside the winner box according to the winner of the game
     winnerTxt.textContent = Txt;
 
+    // Update the state of the Restart Button - When PVP game ends, they can then restart the game.
+    if (this.levelAI === 0) {
+      // Get the restart button section
+      const restartButtonSection = document.querySelector(
+        "#restart-button-container"
+      );
+      // Make it visible once again
+      restartButtonSection.classList.remove("hidden");
+    }
+
+    // Update Single Player Leaderboard
     g_leaderboard.updateSingleplayer(
       winner,
       this.levelAI,

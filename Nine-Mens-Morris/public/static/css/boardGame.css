@@ -515,33 +515,36 @@
   align-self: center;
 }
 
+/* Restart Button Section */
+
 .restart {
   position: absolute;
   display: flex;
   width: 40%;
   align-items: center;
   padding: 0.8em;
-  background-color: var(--squareColor);
+  background-color: var(--lineColor);
   justify-content: center;
   text-align: center;
   bottom: 5%;
-  border: 5px solid var(--activePlayer1Color);
-  border-radius: 8%;
+  border: 5px solid var(--squareColor);
+  border-radius: 8px;
+  opacity: 1;
+  z-index: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.restart.hidden {
+  opacity: 0;
+  z-index: -1;
 }
 
 .restart-btn {
-  opacity: 1;
-}
-.restart-btn.hidden {
-  opacity: 0;
-}
-
-.restart-btn,
-.restart-btn.hidden {
   position: relative;
   color: #fff;
   background-color: transparent;
   font-size: 16px;
+  letter-spacing: 2px;
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -549,8 +552,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-.restart-btn::after,
-.restart-btn.hidden::after {
+.restart-btn::after {
   content: "";
   position: absolute;
   left: 0;
@@ -564,8 +566,7 @@
   transition: transform 0.3s;
 }
 
-.restart-btn:hover::after,
-.restart-btn.hidden:hover::after {
+.restart-btn:hover::after {
   transform-origin: left;
   transform: scaleX(1);
 }

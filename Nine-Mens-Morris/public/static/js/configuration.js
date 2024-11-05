@@ -83,12 +83,19 @@ class Configuration {
     const player2Message = document.getElementById(`player2-notes`);
     player2Message.textContent = "Place a Piece";
 
+    // Reset the winner container
     const winnerContainer = document.querySelector(".game-winner");
     winnerContainer.classList.remove(`active-player1`);
     winnerContainer.classList.remove(`active-player2`);
 
+    // Get the player 2 sections
     const player2GiveUp = document.querySelector(".player2-give-up-btn");
     const player2Name = document.querySelector("#player2-name");
+
+    // Get the restart button section
+    const restartButtonSection = document.querySelector(
+      "#restart-button-container"
+    );
 
     // Update the game state
     var board = new Board(savedBoardSize, savedFirstPlayer);
@@ -103,9 +110,19 @@ class Configuration {
         game.doAiMove(); // Trigger AI first move
       }
 
+      // Check if the HTML element has a hidden class and remove it if so
+      if (restartButtonSection.classList.contains("hidden")) {
+        restartButtonSection.classList.remove("hidden");
+      }
+
       player2Name.textContent = "AI";
     } else {
       game = new Game(gameState, 0);
+
+      // Check if the HTML element already has a hidden class
+      if (!restartButtonSection.classList.contains("hidden")) {
+        restartButtonSection.classList.add("hidden");
+      }
 
       player2GiveUp.style.display = "";
       player2Name.textContent = "Player 2";
