@@ -40,7 +40,7 @@ class Configuration {
     const savedFirstPlayer = parseInt(
       localStorage.getItem("firstPlayer", "1") || "1"
     );
-    const savedAiLevel = parseInt(localStorage.getItem("aiLevel", "1") || "1");
+    const savedAiLevel = parseInt(localStorage.getItem("aiLevel", "1") || "3");
 
     // Fill the brackets with the saved values
     if (savedBoardSize)
