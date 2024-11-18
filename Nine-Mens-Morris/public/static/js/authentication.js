@@ -1,32 +1,51 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const logregBox = document.querySelector(".logreg-box");
-  const loginLink = document.querySelector(".login-link");
-  const registerLink = document.querySelector(".register-link");
+class AuthenticationManager {
+  constructor() {
+    this.logregBox = document.querySelector(".logreg-box");
+    this.loginLink = document.querySelector(".login-link");
+    this.registerLink = document.querySelector(".register-link");
 
-  registerLink.addEventListener("click", () => {
-    logregBox.classList.remove("login");
-    logregBox.classList.remove("account");
-    logregBox.classList.add("register");
-  });
+    this.registerLink.addEventListener("click", () => {
+      this.logregBox.classList.remove("login");
+      this.logregBox.classList.remove("account");
+      this.logregBox.classList.add("register");
+    });
 
-  loginLink.addEventListener("click", () => {
-    logregBox.classList.remove("register");
-    logregBox.classList.remove("account");
-    logregBox.classList.add("login");
-  });
+    this.loginLink.addEventListener("click", () => {
+      this.logregBox.classList.remove("register");
+      this.logregBox.classList.remove("account");
+      this.logregBox.classList.add("login");
+    });
 
-  function capitalize(input) {
+    this.loginForm = document.getElementById("loginForm");
+    this.registerForm = document.getElementById("registerForm");
+    this.logoutButton = document.getElementById("logoutButton");
+
+    this.loginForm.addEventListener("submit", (event) => {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      this.login();
+    });
+
+    this.registerForm.addEventListener("submit", (event) => {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      this.register();
+    });
+
+    // [Logout] Register Form Submission
+    this.logoutButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      this.logout();
+    });
+  }
+
+  capitalize(input) {
     return input.replace(/\b\w/g, function (match) {
       return match.toUpperCase();
     });
   }
 
-  // Login Form Submission
-  const loginForm = document.getElementById("loginForm");
-  loginForm.addEventListener("submit", (event) => {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-
+  login() {
     // Fetching the values from the login form
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
@@ -42,13 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set a timeout to proper showcase the animation of the username appearing in the nav bar
     setTimeout(() => {
-      authNavBtnName.textContent = capitalize(username);
+      authNavBtnName.textContent = this.capitalize(username);
       authNavBtnName.classList.remove("hidden");
     }, 750);
 
-    logregBox.classList.remove("login");
-    logregBox.classList.remove("register");
-    logregBox.classList.add("account");
+    this.logregBox.classList.remove("login");
+    this.logregBox.classList.remove("register");
+    this.logregBox.classList.add("account");
 
     // Here, we could make an AJAX call to request the data from a server.
 
@@ -56,22 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
     var accountUsername = document.getElementById("accountUsername");
     accountUsername.textContent = username;
 
-    // [TODO] Fetch EMAIL IN BACKEND
     var accountEmail = document.getElementById("accountEmail");
     accountEmail.textContent = "None";
 
     var accountPassword = document.getElementById("accountPassword");
     accountPassword.textContent = password;
 
-    enableNavItems(true);
-  });
+    navManager.enableNavItems(true);
 
-  // Register Form Submission
-  const registerForm = document.getElementById("registerForm");
-  registerForm.addEventListener("submit", (event) => {
-    // Prevent the default form submission behavior
-    event.preventDefault();
+    // [TODO] Fetch EMAIL IN BACKEND
+  }
 
+  register() {
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
@@ -97,22 +112,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set a timeout to proper showcase the animation of the username appearing in the nav bar
     setTimeout(() => {
-      authNavBtnName.textContent = capitalize(username);
+      authNavBtnName.textContent = this.capitalize(username);
       authNavBtnName.classList.remove("hidden");
     }, 750);
 
-    logregBox.classList.remove("login");
-    logregBox.classList.remove("register");
-    logregBox.classList.add("account");
+    this.logregBox.classList.remove("login");
+    this.logregBox.classList.remove("register");
+    this.logregBox.classList.add("account");
+
+    navManager.enableNavItems(true);
 
     // [TODO] Send the data to a server here.
-  });
+  }
 
-  // [Logout] Register Form Submission
-  const logoutButton = document.getElementById("logoutButton");
-  logoutButton.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-
+  logout() {
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
@@ -125,11 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Reset forms and go back to the login
-    loginForm.reset();
-    registerForm.reset();
-    logregBox.classList.remove("account");
-    logregBox.classList.remove("register");
-    logregBox.classList.add("login");
+    this.loginForm.reset();
+    this.registerForm.reset();
+    this.logregBox.classList.remove("account");
+    this.logregBox.classList.remove("register");
+    this.logregBox.classList.add("login");
 
     // Update the name of the authentication button in the navigation bar back to the original state
     var authNavBtnName = document.getElementById("nav-btn-authentication");
@@ -146,11 +159,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("accountEmail").textContent = "";
     document.getElementById("accountPassword").textContent = "";
 
-    enableNavItems(false);
+    navManager.enableNavItems(false);
 
     // Restart game board whenever the player logs out so that the next user does not have messy data
     g_config.loadBoard();
 
     // Send the data to a server here.
-  });
-});
+  }
+}
+
+authManeger = new AuthenticationManager();
