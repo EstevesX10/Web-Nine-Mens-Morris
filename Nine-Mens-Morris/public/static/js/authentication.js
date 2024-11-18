@@ -1,21 +1,25 @@
 class AuthenticationManager {
   constructor() {
+    // Fetch login and register links
     this.logregBox = document.querySelector(".logreg-box");
     this.loginLink = document.querySelector(".login-link");
     this.registerLink = document.querySelector(".register-link");
 
-    this.registerLink.addEventListener("click", () => {
-      this.logregBox.classList.remove("login");
-      this.logregBox.classList.remove("account");
-      this.logregBox.classList.add("register");
-    });
-
+    // If a login is performed
     this.loginLink.addEventListener("click", () => {
       this.logregBox.classList.remove("register");
       this.logregBox.classList.remove("account");
       this.logregBox.classList.add("login");
     });
 
+    // If a registration is performed
+    this.registerLink.addEventListener("click", () => {
+      this.logregBox.classList.remove("login");
+      this.logregBox.classList.remove("account");
+      this.logregBox.classList.add("register");
+    });
+
+    // Fetch login and register forms as well as the logout button
     this.loginForm = document.getElementById("loginForm");
     this.registerForm = document.getElementById("registerForm");
     this.logoutButton = document.getElementById("logoutButton");
@@ -23,18 +27,21 @@ class AuthenticationManager {
     this.loginForm.addEventListener("submit", (event) => {
       // Prevent the default form submission behavior
       event.preventDefault();
+      // Login
       this.login();
     });
 
     this.registerForm.addEventListener("submit", (event) => {
       // Prevent the default form submission behavior
       event.preventDefault();
+      // Register
       this.register();
     });
 
     // [Logout] Register Form Submission
     this.logoutButton.addEventListener("click", (event) => {
       event.preventDefault();
+      // Logout
       this.logout();
     });
   }
