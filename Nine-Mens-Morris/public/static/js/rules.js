@@ -1,57 +1,69 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const topicSlides = document.querySelectorAll(".topic-slide");
-  let currentTopic = 0;
+class Rules {
+  constructor() {
+    this.topicSlides = document.querySelectorAll(".topic-slide");
+    this.currentTopic = 0;
+    this.startRules();
+  }
 
-  // Função para gerir os slides
-  function changeTopic(newTopic, direction) {
-    // Remove todas as classes antes de atualizar o estado
-    topicSlides.forEach((slide) => {
+  startRules() {
+    // Adicionar event listeners para as setas
+    document.getElementById("prev-topic").addEventListener("click", () => {
+      this.changeTopic(this.currentTopic - 1, "prev");
+    });
+
+    document.getElementById("next-topic").addEventListener("click", () => {
+      this.changeTopic(this.currentTopic + 1, "next");
+    });
+
+    // Handle section navigation inside each topic
+    document.querySelectorAll(".slider-container").forEach((container) => {
+      const slides = container.querySelectorAll(".slide");
+      const dots = container.querySelectorAll(".dot");
+      let currentSlide = 0;
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const selectedSlide = parseInt(dot.getAttribute("data-slide"));
+          currentSlide = this.changeSlide(
+            slides,
+            dots,
+            currentSlide,
+            selectedSlide
+          );
+        });
+      });
+    });
+  }
+
+  changeSlide(slides, dots, currentSlide, newSlide) {
+    slides[currentSlide].classList.remove("active");
+    dots[currentSlide].classList.remove("active");
+    currentSlide = (newSlide + slides.length) % slides.length;
+    slides[currentSlide].classList.add("active");
+    dots[currentSlide].classList.add("active");
+    return currentSlide;
+  }
+
+  changeTopic(newTopic, direction) {
+    // Remove all classes
+    this.topicSlides.forEach((slide) => {
       slide.classList.remove("active", "prev", "next");
     });
 
-    // Definir o comportamento do swipe baseado na direção
+    // Define the swipe direction
     if (direction === "next") {
-      topicSlides[currentTopic].classList.add("prev"); // O slide atual sai para a esquerda
+      this.topicSlides[this.currentTopic].classList.add("prev");
     } else if (direction === "prev") {
-      topicSlides[currentTopic].classList.add("next"); // O slide atual sai para a direita
+      this.topicSlides[this.currentTopic].classList.add("next");
     }
 
-    // Atualiza o índice do tópico atual (evitar valores negativos ou superiores ao número de slides)
-    const totalSlides = topicSlides.length;
-    currentTopic = (newTopic + totalSlides) % totalSlides;
+    // Update the index of the current topic (evitar valores negativos ou superiores ao número de slides)
+    const totalSlides = this.topicSlides.length;
+    this.currentTopic = (newTopic + totalSlides) % totalSlides;
 
     // Adiciona a classe 'active' ao novo slide
-    topicSlides[currentTopic].classList.add("active");
+    this.topicSlides[this.currentTopic].classList.add("active");
   }
+}
 
-  // Adicionar event listeners para as setas
-  document.getElementById("prev-topic").addEventListener("click", function () {
-    changeTopic(currentTopic - 1, "prev");
-  });
-
-  document.getElementById("next-topic").addEventListener("click", function () {
-    changeTopic(currentTopic + 1, "next");
-  });
-
-  // Handle section navigation inside each topic
-  document.querySelectorAll(".slider-container").forEach((container) => {
-    const slides = container.querySelectorAll(".slide");
-    const dots = container.querySelectorAll(".dot");
-    let currentSlide = 0;
-
-    dots.forEach((dot) => {
-      dot.addEventListener("click", function () {
-        const selectedSlide = parseInt(this.getAttribute("data-slide"));
-        changeSlide(selectedSlide);
-      });
-    });
-
-    function changeSlide(newSlide) {
-      slides[currentSlide].classList.remove("active");
-      dots[currentSlide].classList.remove("active");
-      currentSlide = (newSlide + slides.length) % slides.length;
-      slides[currentSlide].classList.add("active");
-      dots[currentSlide].classList.add("active");
-    }
-  });
-});
+const rules = new Rules();
