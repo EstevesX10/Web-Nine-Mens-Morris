@@ -1,7 +1,7 @@
 class Canvas {
   constructor(config, game) {
     // Save the instance of a game
-    this.game.game = game;
+    this.game = game;
 
     // Get the board container
     this.boardContainer = document.getElementById("board");
@@ -11,6 +11,8 @@ class Canvas {
     this.pointSize = 2 * this.pointRadius;
     this.lineThickness = 4;
     this.lineColor = "#8499ce";
+
+    this.prevSelectedPiece = null;
 
     // Define some strings to help keep track of the last directive of the player before he eliminates a enemy's piece
     this.lastPlayer1Note = "Place a Piece";
@@ -28,15 +30,15 @@ class Canvas {
       if (
         !this.player1GaveUp &&
         !this.player2GaveUp &&
-        !this.currentState.board.gameOver()
+        !this.game.currentState.board.gameOver()
       ) {
         this.player1GaveUp = true;
 
         // Clean UI elements
         this.cleanUI();
 
+        // Trigger Winner Container - Player 2 Wins
         this.triggerWinnerContainer(2);
-        console.log("PLAYER 1 GAVE UP");
       }
     });
 
@@ -51,10 +53,30 @@ class Canvas {
         // Clean UI elements
         this.cleanUI();
 
+        // Trigger Winner Container - Player 1 Wins
         this.triggerWinnerContainer(1);
-        console.log("PLAYER 2 GAVE UP");
       }
     });
+
+    // Get the restart button
+    this.restartButton = document.getElementById("restart-button");
+
+    // Define a Event for a game restart
+    this.restartButton.onclick = () => {
+      this.cleanUI();
+      // Playing against the AI, only the user can reset the game and on his turn
+      if (
+        this.game.levelAI > 0 &&
+        (this.game.currentState.board.gameOver() ||
+          this.game.currentState.board.currentPlayer === 1)
+      ) {
+        g_config.loadBoard();
+      }
+      // Playing PVP either player may be capable of restarting the game
+      else if (this.game.levelAI === 0) {
+        g_config.loadBoard();
+      }
+    };
   }
 
   generateBoard(numSquares) {
@@ -129,8 +151,8 @@ class Canvas {
         point.style.height = `${this.pointSize}px`;
 
         // Handle Point clicking
-        point.addEventListener("click", function () {
-          game.handlePointClick(point, 8 * index + i);
+        point.addEventListener("click", () => {
+          this.handlePointClick(point, 8 * index + i);
         });
 
         this.boardContainer.appendChild(point);
@@ -392,6 +414,246 @@ class Canvas {
     }
   }
 
+  addPiece(action, pointToAdd) {
+    // Get the player who performed the action
+    const player = action.player;
+
+    // Remove a piece from the pieces container
+    this.usePiece(player);
+
+    // Adds the selected player class to the HTML
+    pointToAdd.classList.add(`point-player${player}`);
+
+    // Check if the game phase was changed
+    if (this.game.currentState.board.getPlayerPhase(player) === "moving") {
+      // Update the HTML text content for the current phase
+      this.updatePlayerInfo(player, "Moving Phase", "Move a Piece");
+    }
+
+    // Check if a mill was formed
+    if (this.game.isMillFormed()) {
+      // Highlight possible pieces to remove
+      this.highlightPossiblePieceRemovals(player);
+
+      // Inform that he has made a mill [Change player notes]
+      this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
+    } else {
+      // A Mill was not formed and therefore the current player switches
+      this.switchPlayerHighlight(player);
+    }
+
+    // Check if the game is over
+    this.checkGameOver();
+  }
+
+  removeEnemyPiece(action, pointToRemove) {
+    // Get player and Opponent
+    const player = action.player;
+    const opponent = this.game.currentState.board.getOpponent(player);
+
+    // Remove highlights of the pieces that could have been removed
+    this.removeHighlightPossiblePieceRemovals(player);
+
+    // Update the current player highlighting
+    this.switchPlayerHighlight(player);
+
+    // If selected, remove the selection
+    pointToRemove.classList.remove("point-player1");
+    pointToRemove.classList.remove("point-player2");
+
+    // Go back to the player's previous directive since a piece was already removed
+    this.getPlayerLastMessage(player);
+
+    // Check if the opponent has 3 pieces [Has transitioned into a flying phase]
+    if (this.game.currentState.board.getPlayerPhase(opponent) === "flying") {
+      // Update the opponent game phase
+      this.updatePlayerInfo(opponent, "Flying Phase", "Fly a Piece");
+    }
+
+    // Check if the game is over
+    this.checkGameOver();
+  }
+
+  movePiece(action, initialPoint, pointToMoveTo) {
+    const player = action.player;
+    const initialIndex = action.from;
+
+    // Remove the styling of the initial point [In the HTML]
+    initialPoint.classList.remove(
+      `point-player${player}`,
+      `selected-point-player${player}`
+    );
+
+    // Adds the point to the new place [In HTML]
+    pointToMoveTo.classList.add(`point-player${player}`);
+
+    // Check if a mill was formed
+    if (this.game.isMillFormed()) {
+      // Highlight possible pieces to remove
+      this.highlightPossiblePieceRemovals(player);
+
+      // Inform that he has made a mill [Change player notes]
+      this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
+    } else {
+      // A Mill was not formed and therefore the current player switches
+      this.switchPlayerHighlight(player);
+    }
+
+    // Remove highlight from the possible moves
+    this.removeHighlightPossibleMoves(player, initialIndex);
+
+    // Check if the game is over
+    this.checkGameOver();
+  }
+
+  async handlePointClick(point, index) {
+    // Check if the game is over
+    if (this.game.checkGameOver()) {
+      return;
+    }
+
+    // Get current player
+    const currentPlayer = this.game.getCurrentPlayer();
+
+    // Get selected pieces
+    const selectedPieces = this.game.getSelectedPieces();
+
+    console.log("[SELECTED PIECES]", selectedPieces);
+
+    // Check if we not have selected the first piece
+    if (selectedPieces.length === 1) {
+      if (this.prevSelectedPiece !== null) {
+        // Get the previous point
+        const prevPoint = this.getPointFromIndex(this.prevSelectedPiece);
+
+        // Removes a highlight of the previously selected piece
+        prevPoint.classList.remove(`selected-point-player${currentPlayer}`);
+
+        // Remove highlight from the possible moves of the previously selected piece
+        this.removeHighlightPossibleMoves(
+          currentPlayer,
+          this.prevSelectedPiece
+        );
+      }
+    }
+    // Check if we have selected the first piece
+    else if (selectedPieces.length === 1) {
+      // Fetching the selected point
+      const selectedPoint = this.getPointFromIndex(selectedPieces[0]);
+
+      // Adds a highlight to the piece to better visualize the one selected
+      selectedPoint.classList.add(`selected-point-player${currentPlayer}`);
+
+      // Add a highlight for every possible move
+      this.highlightPossibleMoves(currentPlayer, index);
+
+      // Update the previous selected point
+      this.prevSelectedPiece = selectedPieces[0];
+    }
+
+    // Check if we are in PVP Mode
+    if (
+      this.game.levelAI !== 0 &&
+      this.game.currentState.board.currentPlayer === 2
+    ) {
+      return;
+    }
+
+    // Perform Player Action
+    const action = this.game.chooseAction(index);
+    if (action === null) {
+      return;
+    }
+    this.game.currentState.execute(action);
+
+    this.updateDOM(action);
+
+    // Perform AI Action
+    while (
+      this.game.levelAI !== 0 &&
+      this.game.currentState.board.currentPlayer === 2
+    ) {
+      const aiAction = await this.game.doAiMove();
+
+      this.game.currentState.execute(aiAction);
+
+      this.updateDOM(aiAction);
+    }
+  }
+
+  getPointFromIndex(index) {
+    return this.boardContainer.childNodes
+      .values()
+      .filter((v) => v.classList[0] === "point")
+      .toArray()[index];
+  }
+
+  updateDOM(action) {
+    if (action instanceof PlaceAction) {
+      const pointToAdd = this.getPointFromIndex(action.pos);
+      this.addPiece(action, pointToAdd);
+    } else if (action instanceof DestroyAction) {
+      const pointToRemove = this.getPointFromIndex(action.pos);
+      this.removeEnemyPiece(action, pointToRemove);
+    } else if (action instanceof MoveAction) {
+      const initialPoint = this.getPointFromIndex(action.from);
+      const pointToMoveTo = this.getPointFromIndex(action.to);
+      this.movePiece(action, initialPoint, pointToMoveTo);
+    } else {
+      console.log("[!] invalid action", action);
+    }
+  }
+
+  checkGameOver() {
+    // Check if the game is over
+    if (this.game.checkGameOver()) {
+      // Clean the UI
+      this.cleanUI();
+
+      // Get Winner
+      const winner = this.game.currentState.board.getWinner();
+
+      // Toogle the game winner box
+      this.triggerWinnerContainer(winner);
+    }
+  }
+
+  triggerWinnerContainer(winner) {
+    // Get Winner Container
+    const gameWinnerContainer = document.querySelector(`.game-winner`);
+
+    if (!gameWinnerContainer.classList.contains(`active-player${winner}`)) {
+      gameWinnerContainer.classList.add(`active-player${winner}`);
+    }
+
+    // Get the winner text
+    const winnerTxt = document.getElementById("current-winner");
+
+    // Define a String to include the Winner name
+    var Txt = "Draw";
+    if (winner === 1) {
+      Txt = "Player 1 Wins!";
+    } else if (winner === 2) {
+      Txt = "Player 2 Wins!";
+    }
+
+    // Update text inside the winner box according to the winner of the game
+    winnerTxt.textContent = Txt;
+
+    // Update the state of the Restart Button - When PVP game ends, they can then restart the game.
+    if (this.game.levelAI === 0) {
+      // Get the restart button section
+      const restartButtonSection = document.querySelector(
+        "#restart-button-container"
+      );
+      // Make it visible once again
+      restartButtonSection.classList.remove("hidden");
+    }
+
+    // Update Single Player Leaderboard
+    this.game.updateSingleplayerLeaderboard(winner);
+  }
+
   cleanUI() {
     // Remove pieces removal highlights
     this.removeHighlightPossiblePieceRemovals(1);
@@ -406,5 +668,3 @@ class Canvas {
     this.removeAllHighlightPossibleMoves(2);
   }
 }
-
-const canvas = new Canvas();

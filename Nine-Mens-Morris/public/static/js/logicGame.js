@@ -379,27 +379,20 @@ class Game {
   constructor(state, levelAI) {
     this.currentState = state;
     this.levelAI = levelAI;
-
-    // Using a Array with a singular position in order to store the previously selected point
     this.selectedPoints = [];
+  }
 
-    // Define a Event for a game restart
-    // Get the restart button
-    const restartButton = document.getElementById("restart-button");
-    restartButton.onclick = () => {
-      // Playing against the AI, only the user can reset the game and on his turn
-      if (
-        this.levelAI > 0 &&
-        (this.currentState.board.gameOver() ||
-          this.currentState.board.currentPlayer === 1)
-      ) {
-        g_config.loadBoard();
-      }
-      // Playing PVP either player may be capable of restarting the game
-      else if (this.levelAI === 0) {
-        g_config.loadBoard();
-      }
-    };
+  getCurrentPlayer() {
+    return this.currentState.board.getCurrentPlayer();
+  }
+
+  isMillFormed() {
+    // Checks if a Mill is formed
+    return this.currentState.board.millFormed;
+  }
+
+  getSelectedPieces() {
+    return this.selectedPoints;
   }
 
   checkGameOver() {
@@ -409,153 +402,13 @@ class Game {
       this.player1GaveUp ||
       this.player2GaveUp
     ) {
-      // Clean the UI
-      this.cleanUI();
-
-      // Get Winner
-      const winner = this.currentState.board.getWinner();
-
-      // Toogle the game winner box
-      this.triggerWinnerContainer(winner);
-
-      console.log("[WINNER]", winner);
-    }
-  }
-
-  addPiece(action) {
-    const player = action.player;
-    const indexToAdd = action.pos;
-    const pointToAdd = this.getPointFromIndex(indexToAdd);
-
-    // Remove a piece from the pieces container
-    this.usePiece(player);
-
-    // Adds the selected player class to the HTML
-    pointToAdd.classList.add(`point-player${player}`);
-
-    // Check if the game phase was changed
-    if (this.currentState.board.getPlayerPhase(player) === "moving") {
-      // Update the HTML text content for the current phase
-      this.updatePlayerInfo(player, "Moving Phase", "Move a Piece");
-    }
-
-    // Check if a mill was formed
-    if (this.currentState.board.millFormed) {
-      // Highlight possible pieces to remove
-      this.highlightPossiblePieceRemovals(player);
-
-      // Inform that he has made a mill [Change player notes]
-      this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
+      return true;
     } else {
-      // A Mill was not formed and therefore the current player switches
-      this.switchPlayerHighlight(player);
+      return false;
     }
-
-    // Check if the game is over
-    this.checkGameOver();
   }
 
-  removeEnemyPiece(action) {
-    // Get player and Opponent
-    const player = action.player;
-    const opponent = this.currentState.board.getOpponent(player);
-
-    let pointToRemove = this.getPointFromIndex(action.pos);
-
-    // Remove highlights of the pieces that could have been removed
-    this.removeHighlightPossiblePieceRemovals(player);
-
-    // Update the current player highlighting
-    this.switchPlayerHighlight(player);
-
-    // If selected, remove the selection
-    pointToRemove.classList.remove("point-player1");
-    pointToRemove.classList.remove("point-player2");
-
-    // Go back to the player's previous directive since a piece was already removed
-    this.getPlayerLastMessage(player);
-
-    // Check if the opponent has 3 pieces [Has transitioned into a flying phase]
-    if (this.currentState.board.getPlayerPhase(opponent) === "flying") {
-      // Update the opponent game phase
-      this.updatePlayerInfo(opponent, "Flying Phase", "Fly a Piece");
-    }
-
-    // Check if the game is over
-    this.checkGameOver();
-  }
-
-  movePiece(action) {
-    const player = action.player;
-    const initialIndex = action.from;
-    const indexToMoveTo = action.to;
-
-    const initialPoint = this.getPointFromIndex(initialIndex);
-    const pointToMoveTo = this.getPointFromIndex(indexToMoveTo);
-
-    // Remove the styling of the initial point [In the HTML]
-    initialPoint.classList.remove(
-      `point-player${player}`,
-      `selected-point-player${player}`
-    );
-
-    // Adds the point to the new place [In HTML]
-    pointToMoveTo.classList.add(`point-player${player}`);
-
-    // Check if a mill was formed
-    if (this.currentState.board.millFormed) {
-      // Highlight possible pieces to remove
-      this.highlightPossiblePieceRemovals(player);
-
-      // Inform that he has made a mill [Change player notes]
-      this.informPlayer(player, "[MILL FORMED]\nRemove a Enemy Piece");
-    } else {
-      // A Mill was not formed and therefore the current player switches
-      this.switchPlayerHighlight(player);
-    }
-
-    // Define a new and clean Array
-    this.selectedPoints = [];
-
-    // Remove highlight from the possible moves
-    this.removeHighlightPossibleMoves(player, initialIndex);
-
-    // Check if the game is over
-    this.checkGameOver();
-  }
-
-  triggerWinnerContainer(winner) {
-    // Get Winner Container
-    const gameWinnerContainer = document.querySelector(`.game-winner`);
-
-    if (!gameWinnerContainer.classList.contains(`active-player${winner}`)) {
-      gameWinnerContainer.classList.add(`active-player${winner}`);
-    }
-
-    // Get the winner text
-    const winnerTxt = document.getElementById("current-winner");
-
-    // Define a String to include the Winner name
-    var Txt = "Draw";
-    if (winner === 1) {
-      Txt = "Player 1 Wins!";
-    } else if (winner === 2) {
-      Txt = "Player 2 Wins!";
-    }
-
-    // Update text inside the winner box according to the winner of the game
-    winnerTxt.textContent = Txt;
-
-    // Update the state of the Restart Button - When PVP game ends, they can then restart the game.
-    if (this.levelAI === 0) {
-      // Get the restart button section
-      const restartButtonSection = document.querySelector(
-        "#restart-button-container"
-      );
-      // Make it visible once again
-      restartButtonSection.classList.remove("hidden");
-    }
-
+  updateSingleplayerLeaderboard(winner) {
     // Update Single Player Leaderboard
     g_leaderboard.updateSingleplayer(
       winner,
@@ -565,14 +418,14 @@ class Game {
   }
 
   chooseAction(index) {
-    const currentPlayer = this.currentState.board.getCurrentPlayer();
+    const currentPlayer = this.getCurrentPlayer();
 
     // Get the phase of the current player
     const currentPlayerPhase =
       this.currentState.board.getPlayerPhase(currentPlayer);
 
     // Check if a Mill was formed
-    if (this.currentState.board.millFormed) {
+    if (this.isMillFormed()) {
       if (this.currentState.board.getPiece(index) === 3 - currentPlayer) {
         return new DestroyAction(index, currentPlayer);
       }
@@ -597,8 +450,8 @@ class Game {
       // Check if any piece was previously selected
       if (this.selectedPoints.length > 0) {
         // Fetch previously selected piece [Starting piece] - The list with the selected points aims to have 1 point each time.
-        const initialPoint = this.selectedPoints[0][0];
-        const initialIndex = this.selectedPoints[0][1];
+        // const initialPoint = this.selectedPoints[0][0];
+        const initialIndex = this.selectedPoints[0];
 
         // Check if the final place is empty
         if (this.currentState.board.getPiece(index) === 0) {
@@ -607,20 +460,15 @@ class Game {
             this.currentState.board.isAdjacent(initialIndex, index) ||
             currentPlayerPhase === "flying"
           ) {
+            // Define a new and clean Array
+            this.selectedPoints = [];
+
             // Perform the action
             return new MoveAction(initialIndex, index, currentPlayer);
           } else {
             // The target place is not considered to be a valid move
             // Clear Previously Selected Piece
             this.selectedPoints = [];
-
-            // Removes a highlight of the selected piece
-            initialPoint.classList.remove(
-              `selected-point-player${currentPlayer}`
-            );
-
-            // Remove highlight from the possible moves
-            this.removeHighlightPossibleMoves(currentPlayer, initialIndex);
           }
         } else {
           console.log("OCUPADO MEUUU!!!");
@@ -630,15 +478,8 @@ class Game {
         // We are selecting the initial piece
         // Check if the selected piece is valid
         if (currentPlayer === this.currentState.board.getPiece(index)) {
-          // Saves the selected point
-          const pointToMoveTo = this.getPointFromIndex(index);
-          this.selectedPoints.push([pointToMoveTo, index]);
-
-          // Adds a highlight to the piece to better visualize the one selected
-          pointToMoveTo.classList.add(`selected-point-player${currentPlayer}`);
-
-          // Add a highlight for every possible move
-          this.highlightPossibleMoves(currentPlayer, index);
+          // Saves the index of a selected point
+          this.selectedPoints.push([index]);
         } else {
           // Clear Previously Selected Piece
           this.selectedPoints = [];
@@ -653,71 +494,21 @@ class Game {
     return null;
   }
 
-  updateDOM(action) {
-    if (action instanceof DestroyAction) {
-      this.removeEnemyPiece(action);
-    } else if (action instanceof MoveAction) {
-      this.movePiece(action);
-    } else if (action instanceof PlaceAction) {
-      this.addPiece(action);
-    } else {
-      console.log("[!] invalid action", action);
-    }
-  }
-
-  async handlePointClick(point, index) {
-    const isGameOver =
-      this.currentState.board.gameOver() ||
-      this.player1GaveUp ||
-      this.player2GaveUp;
-
-    if (isGameOver) {
-      return;
-    }
-
-    if (this.levelAI !== 0 && this.currentState.board.currentPlayer === 2) {
-      return;
-    }
-
-    const action = this.chooseAction(index);
-    if (action === null) {
-      return;
-    }
-    this.currentState.execute(action);
-
-    this.updateDOM(action);
-
-    await this.doAiMove();
-  }
-
   async doAiMove() {
-    while (this.levelAI !== 0 && this.currentState.board.currentPlayer === 2) {
-      const isGameOver =
-        this.currentState.board.gameOver() ||
-        this.player1GaveUp ||
-        this.player2GaveUp;
-
-      if (isGameOver) {
-        return;
-      }
-
-      // wait a bit but dont block everything
-      await new Promise((r) => setTimeout(r, 750));
-
-      const aiAction = executeMinimaxMove(
-        heuristic1,
-        this.levelAI
-      )(this.currentState);
-      this.currentState.execute(aiAction);
-
-      this.updateDOM(aiAction);
+    // Check if game is over
+    if (this.checkGameOver()) {
+      return;
     }
-  }
 
-  getPointFromIndex(index) {
-    return boardContainer.childNodes
-      .values()
-      .filter((v) => v.classList[0] === "point")
-      .toArray()[index];
+    // wait a bit but dont block everything
+    await new Promise((r) => setTimeout(r, 750));
+
+    // Compute the action to be performed by the MinMax
+    const aiAction = executeMinimaxMove(
+      heuristic1,
+      this.levelAI
+    )(this.currentState);
+
+    return aiAction;
   }
 }

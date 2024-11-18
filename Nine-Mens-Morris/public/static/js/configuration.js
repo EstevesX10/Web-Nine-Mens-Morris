@@ -51,17 +51,11 @@ class Configuration {
       document.getElementById("first-player").value = savedFirstPlayer;
     if (savedAiLevel) document.getElementById("ai-level").value = savedAiLevel;
 
-    // Crate a new Board [On the FrontEnd] based on the board size
-    canvas.generateBoard(savedBoardSize);
-
     // Remove all the player pieces if there were any previously
     var player1PiecesContainer = document.getElementById("player1-pieces");
     player1PiecesContainer.replaceChildren();
     var player2PiecesContainer = document.getElementById("player2-pieces");
     player2PiecesContainer.replaceChildren();
-
-    // Generate the Each Player's Available Pieces
-    canvas.generatePlayerPieces(savedBoardSize * 3);
 
     // Update background Color of the first player
     const firstPlayerInfo = document.querySelector(
@@ -127,6 +121,15 @@ class Configuration {
       player2GiveUp.style.display = "";
       player2Name.textContent = "Player 2";
     }
+    // Update Canvas
+    const canvas = new Canvas("", game);
+
+    // Crate a new Board [On the FrontEnd] based on the board size
+    canvas.generateBoard(savedBoardSize);
+
+    // Generate the Each Player's Available Pieces
+    canvas.generatePlayerPieces(savedBoardSize * 3);
+
     // console.log(gameState)
   }
 }
