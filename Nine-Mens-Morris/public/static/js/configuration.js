@@ -52,7 +52,7 @@ class Configuration {
     if (savedAiLevel) document.getElementById("ai-level").value = savedAiLevel;
 
     // Crate a new Board [On the FrontEnd] based on the board size
-    generateBoard(savedBoardSize);
+    canvas.generateBoard(savedBoardSize);
 
     // Remove all the player pieces if there were any previously
     var player1PiecesContainer = document.getElementById("player1-pieces");
@@ -61,7 +61,7 @@ class Configuration {
     player2PiecesContainer.replaceChildren();
 
     // Generate the Each Player's Available Pieces
-    generatePlayerPieces(savedBoardSize * 3);
+    canvas.generatePlayerPieces(savedBoardSize * 3);
 
     // Update background Color of the first player
     const firstPlayerInfo = document.querySelector(
@@ -132,4 +132,4 @@ class Configuration {
 }
 
 game = null;
-g_config = new Configuration();
+const g_config = new Configuration();
