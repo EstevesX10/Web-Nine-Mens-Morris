@@ -1,6 +1,25 @@
-document.addEventListener("DOMContentLoaded", () => {
+class NavigationManager {
+  constructor() {
+    // Get all the Navigation Buttons
+    this.navButtons = document.querySelectorAll(".nav-btn");
+
+    // Add event listeners to each one to keep track of their behaviour and which one is selected
+    this.navButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        // Get the section Id to which we are transitioning into
+        this.sectionId = button.getAttribute("data-target");
+
+        // Clean Active Selection
+        this.cleanActiveSection();
+
+        // Switch section on button click
+        this.updateActiveSection(this.sectionId);
+      });
+    });
+  }
+
   // Function to clear the active class from the previous content section
-  function cleanActiveSection() {
+  cleanActiveSection() {
     // Get the current active content section
     const section = document.querySelector(".content.active");
 
@@ -13,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to update the current active content section
-  function updateActiveSection(sectionId) {
+  updateActiveSection(sectionId) {
     // Show the target section and fade it in
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
@@ -29,32 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Get all the Navigation Buttons
-  const navButtons = document.querySelectorAll(".nav-btn");
-
-  // Add event listeners to each one to keep track of their behaviour and which one is selected
-  navButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      // Get the section Id to which we are transitioning into
-      const sectionId = button.getAttribute("data-target");
-
-      // Clean Active Selection
-      cleanActiveSection();
-
-      // Switch section on button click
-      updateActiveSection(sectionId);
+  enableNavItems(show) {
+    // Add event listeners to each one to keep track of their behaviour and which one is selected
+    this.navButtons.forEach((button) => {
+      if (button.getAttribute("data-target") !== "authentication") {
+        button.style.display = show ? "" : "none";
+      }
     });
-  });
-});
-
-function enableNavItems(show) {
-  // Get all the Navigation Buttons
-  const navButtons = document.querySelectorAll(".nav-btn");
-
-  // Add event listeners to each one to keep track of their behaviour and which one is selected
-  navButtons.forEach((button) => {
-    if (button.getAttribute("data-target") !== "authentication") {
-      button.style.display = show ? "" : "none";
-    }
-  });
+  }
 }
+
+navManager = new NavigationManager();
