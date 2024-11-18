@@ -386,7 +386,7 @@
 }
 
 /* Players Buttons to Give Up */
-
+/* 
 .player1-give-up-btn,
 .player2-give-up-btn {
   position: absolute;
@@ -434,6 +434,57 @@
   font-weight: bold;
   letter-spacing: 0.1rem;
   text-align: center;
+} */
+
+.player1-resign-container,
+.player2-resign-container{
+  position: absolute;
+  display: flex;
+  top: 85%;
+  height: max-content;
+  width: 45%;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  white-space: pre;
+  border-radius: 10px;
+  border: 2px solid;
+  opacity: 1;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  z-index: 3;
+}
+
+.player1-resign-container {
+  background-color: var(--piece1Color);
+  border-color: var(--player1SelectedPoint);
+}
+
+.player2-resign-container {
+  background-color: var(--player2Color);
+  border-color: var(--player2SelectedPoint);
+}
+
+.player1-resign-btn,
+.player2-resign-btn {
+  position: relative;
+  color: #fff;
+  height: 100%; 
+  width: 100%;
+  font-weight: bold;
+  background-color: transparent;
+  font-size: 13px;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.player1-resign-container:hover,
+.player2-resign-container:hover {
+  width: 48%;
+  box-shadow: 0 0 10px var(--player1PossibleMovesColor);
 }
 
 /* Board Related Elements */

@@ -390,8 +390,8 @@ class Game {
     this.lastPlayer2Note = "Place a Piece";
 
     // Get Give Up Buttons
-    const player1GiveUpButton = document.querySelector(".player1-give-up-btn");
-    const player2GiveUpButton = document.querySelector(".player2-give-up-btn");
+    const player1GiveUpButton = document.querySelector(".player1-resign-btn");
+    const player2GiveUpButton = document.querySelector(".player2-resign-btn");
 
     player1GiveUpButton.addEventListener("click", () => {
       if (
@@ -430,7 +430,7 @@ class Game {
     const restartButton = document.getElementById("restart-button");
     restartButton.onclick = () => {
       // Playing against the AI, only the user can reset the game and on his turn
-      if (this.levelAI > 0 && this.currentState.board.currentPlayer === 1) {
+      if (this.levelAI > 0 && (this.currentState.board.gameOver() || this.currentState.board.currentPlayer === 1)) {
         g_config.loadBoard();
       }
       // Playing PVP either player may be capable of restarting the game

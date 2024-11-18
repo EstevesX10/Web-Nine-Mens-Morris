@@ -89,7 +89,7 @@ class Configuration {
     winnerContainer.classList.remove(`active-player2`);
 
     // Get the player 2 sections
-    const player2GiveUp = document.querySelector(".player2-give-up-btn");
+    const player2GiveUp = document.querySelector(".player2-resign-container");
     const player2Name = document.querySelector("#player2-name");
 
     // Get the restart button section
