@@ -437,7 +437,7 @@
 } */
 
 .player1-resign-container,
-.player2-resign-container{
+.player2-resign-container {
   position: absolute;
   display: flex;
   top: 85%;
@@ -469,7 +469,7 @@
 .player2-resign-btn {
   position: relative;
   color: #fff;
-  height: 100%; 
+  height: 100%;
   width: 100%;
   font-weight: bold;
   background-color: transparent;
