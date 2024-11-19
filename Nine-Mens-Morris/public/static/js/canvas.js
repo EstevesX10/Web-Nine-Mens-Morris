@@ -12,8 +12,6 @@ class Canvas {
     this.lineThickness = 4;
     this.lineColor = "#8499ce";
 
-    this.prevSelectedPiece = null;
-
     // Define some strings to help keep track of the last directive of the player before he eliminates a enemy's piece
     this.lastPlayer1Note = "Place a Piece";
     this.lastPlayer2Note = "Place a Piece";
@@ -35,6 +33,7 @@ class Canvas {
         !this.player2GaveUp &&
         !this.game.currentState.board.gameOver()
       ) {
+        // Player 1 Gave Up
         this.player1GaveUp = true;
 
         // Clean UI elements
@@ -51,6 +50,7 @@ class Canvas {
         !this.player2GaveUp &&
         !this.currentState.board.gameOver()
       ) {
+        // Player 2 Gave Up
         this.player2GaveUp = true;
 
         // Clean UI elements
