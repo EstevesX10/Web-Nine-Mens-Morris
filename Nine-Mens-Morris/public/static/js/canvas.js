@@ -48,7 +48,7 @@ class Canvas {
       if (
         !this.player1GaveUp &&
         !this.player2GaveUp &&
-        !this.currentState.board.gameOver()
+        !this.game.currentState.board.gameOver()
       ) {
         // Player 2 Gave Up
         this.player2GaveUp = true;
