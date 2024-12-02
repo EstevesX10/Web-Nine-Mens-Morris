@@ -376,9 +376,10 @@ class State {
 }
 
 class Game {
-  constructor(state, levelAI) {
+  constructor(state, levelAI, gameHash) {
     this.currentState = state;
     this.levelAI = levelAI;
+    this.gameHash = gameHash;
     this.selectedPoints = [];
   }
 

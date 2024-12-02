@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="static/css/configuration.css" />
     <link rel="stylesheet" href="static/css/leaderboard.css" />
     <link rel="stylesheet" href="static/css/authentication.css" />
+    <link rel="stylesheet" href="static/css/errorMessages.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -622,7 +623,19 @@
           </div>
         </section>
       </div>
+      <div class="modal">
+        <div class="modal-content">
+          <span class="closeIcon"><i class="fas-fa-times"></i></span>
+          <div class="modal-body">
+            <span class="icon"><i class = "fas-fa-exclamation-triangle"></i></span>
+            <div class="right-items">
+              <h1>Poopyhead</h1>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
+    <script src="static/js/serverRequests.js"></script>
     <script src="static/js/script.js"></script>
     <script src="static/js/rules.js"></script>
     <script src="static/js/canvas.js"></script>
@@ -633,7 +646,6 @@
     <script src="static/js/ai.js"></script>
     <script src="static/js/heuristics.js"></script>
     <script src="static/js/configuration.js"></script>
-    <script src="static/js/serverRequests.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"

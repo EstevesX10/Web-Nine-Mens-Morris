@@ -1,3 +1,15 @@
+const closeBtn = document.querySelector('.closeIcon');
+const modal = document.querySelector('.modal');
+
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active')
+})
+
+window.addEventListener('click', event => {
+  if (event.target === modal)
+      modal.classList.remove('active')
+})
+
 class AuthenticationManager {
   constructor() {
     // Fetch login and register links
@@ -52,97 +64,114 @@ class AuthenticationManager {
     });
   }
 
-  login() {
+  async login() {
     // Fetching the values from the login form
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
 
-    console.log("Login Form Data:", {
-      username: username,
-      password: password,
-    });
+    // Check if the login is valid
+    const loginResponse = await register(username, password);
 
-    // Update the name of the authentication button in the navigation bar
-    var authNavBtnName = document.getElementById("nav-btn-authentication");
-    authNavBtnName.classList.add("hidden");
+    // Define a variable for whether or not we can login
+    let canLogin = null;
 
-    // Set a timeout to proper showcase the animation of the username appearing in the nav bar
-    setTimeout(() => {
-      authNavBtnName.textContent = this.capitalize(username);
-      authNavBtnName.classList.remove("hidden");
-    }, 750);
+    // Check if the we can perform login
+    if (loginResponse["error"] == null) {
+      canLogin = true;
+    } else {
+      canLogin = false;
+    }
 
-    this.logregBox.classList.remove("login");
-    this.logregBox.classList.remove("register");
-    this.logregBox.classList.add("account");
+    // Perform Login
+    if (canLogin) {
+      // Update the name of the authentication button in the navigation bar
+      var authNavBtnName = document.getElementById("nav-btn-authentication");
+      authNavBtnName.classList.add("hidden");
 
-    // Here, we could make an AJAX call to request the data from a server.
+      // Set a timeout to proper showcase the animation of the username appearing in the nav bar
+      setTimeout(() => {
+        authNavBtnName.textContent = this.capitalize(username);
+        authNavBtnName.classList.remove("hidden");
+      }, 750);
 
-    // Add the data into the account details section
-    var accountUsername = document.getElementById("accountUsername");
-    accountUsername.textContent = username;
+      this.logregBox.classList.remove("login");
+      this.logregBox.classList.remove("register");
+      this.logregBox.classList.add("account");
 
-    var accountEmail = document.getElementById("accountEmail");
-    accountEmail.textContent = "None";
+      // Add the data into the account details section
+      var accountUsername = document.getElementById("accountUsername");
+      accountUsername.textContent = username;
 
-    var accountPassword = document.getElementById("accountPassword");
-    accountPassword.textContent = password;
+      var accountEmail = document.getElementById("accountEmail");
+      accountEmail.textContent = "None";
 
-    navManager.enableNavItems(true);
+      var accountPassword = document.getElementById("accountPassword");
+      accountPassword.textContent = password;
 
-    // [TODO] Fetch EMAIL IN BACKEND
+      navManager.enableNavItems(true);
+
+      // Restart game board whenever the player logs out so that the next user does not have messy data
+      g_config.loadBoard();
+    } else {
+      modal.classList.add('active');
+    }
   }
 
-  register() {
+  async register() {
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
     const password = document.getElementById("registerPassword").value;
 
-    console.log("Register Form Data:", {
-      username: username,
-      email: email,
-      password: password,
-    });
+    // Check if the register is valid
+    const registerResponse = await register(username, password);
 
-    // Add the data into the account details section
-    var accountUsername = document.getElementById("accountUsername");
-    accountUsername.textContent = username;
-    var accountEmail = document.getElementById("accountEmail");
-    accountEmail.textContent = email;
-    var accountPassword = document.getElementById("accountPassword");
-    accountPassword.textContent = password;
+    // Define a variable for whether or not we can register
+    let canRegister = null;
 
-    // Update the name of the authentication button in the navigation bar
-    var authNavBtnName = document.getElementById("nav-btn-authentication");
-    authNavBtnName.classList.add("hidden");
+    // Check if the we can perform login
+    if (registerResponse["error"] == null) {
+      canRegister = true;
+    } else {
+      canRegister = false;
+    }
 
-    // Set a timeout to proper showcase the animation of the username appearing in the nav bar
-    setTimeout(() => {
-      authNavBtnName.textContent = this.capitalize(username);
-      authNavBtnName.classList.remove("hidden");
-    }, 750);
+    if (canRegister) {
+      // Add the data into the account details section
+      var accountUsername = document.getElementById("accountUsername");
+      accountUsername.textContent = username;
+      var accountEmail = document.getElementById("accountEmail");
+      accountEmail.textContent = email;
+      var accountPassword = document.getElementById("accountPassword");
+      accountPassword.textContent = password;
 
-    this.logregBox.classList.remove("login");
-    this.logregBox.classList.remove("register");
-    this.logregBox.classList.add("account");
+      // Update the name of the authentication button in the navigation bar
+      var authNavBtnName = document.getElementById("nav-btn-authentication");
+      authNavBtnName.classList.add("hidden");
 
-    navManager.enableNavItems(true);
+      // Set a timeout to proper showcase the animation of the username appearing in the nav bar
+      setTimeout(() => {
+        authNavBtnName.textContent = this.capitalize(username);
+        authNavBtnName.classList.remove("hidden");
+      }, 750);
 
-    // [TODO] Send the data to a server here.
+      // Hide the login, register and account sections
+      this.logregBox.classList.remove("login");
+      this.logregBox.classList.remove("register");
+      this.logregBox.classList.add("account");
+
+      // Enable the Navigation Items
+      navManager.enableNavItems(true);
+    } else {
+      modal.classList.add('active');
+    }
   }
 
-  logout() {
+  async logout() {
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
     const password = document.getElementById("registerPassword").value;
-
-    console.log("Register Form Data:", {
-      username: username,
-      email: email,
-      password: password,
-    });
 
     // Reset forms and go back to the login
     this.loginForm.reset();
@@ -166,12 +195,18 @@ class AuthenticationManager {
     document.getElementById("accountEmail").textContent = "";
     document.getElementById("accountPassword").textContent = "";
 
+    // Disable the navigation items
     navManager.enableNavItems(false);
 
-    // Restart game board whenever the player logs out so that the next user does not have messy data
-    g_config.loadBoard();
+    console.log("Game Hash", game.gameHash);
 
-    // Send the data to a server here.
+    // Leave the current session as we are no longer logged in
+    let leaveResponse = await leave(username, password, game.gameHash);
+
+    console.log(leaveResponse);
+
+    // Restart game board whenever the player logs out so that the next user does not have messy data
+    // g_config.loadBoard();
   }
 }
 

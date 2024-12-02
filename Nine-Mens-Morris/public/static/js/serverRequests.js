@@ -1,9 +1,6 @@
 async function fetchData(url, options = {}) {
   try {
     const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     const data = await response.json(); // Parse JSON response
     console.log("data", data);
     return data;
