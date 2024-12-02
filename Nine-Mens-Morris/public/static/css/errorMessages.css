@@ -1,9 +1,7 @@
 .modal {
-    margin-left: 5px;
-    margin-top: 45%;
     display: none;
     position: absolute;
-    width: 50%;
+    width: 80%;
     height: 10%;
     background-color: transparent;
     align-items: center;
@@ -43,12 +41,12 @@
 
 .closeIcon {
     position: absolute;
-    margin-top: 2px;
+    margin-top: -4px;
     right: 20px;
     top: 20px;
     color: #abafba;
     transition: .3s;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .closeIcon:hover {
@@ -67,11 +65,11 @@
 span.error-icon {
     position: absolute;
     margin-right: 85%;
-    font-size: 40px;
+    font-size: 30px;
     color: #f65656;
 }
 
 .error-message {
     margin: left;
-    font-size: 30px;
+    font-size: 20px;
 }
