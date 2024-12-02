@@ -377,11 +377,13 @@ class Canvas {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(`player${player}-notes`).textContent =
-        this.lastPlayer1Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = this.lastPlayer1Note;
     } else {
-      document.getElementById(`player${player}-notes`).textContent =
-        this.lastPlayer2Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = this.lastPlayer2Note;
     }
   }
 
@@ -513,8 +515,9 @@ class Canvas {
     const currentPlayer = this.game.getCurrentPlayer();
 
     // Get the phase of the current player
-    const currentPlayerPhase =
-      this.game.currentState.board.getPlayerPhase(currentPlayer);
+    const currentPlayerPhase = this.game.currentState.board.getPlayerPhase(
+      currentPlayer
+    );
 
     // Check if a Mill was formed
     if (this.game.isMillFormed()) {
@@ -725,4 +728,63 @@ class Canvas {
     this.removeAllHighlightPossibleMoves(1);
     this.removeAllHighlightPossibleMoves(2);
   }
+
+  createNetworkUpdate() {
+    let prevFrom = -1;
+    let prevRequest = None;
+
+    const inner = (event) => {
+      const data = event.data;
+      console.log(`Got server update ${data}`);
+      if (data.error !== undefined) {
+        // TODO: handle error
+        console.warn(`Server returned error: ${data.error}`);
+        return;
+      }
+
+      if (data.cell === undefined) {
+        // This is the first update call
+        if (data.turn !== document.getElementById("loginUsername").value) {
+          // TODO: switch player highlight
+          this.switchPlayerHighlight(
+            this.game.currentState.board.getCurrentPlayer()
+          );
+        }
+      } else if (prevRequest === "drop") {
+        const action = PlaceAction(
+          cellToIndex(data.cell),
+          this.game.currentState.board.getCurrentPlayer()
+        );
+        this.game.currentState.execute(action);
+        this.updateDOM(action);
+      } else if (prevRequest === "from") {
+        prevFrom = cellToIndex(data.cell);
+      } else if (prevRequest === "to") {
+        assert(prevFrom !== -1, "Got step='to' without step='from'");
+
+        const action = MoveAction(
+          prevFrom,
+          cellToIndex(data.cell),
+          this.game.currentState.board.getCurrentPlayer()
+        );
+        this.game.currentState.execute(action);
+        this.updateDOM(action);
+      } else if (prevRequest === "take") {
+        const action = DestroyAction(
+          cellToIndex(data.cell),
+          this.game.currentState.board.getCurrentPlayer()
+        );
+        this.game.currentState.execute(action);
+        this.updateDOM(action);
+      } else {
+        console.error(`Bad prevRequest: ${prevRequest}`);
+      }
+
+      prevRequest = data.phase === "drop" ? "drop" : data.step;
+    };
+  }
+}
+
+function cellToIndex(cell) {
+  return cell.square * 8 + cell.position;
 }
