@@ -97,6 +97,9 @@ class AuthenticationManager {
       accountPassword.textContent = password;
 
       navManager.enableNavItems(true);
+
+      // Restart game board whenever the player logs out so that the next user does not have messy data
+      g_config.loadBoard();
     } else {
       alert("Inserted Wrong Password!");
     }
@@ -140,27 +143,23 @@ class AuthenticationManager {
         authNavBtnName.classList.remove("hidden");
       }, 750);
 
+      // Hide the login, register and account sections
       this.logregBox.classList.remove("login");
       this.logregBox.classList.remove("register");
       this.logregBox.classList.add("account");
 
+      // Enable the Navigation Items
       navManager.enableNavItems(true);
     } else {
       alert("Invalid Registration (User Already exists!)");
     }
   }
 
-  logout() {
+  async logout() {
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
     const password = document.getElementById("registerPassword").value;
-
-    console.log("Register Form Data:", {
-      username: username,
-      email: email,
-      password: password,
-    });
 
     // Reset forms and go back to the login
     this.loginForm.reset();
@@ -184,12 +183,18 @@ class AuthenticationManager {
     document.getElementById("accountEmail").textContent = "";
     document.getElementById("accountPassword").textContent = "";
 
+    // Disable the navigation items
     navManager.enableNavItems(false);
 
-    // Restart game board whenever the player logs out so that the next user does not have messy data
-    g_config.loadBoard();
+    console.log("Game Hash", game.gameHash);
 
-    // Send the data to a server here.
+    // Leave the current session as we are no longer logged in
+    let leaveResponse = await leave(username, password, game.gameHash);
+
+    console.log(leaveResponse);
+
+    // Restart game board whenever the player logs out so that the next user does not have messy data
+    // g_config.loadBoard();
   }
 }
 
