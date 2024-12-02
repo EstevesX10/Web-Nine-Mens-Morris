@@ -108,23 +108,10 @@ async function ranking(group, size) {
   return response;
 }
 
-// ---------------------------------------------------------
-// Authentication
-
-// async function getUserPassword(nickName) {
-//   fetchData("http://twserver.alunos.dcc.fc.up.pt:8008/register", {
-//     method: "GET",
-//     // headers: {
-//     //   "Content-Type": "application/json",
-//     // },
-//     body: JSON.stringify({ nick: nickName, password: password }),
-//   })
-//     .then((data) => {
-//       console.log("Fetched data:", data);
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//     });
-// }
-
-async function login(nickName, password) {}
+function update(nick, gameId, callback) {
+  const eventSource = new EventSource(
+    `http://twserver.alunos.dcc.fc.up.pt:8008/update/nick=${nick}&game=${gameId}`
+  );
+  eventSource.onmessage = callback;
+  return eventSource;
+}
