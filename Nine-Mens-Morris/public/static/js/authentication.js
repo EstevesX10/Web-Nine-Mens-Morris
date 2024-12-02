@@ -1,5 +1,6 @@
 const closeBtn = document.querySelector('.closeIcon');
 const modal = document.querySelector('.modal');
+const errorMsg = document.querySelector('.error-message');
 
 closeBtn.addEventListener('click', () => {
     modal.classList.remove('active')
@@ -111,8 +112,9 @@ class AuthenticationManager {
       navManager.enableNavItems(true);
 
       // Restart game board whenever the player logs out so that the next user does not have messy data
-      g_config.loadBoard();
+       g_config.loadBoard();
     } else {
+      errorMsg.innerHTML = "Wrong password! Please try again.";
       modal.classList.add('active');
     }
   }
@@ -163,6 +165,7 @@ class AuthenticationManager {
       // Enable the Navigation Items
       navManager.enableNavItems(true);
     } else {
+      errorMsg.innerHTML = "User is already registered! Please try again.";
       modal.classList.add('active');
     }
   }
