@@ -1,3 +1,15 @@
+const closeBtn = document.querySelector('.closeIcon');
+const modal = document.querySelector('.modal');
+
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active')
+})
+
+window.addEventListener('click', event => {
+  if (event.target === modal)
+      modal.classList.remove('active')
+})
+
 class AuthenticationManager {
   constructor() {
     // Fetch login and register links
@@ -98,7 +110,7 @@ class AuthenticationManager {
 
       navManager.enableNavItems(true);
     } else {
-      alert("Inserted Wrong Password!");
+      modal.classList.add('active');
     }
   }
 
@@ -146,7 +158,7 @@ class AuthenticationManager {
 
       navManager.enableNavItems(true);
     } else {
-      alert("Invalid Registration (User Already exists!)");
+      modal.classList.add('active');
     }
   }
 
