@@ -107,7 +107,7 @@ async function ranking(group, size) {
 
 function update(nick, gameId, callback) {
   const eventSource = new EventSource(
-    `http://twserver.alunos.dcc.fc.up.pt:8008/update/nick=${nick}&game=${gameId}`
+    `http://twserver.alunos.dcc.fc.up.pt:8008/update?nick=${nick}&game=${gameId}`
   );
   eventSource.onmessage = callback;
   return eventSource;

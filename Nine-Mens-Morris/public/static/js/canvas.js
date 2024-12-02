@@ -753,7 +753,7 @@ class Canvas {
           );
         }
       } else if (prevRequest === "drop") {
-        const action = PlaceAction(
+        const action = new PlaceAction(
           cellToIndex(data.cell),
           this.game.currentState.board.getCurrentPlayer()
         );
@@ -764,7 +764,7 @@ class Canvas {
       } else if (prevRequest === "to") {
         assert(prevFrom !== -1, "Got step='to' without step='from'");
 
-        const action = MoveAction(
+        const action = new MoveAction(
           prevFrom,
           cellToIndex(data.cell),
           this.game.currentState.board.getCurrentPlayer()
@@ -772,7 +772,7 @@ class Canvas {
         this.game.currentState.execute(action);
         this.updateDOM(action);
       } else if (prevRequest === "take") {
-        const action = DestroyAction(
+        const action = new DestroyAction(
           cellToIndex(data.cell),
           this.game.currentState.board.getCurrentPlayer()
         );
