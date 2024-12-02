@@ -548,6 +548,20 @@ class Canvas {
         // const initialPoint = this.selectedPoints[0][0];
         const initialIndex = this.selectedPoints[0];
 
+        if (index === initialIndex) {
+          // Selected the same piece twice
+          // Clear Previously Selected Piece
+          this.selectedPoints = [];
+
+          // Removes a highlight of the selected piece
+          initialPoint.classList.remove(
+            `selected-point-player${currentPlayer}`
+          );
+
+          // Remove highlight from the possible moves
+          this.removeHighlightPossibleMoves(currentPlayer, initialIndex);
+        }
+
         // Check if the final place is empty
         if (this.game.currentState.board.getPiece(index) === 0) {
           // Check if a movement is valid
@@ -560,18 +574,6 @@ class Canvas {
 
             // Perform the action
             return new MoveAction(initialIndex, index, currentPlayer);
-          } else {
-            // The target place is not considered to be a valid move
-            // Clear Previously Selected Piece
-            this.selectedPoints = [];
-
-            // Removes a highlight of the selected piece
-            initialPoint.classList.remove(
-              `selected-point-player${currentPlayer}`
-            );
-
-            // Remove highlight from the possible moves
-            this.removeHighlightPossibleMoves(currentPlayer, initialIndex);
           }
         } else {
           console.log("OCUPADO MEUUU!!!");
