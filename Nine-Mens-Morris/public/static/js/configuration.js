@@ -9,7 +9,7 @@ class Configuration {
     // localStorage.clear();
 
     // Load initial board configuration
-    this.loadBoard();
+    // this.loadBoard();
 
     // Save the configuration when submiting the form and loading a new board based on those new parameters
     form.addEventListener("submit", (event) => {
@@ -34,7 +34,7 @@ class Configuration {
     });
   }
 
-  loadBoard() {
+  async loadBoard() {
     const savedBoardSize = parseInt(localStorage.getItem("boardSize") || "2");
     const savedOpponent = localStorage.getItem("opponent", "ai") || "ai";
     const savedFirstPlayer = parseInt(
@@ -97,7 +97,8 @@ class Configuration {
 
     // Check for the Game Opponent
     if (savedOpponent === "ai") {
-      game = new Game(gameState, savedAiLevel);
+      // Define a new instance for the game
+      game = new Game(gameState, savedAiLevel, "");
 
       player2GiveUp.style.display = "none";
       if (savedFirstPlayer === 2) {
@@ -111,7 +112,15 @@ class Configuration {
 
       player2Name.textContent = "AI";
     } else {
-      game = new Game(gameState, 0);
+      // Get the current authenticated user
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+
+      // Join a Session with the default configuration
+      let joinResponse = await join(username, password, 4, savedBoardSize);
+
+      // Create a instance of the game
+      game = new Game(gameState, 0, joinResponse["game"]);
 
       // Check if the HTML element already has a hidden class
       if (!restartButtonSection.classList.contains("hidden")) {
@@ -129,10 +138,8 @@ class Configuration {
 
     // Generate the Each Player's Available Pieces
     canvas.generatePlayerPieces(savedBoardSize * 3);
-
-    // console.log(gameState)
   }
 }
 
-game = null;
+let game = null;
 const g_config = new Configuration();
