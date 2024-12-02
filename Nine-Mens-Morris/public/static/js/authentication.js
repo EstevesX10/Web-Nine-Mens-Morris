@@ -157,9 +157,21 @@ class AuthenticationManager {
 
   async logout() {
     // Fetching the values from the register form
-    const username = document.getElementById("registerUsername").value;
+    const username =
+      document.getElementById("registerUsername").value ||
+      document.getElementById("loginUsername").value;
     const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
+    const password =
+      document.getElementById("registerPassword").value ||
+      document.getElementById("loginPassword").value;
+
+    // Fetching the values from the login form
+    console.log(username + " " + password + " " + game.gameHash);
+
+    // Leave the current session as we are no longer logged in
+    let leaveResponse = await leave(username, password, game.gameHash);
+
+    console.log(leaveResponse);
 
     // Reset forms and go back to the login
     this.loginForm.reset();
@@ -185,13 +197,6 @@ class AuthenticationManager {
 
     // Disable the navigation items
     navManager.enableNavItems(false);
-
-    console.log("Game Hash", game.gameHash);
-
-    // Leave the current session as we are no longer logged in
-    let leaveResponse = await leave(username, password, game.gameHash);
-
-    console.log(leaveResponse);
 
     // Restart game board whenever the player logs out so that the next user does not have messy data
     // g_config.loadBoard();
