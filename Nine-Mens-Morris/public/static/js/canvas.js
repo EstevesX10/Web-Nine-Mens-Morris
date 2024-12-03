@@ -620,21 +620,25 @@ class Canvas {
       return;
     }
 
-    // Perform Player Action
+    // Select player action
     const action = this.chooseAction(index);
-    if (action === null) {
-      return;
-    }
 
     // Check if we are in PVP Mode
     if (!!this.game.gameHash) {
       const username = document.getElementById("loginUsername").value;
       const password = document.getElementById("loginPassword").value;
+      console.log(`Notifying server click at ${index}`);
       await notify(username, password, this.game.gameHash, index);
-    } else {
-      this.game.currentState.execute(action);
-      this.updateDOM(action);
+      return;
     }
+
+    // Playing singleplayer
+    // performe the action
+    if (action === null) {
+      return;
+    }
+    this.game.currentState.execute(action);
+    this.updateDOM(action);
 
     // Perform AI Action
     while (
@@ -749,7 +753,10 @@ class Canvas {
         return;
       }
 
-      if (data.cell === undefined) {
+      if (data.winner !== undefined) {
+        const winner = data.winner;
+        this.triggerWinnerContainer(winner);
+      } else if (data.cell === undefined) {
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {
           console.log("The other player goes first... Switching player");
@@ -767,9 +774,10 @@ class Canvas {
         this.game.currentState.execute(action);
         this.updateDOM(action);
       } else if (prevRequest === "from") {
+        console.log("Networked partial move:", data.cell);
         prevFrom = cellToIndex(data.cell);
       } else if (prevRequest === "to") {
-        assert(prevFrom !== -1, "Got step='to' without step='from'");
+        console.assert(prevFrom !== -1, "Got step='to' without step='from'");
 
         const action = new MoveAction(
           prevFrom,
