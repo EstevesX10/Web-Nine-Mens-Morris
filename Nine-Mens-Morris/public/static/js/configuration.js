@@ -84,6 +84,7 @@ class Configuration {
 
     // Get the player 2 sections
     const player2GiveUp = document.querySelector(".player2-resign-container");
+    player2GiveUp.style.display = "none";
     const player2Name = document.querySelector("#player2-name");
 
     // Get the restart button section
@@ -101,7 +102,6 @@ class Configuration {
       // Define a new instance for the game
       game = new Game(gameState, savedAiLevel, null);
 
-      player2GiveUp.style.display = "none";
       if (savedFirstPlayer === 2) {
         game.doAiMove(); // Trigger AI first move
       }
@@ -131,7 +131,6 @@ class Configuration {
         restartButtonSection.classList.add("hidden");
       }
 
-      player2GiveUp.style.display = "";
       player2Name.textContent = "Player 2";
 
       // Update Canvas

@@ -41,6 +41,13 @@ class Canvas {
 
         // Trigger Winner Container - Player 2 Wins
         this.triggerWinnerContainer(2);
+
+        if (this.game.gameHash !== undefined) {
+          const username = document.getElementById("loginUsername").value;
+          const password = document.getElementById("loginPassword").value;
+          console.log("Notifying server giveup")
+          leave(username, password, this.game.gameHash)
+        }
       }
     });
 
@@ -722,8 +729,10 @@ class Canvas {
       restartButtonSection.classList.remove("hidden");
     }
 
-    // Update Single Player Leaderboard
-    this.game.updateSingleplayerLeaderboard(winner);
+    if (this.game.gameHash === undefined) {
+      // Update Single Player Leaderboard
+      this.game.updateSingleplayerLeaderboard(winner);
+    }
   }
 
   cleanUI() {
@@ -755,7 +764,8 @@ class Canvas {
 
       if (data.winner !== undefined) {
         const winner = data.winner;
-        this.triggerWinnerContainer(winner);
+        console.log("Networked winner", winner);
+        this.triggerWinnerContainer(winner === document.getElementById("loginUsername").value ? 1 : 2);
       } else if (data.cell === undefined) {
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {
