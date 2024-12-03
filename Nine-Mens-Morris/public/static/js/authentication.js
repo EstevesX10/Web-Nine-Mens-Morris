@@ -66,6 +66,9 @@ class AuthenticationManager {
   }
 
   async login() {
+    // Remove error pop-up if it's on the screen
+    modal.classList.remove('active');
+
     // Fetching the values from the login form
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
@@ -120,6 +123,9 @@ class AuthenticationManager {
   }
 
   async register() {
+    // Remove error pop-up if it's on the screen
+    modal.classList.remove('active');
+    
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
