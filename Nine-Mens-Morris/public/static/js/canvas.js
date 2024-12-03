@@ -779,6 +779,11 @@ class Canvas {
       } else if (prevRequest === "to") {
         console.assert(prevFrom !== -1, "Got step='to' without step='from'");
 
+        if (prevFrom === cellToIndex(data.cell)) {
+          // Piece has deselected
+          return;
+        }
+
         const action = new MoveAction(
           prevFrom,
           cellToIndex(data.cell),
