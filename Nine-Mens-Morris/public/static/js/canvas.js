@@ -123,25 +123,25 @@ class Canvas {
           y: offset - this.pointSize / 2 + this.lineThickness / 2,
         }, // Upper right corner
         {
-          x: offset - this.pointSize / 2 + this.lineThickness / 2,
-          y: boardCenter - this.pointSize / 2,
-        }, // Middle left point
-        {
           x: boardCenter + half - this.pointSize / 2 - this.lineThickness / 2,
           y: boardCenter - this.pointSize / 2,
         }, // Middle right point
         {
-          x: offset - this.pointSize / 2 + this.lineThickness / 2,
+          x: boardCenter + half - this.pointSize / 2 - this.lineThickness / 2,
           y: boardCenter + half - this.pointSize / 2 - this.lineThickness / 2,
-        }, // Lower left corner
+        }, // Lower right corner
         {
           x: boardCenter - this.pointSize / 2 + this.lineThickness / 2,
           y: boardCenter + half - this.pointSize / 2 - this.lineThickness / 2,
         }, // Lower middle corner
         {
-          x: boardCenter + half - this.pointSize / 2 - this.lineThickness / 2,
+          x: offset - this.pointSize / 2 + this.lineThickness / 2,
           y: boardCenter + half - this.pointSize / 2 - this.lineThickness / 2,
-        }, // Lower right corner
+        }, // Lower left corner
+        {
+          x: offset - this.pointSize / 2 + this.lineThickness / 2,
+          y: boardCenter - this.pointSize / 2,
+        }, // Middle left point
       ];
 
       // Add points to the board
@@ -548,12 +548,13 @@ class Canvas {
         // const initialPoint = this.selectedPoints[0][0];
         const initialIndex = this.selectedPoints[0];
 
-        if (index === initialIndex) {
+        if (index === initialIndex[0]) {
           // Selected the same piece twice
           // Clear Previously Selected Piece
           this.selectedPoints = [];
 
           // Removes a highlight of the selected piece
+          const initialPoint = this.getPointFromIndex(index);
           initialPoint.classList.remove(
             `selected-point-player${currentPlayer}`
           );
@@ -619,7 +620,7 @@ class Canvas {
       this.game.levelAI !== 0 &&
       this.game.currentState.board.currentPlayer === 2
     ) {
-      return;
+      if (this.game.currentState.board.currentPlayer === 2) return;
     }
 
     // Perform Player Action
