@@ -615,12 +615,9 @@ class Canvas {
       return;
     }
 
-    // Check if we are in PVP Mode
-    if (
-      this.game.levelAI !== 0 &&
-      this.game.currentState.board.currentPlayer === 2
-    ) {
-      if (this.game.currentState.board.currentPlayer === 2) return;
+    // Chck if the players turn
+    if (this.game.currentState.board.currentPlayer === 2) {
+      return;
     }
 
     // Perform Player Action
@@ -628,9 +625,16 @@ class Canvas {
     if (action === null) {
       return;
     }
-    this.game.currentState.execute(action);
 
-    this.updateDOM(action);
+    // Check if we are in PVP Mode
+    if (!!this.game.gameHash) {
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+      await notify(username, password, this.game.gameHash, index);
+    } else {
+      this.game.currentState.execute(action);
+      this.updateDOM(action);
+    }
 
     // Perform AI Action
     while (
@@ -734,11 +738,11 @@ class Canvas {
 
   createNetworkUpdate() {
     let prevFrom = -1;
-    let prevRequest = None;
+    let prevRequest = null;
 
     const inner = (event) => {
-      const data = event.data;
-      console.log(`Got server update ${data}`);
+      const data = JSON.parse(event.data);
+      console.log(`Got server update ${event.data}`);
       if (data.error !== undefined) {
         // TODO: handle error
         console.warn(`Server returned error: ${data.error}`);
@@ -748,16 +752,18 @@ class Canvas {
       if (data.cell === undefined) {
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {
-          // TODO: switch player highlight
+          console.log("The other player goes first... Switching player");
           this.switchPlayerHighlight(
             this.game.currentState.board.getCurrentPlayer()
           );
+          this.game.currentState.board.switchPlayer();
         }
       } else if (prevRequest === "drop") {
         const action = new PlaceAction(
           cellToIndex(data.cell),
           this.game.currentState.board.getCurrentPlayer()
         );
+        console.log("Networked placing", action);
         this.game.currentState.execute(action);
         this.updateDOM(action);
       } else if (prevRequest === "from") {
@@ -770,6 +776,7 @@ class Canvas {
           cellToIndex(data.cell),
           this.game.currentState.board.getCurrentPlayer()
         );
+        console.log("Networked moving", action);
         this.game.currentState.execute(action);
         this.updateDOM(action);
       } else if (prevRequest === "take") {
@@ -777,6 +784,7 @@ class Canvas {
           cellToIndex(data.cell),
           this.game.currentState.board.getCurrentPlayer()
         );
+        console.log("Networked destroying", action);
         this.game.currentState.execute(action);
         this.updateDOM(action);
       } else {
@@ -785,6 +793,8 @@ class Canvas {
 
       prevRequest = data.phase === "drop" ? "drop" : data.step;
     };
+
+    return inner;
   }
 }
 

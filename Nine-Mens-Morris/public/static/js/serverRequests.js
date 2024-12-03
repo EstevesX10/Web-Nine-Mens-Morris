@@ -66,7 +66,7 @@ async function leave(nickName, password, game) {
   return response;
 }
 
-async function notify(nickName, password, game, cell) {
+async function notify(nickName, password, game, index) {
   const response = await fetchData(
     "http://twserver.alunos.dcc.fc.up.pt:8008/notify",
     {
@@ -78,7 +78,10 @@ async function notify(nickName, password, game, cell) {
         nick: nickName,
         password: password,
         game: game,
-        cell: cell,
+        cell: {
+          square: Math.floor(index / 8),
+          position: index % 8,
+        },
       }),
     }
   ).catch((error) => {
@@ -105,7 +108,7 @@ async function ranking(group, size) {
   return response;
 }
 
-function update(nick, gameId, callback) {
+function hookUpdate(nick, gameId, callback) {
   const eventSource = new EventSource(
     `http://twserver.alunos.dcc.fc.up.pt:8008/update?nick=${nick}&game=${gameId}`
   );

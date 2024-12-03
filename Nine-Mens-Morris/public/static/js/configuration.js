@@ -94,11 +94,12 @@ class Configuration {
     // Update the game state
     var board = new Board(savedBoardSize, savedFirstPlayer);
     var gameState = new State(board);
+    let canvas = null;
 
     // Check for the Game Opponent
     if (savedOpponent === "ai") {
       // Define a new instance for the game
-      game = new Game(gameState, savedAiLevel, "");
+      game = new Game(gameState, savedAiLevel, null);
 
       player2GiveUp.style.display = "none";
       if (savedFirstPlayer === 2) {
@@ -111,6 +112,9 @@ class Configuration {
       }
 
       player2Name.textContent = "AI";
+
+      // Update Canvas
+      canvas = new Canvas("", game);
     } else {
       // Get the current authenticated user
       const username = document.getElementById("loginUsername").value;
@@ -129,9 +133,12 @@ class Configuration {
 
       player2GiveUp.style.display = "";
       player2Name.textContent = "Player 2";
+
+      // Update Canvas
+      canvas = new Canvas("", game);
+      console.log(`Connect to ${joinResponse.game} as ${username}`);
+      hookUpdate(username, joinResponse.game, canvas.createNetworkUpdate());
     }
-    // Update Canvas
-    const canvas = new Canvas("", game);
 
     // Crate a new Board [On the FrontEnd] based on the board size
     canvas.generateBoard(savedBoardSize);
