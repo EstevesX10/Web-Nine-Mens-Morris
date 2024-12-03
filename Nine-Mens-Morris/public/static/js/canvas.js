@@ -42,11 +42,12 @@ class Canvas {
         // Trigger Winner Container - Player 2 Wins
         this.triggerWinnerContainer(2);
 
-        if (this.game.gameHash !== undefined) {
+        if (this.game.gameHash !== null) {
           const username = document.getElementById("loginUsername").value;
           const password = document.getElementById("loginPassword").value;
           console.log("Notifying server giveup")
           leave(username, password, this.game.gameHash)
+          this.game.gameHash = null;
         }
       }
     });
@@ -631,7 +632,7 @@ class Canvas {
     const action = this.chooseAction(index);
 
     // Check if we are in PVP Mode
-    if (!!this.game.gameHash) {
+    if (this.game.gameHash !== null) {
       const username = document.getElementById("loginUsername").value;
       const password = document.getElementById("loginPassword").value;
       console.log(`Notifying server click at ${index}`);
@@ -729,7 +730,7 @@ class Canvas {
       restartButtonSection.classList.remove("hidden");
     }
 
-    if (this.game.gameHash === undefined) {
+    if (this.game.gameHash === null) {
       // Update Single Player Leaderboard
       this.game.updateSingleplayerLeaderboard(winner);
     }
