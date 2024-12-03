@@ -32,7 +32,7 @@ class Leaderboard {
       singlePlayerLeaderboard.classList.add("hidden");
 
       // Get the board Size
-      let size = document.getElementById("board-size").value;
+      let size = parseInt(document.getElementById("board-size").value);
 
       // Perform a Request to the Server for the Rankings
       let rankingResponse = await ranking(4, size);
