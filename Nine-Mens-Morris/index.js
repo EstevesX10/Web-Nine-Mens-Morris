@@ -1,10 +1,14 @@
 // const http = new require("http");
 import http from "http";
 
-const PORT = 8004;
+const PORT = 8104;
 
-import { writeUserData } from "./private/UsersData.js";
+import { writeUserData } from "./private/requests/utils.js";
 import { routes } from "./private/routes.js";
+
+import crypto from "crypto";
+let value = "test";
+const hash = crypto.createHash("md5").update(value).digest("hex");
 
 class Server {
   constructor(routes) {
