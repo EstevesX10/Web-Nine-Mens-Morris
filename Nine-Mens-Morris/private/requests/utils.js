@@ -90,7 +90,7 @@ export function send(res, body) {
 }
 
 export function error(res, msg) {
-  res.writeHead(200, { "Content-Type": "application/json" });
+  res.writeHead(400, { "Content-Type": "application/json" });
   res.write(JSON.stringify({ error: msg }));
   res.end();
 }
