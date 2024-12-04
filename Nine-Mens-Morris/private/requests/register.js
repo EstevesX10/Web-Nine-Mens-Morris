@@ -1,21 +1,50 @@
-import { readUsers, writeUserData } from "./utils.js";
+import {
+  receive,
+  send,
+  error,
+  readUsers,
+  userExists,
+  getUser,
+  addUser,
+  saveUsers,
+} from "./utils.js";
+import crypto from "crypto";
 
-export const register = async (nickName, password) => {
-  // Load the current Users
-  let users = readUsers();
-  console.log(users);
+export const register = async (req, res) => {
+  // Get the request
+  let requestData = await receive(req);
+
+  // Parse the User
+  let user = JSON.parse(requestData);
+
+  // Compute the Cypher Password
+  const secretPassword = crypto
+    .createHash("md5")
+    .update(user.password)
+    .digest("hex");
+
+  // Check if the User Already exists
+  if (userExists(user.nick)) {
+    // Perform Login
+
+    // Fetch the User
+    let currentUser = getUser(user.nick);
+
+    // Check if the Secret Password is the same as the one saved
+    if (currentUser.password === secretPassword) {
+      // Send empty message
+      return send(res, {});
+    } else {
+      // User Already exist - Send error
+      return error(res, "User already exists! Please check your Password!");
+    }
+  } else {
+    // Perform Registration
+
+    // Add the User to the Array
+    addUser(user.nick, secretPassword);
+
+    // Send empty message
+    return send(res, {});
+  }
 };
-
-// async function register(nickName, password) {
-//   const response = await fetchData(`${SERVER}/register`, {
-//     method: "POST",
-//     // headers: {
-//     //   "Content-Type": "application/json",
-//     // },
-//     body: JSON.stringify({ nick: nickName, password: password }),
-//   }).catch((error) => {
-//     console.error("Error:", error);
-//   });
-//   // console.log("responde", response);
-//   return response;
-// }
