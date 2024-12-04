@@ -15,7 +15,7 @@ export const register = async (req, res) => {
   let requestData = await receive(req);
 
   // Parse the User
-  let user = JSON.parse(requestData);
+  let user = requestData;
 
   // Compute the Cypher Password
   const secretPassword = crypto

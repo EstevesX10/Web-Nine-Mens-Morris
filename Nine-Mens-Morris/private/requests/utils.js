@@ -85,7 +85,7 @@ export async function receive(req) {
   });
 
   // Return accumulated data
-  return data;
+  return JSON.parse(data);
 }
 
 export function send(res, body) {
