@@ -3,7 +3,7 @@ import http from "http";
 
 const PORT = 8104;
 
-import { writeUserData } from "./private/requests/utils.js";
+import { readUsers } from "./private/requests/utils.js";
 import { routes } from "./private/routes.js";
 
 import crypto from "crypto";
@@ -37,7 +37,7 @@ const server = new Server(routes);
 
 server.listen(PORT, () => {
   console.log("Server listening on port " + PORT + "...");
-  //   readUsersData();
+  readUsers();
   //   writeUserData();
 });
 
