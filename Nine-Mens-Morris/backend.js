@@ -4,6 +4,7 @@ import http from "http";
 const PORT = 8004;
 
 import { writeUserData } from "./private/UsersData.js";
+import { routes } from "./private/routes.js";
 
 class Server {
   constructor(routes) {
@@ -27,19 +28,6 @@ class Server {
     this.server.on(event, callback);
   }
 }
-
-const routes = {
-  GET: {},
-  POST: {
-    // "/register": register,
-    // "/ranking": ranking,
-    // "/join": join,
-  },
-  default: (req, res) => {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("404 Not Found\n");
-  },
-};
 
 const server = new Server(routes);
 
