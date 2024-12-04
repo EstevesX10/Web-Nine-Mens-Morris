@@ -10,7 +10,10 @@ export const routes = {
     "/join": join,
   },
   default: (req, res) => {
-    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.writeHead(404, {
+      "Content-Type": "text/plain",
+      "Access-Control-Allow-Origin": "*",
+    });
     res.end("404 Not Found\n");
   },
 };
