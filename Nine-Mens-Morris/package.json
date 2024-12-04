@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "backend.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon --ignore '*.json'  index.js"
