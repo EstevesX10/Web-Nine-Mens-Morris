@@ -84,3 +84,15 @@ export async function receive(req) {
   // Return accumulated data
   return data;
 }
+
+export function respond(res, body) {
+  response.writeHead(200, { "Content-Type": "application/json" });
+  response.write(Json.stringify(body));
+  response.end();
+}
+
+export function error(res, msg) {
+  response.writeHead(200, { "Content-Type": "application/json" });
+  response.write(Json.stringify({ error: msg }));
+  response.end();
+}
