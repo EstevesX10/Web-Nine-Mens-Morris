@@ -2,8 +2,6 @@ import { readFileSync, writeFileSync } from "fs";
 
 let UsersData = [];
 
-export function getUser(user) {}
-
 export function getUsersData() {
   // Return the Users Data
   return UsersData;
@@ -28,39 +26,47 @@ export function readUsers() {
   UsersData = Array.isArray(Users) ? Users : [];
 }
 
-export function writeUserData() {
+export function saveUsers() {
   // Write the current state of the User Data Array
   writeFileSync("./private/data/users.json", JSON.stringify(UsersData));
 
-  // Reload
-  // readUsersData();
+  // Reload the Users
+  readUsers();
 }
 
-export function addUser(user) {
-  if (!user.username || !user.hash) {
+export function addUser(nick, secretPassword) {
+  // Check if the nick and the password exist
+  if (!nick || !secretPassword) {
     return false;
   }
+
+  // Define the User
+  const user = {
+    nick: nick,
+    password: secretPassword,
+  };
+
   // Add the User to the Array
   UsersData.push(user);
 
   // Save the User
-  writeUserData();
+  saveUsers();
   console.log("User added");
   return true;
 }
 
-export function checkUserExists(username) {
-  let value;
-  let useR;
-  UsersData.some((user) => {
-    value = user.username === username;
-    useR = user;
+export function userExists(username) {
+  // Check if a User already exists
+  return UsersData.some((user) => {
+    user.nick === nickToCheck;
   });
-  let data = {
-    value: value,
-    user: useR,
-  };
-  return data;
+}
+
+export function getUser(username) {
+  // Fetches a given user's data
+  return UsersData.find((user) => {
+    user.nick === username;
+  });
 }
 
 export function printUsers() {
