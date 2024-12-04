@@ -16,7 +16,7 @@ sessions = {
     hash: {         <game Hash>
         ongoing:    <true || false>
         finished:   <true || false>
-        size:       <2 || 3 || 4>
+        size:       < 2 || 3 || 4 >
         player1:    <player 1 Nick>
         player2:    <player 2 Nick>
     } 
@@ -76,7 +76,7 @@ function joinExistingSession(sessionGameHash, username) {
   return sessionGameHash;
 }
 
-export const join = async (req, res) => {
+export async function join(req, res) {
   // Get the request
   let userJoin = await receive(req);
 
@@ -130,4 +130,4 @@ export const join = async (req, res) => {
 
   // Send the final message with the game hash
   return send(res, { game: gameHash });
-};
+}

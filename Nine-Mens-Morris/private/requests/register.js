@@ -10,7 +10,7 @@ import {
 } from "./utils.js";
 import crypto from "crypto";
 
-export const register = async (req, res) => {
+export async function register(req, res) {
   // Get the request
   let user = await receive(req);
 
@@ -44,4 +44,4 @@ export const register = async (req, res) => {
     // Send empty message
     return send(res, {});
   }
-};
+}
