@@ -23,6 +23,7 @@ export function readUsers() {
     // Create a Empty Array
     UsersData = [];
   }
+  console.log(UsersData);
 }
 
 export function saveUsers() {
@@ -56,16 +57,12 @@ export function addUser(nick, secretPassword) {
 
 export function userExists(username) {
   // Check if a User already exists
-  return UsersData.some((user) => {
-    user.nick === nickToCheck;
-  });
+  return UsersData.some((user) => user.nick === username);
 }
 
 export function getUser(username) {
   // Fetches a given user's data
-  return UsersData.find((user) => {
-    user.nick === username;
-  });
+  return UsersData.find((user) => user.nick === username);
 }
 
 export async function receive(req) {
@@ -86,14 +83,14 @@ export async function receive(req) {
   return data;
 }
 
-export function respond(res, body) {
+export function send(res, body) {
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.write(Json.stringify(body));
+  res.write(JSON.stringify(body));
   res.end();
 }
 
 export function error(res, msg) {
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.write(Json.stringify({ error: msg }));
+  res.write(JSON.stringify({ error: msg }));
   res.end();
 }
