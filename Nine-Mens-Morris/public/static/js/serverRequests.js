@@ -1,9 +1,10 @@
-const SERVER = "http://twserver.alunos.dcc.fc.up.pt:8008";
+// const SERVER = "http://twserver.alunos.dcc.fc.up.pt:8008";
+const SERVER = "http://localhost:8104";
 
 async function fetchData(url, options = {}) {
   try {
     const response = await fetch(url, options);
-    const data = await response.json(); // Parse JSON response
+    const data = await response.json();
     console.log("data", data);
     return data;
   } catch (error) {
@@ -15,23 +16,16 @@ async function fetchData(url, options = {}) {
 async function register(nickName, password) {
   const response = await fetchData(`${SERVER}/register`, {
     method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     body: JSON.stringify({ nick: nickName, password: password }),
   }).catch((error) => {
     console.error("Error:", error);
   });
-  // console.log("responde", response);
   return response;
 }
 
 async function join(nickName, password, group, size) {
   const response = await fetchData(`${SERVER}/join`, {
     method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     body: JSON.stringify({
       nick: nickName,
       password: password,
@@ -41,30 +35,22 @@ async function join(nickName, password, group, size) {
   }).catch((error) => {
     console.error("Error:", error);
   });
-  // console.log("responde", response);
   return response;
 }
 
 async function leave(nickName, password, game) {
   const response = await fetchData(`${SERVER}/leave`, {
     method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     body: JSON.stringify({ nick: nickName, password: password, game: game }),
   }).catch((error) => {
     console.error("Error:", error);
   });
-  // console.log("responde", response);
   return response;
 }
 
 async function notify(nickName, password, game, index) {
   const response = await fetchData(`${SERVER}/notify`, {
     method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     body: JSON.stringify({
       nick: nickName,
       password: password,
@@ -77,21 +63,16 @@ async function notify(nickName, password, game, index) {
   }).catch((error) => {
     console.error("Error:", error);
   });
-  // console.log("responde", response);
   return response;
 }
 
 async function ranking(group, size) {
   const response = await fetchData(`${SERVER}/ranking`, {
     method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     body: JSON.stringify({ group: group, size: size }),
   }).catch((error) => {
     console.error("Error:", error);
   });
-  // console.log("responde", response);
   return response;
 }
 
