@@ -72,3 +72,21 @@ export function getUser(username) {
 export function printUsers() {
   console.log(UsersData.toString());
 }
+
+export async function receive(req) {
+  let data = "";
+
+  // Accumulate data chunks
+  req.on("data", (chunk) => {
+    data += chunk;
+  });
+
+  // Wait for the 'end' event or handle errors
+  await new Promise((resolve, reject) => {
+    req.on("end", resolve);
+    req.on("error", reject);
+  });
+
+  // Return accumulated data
+  return data;
+}
