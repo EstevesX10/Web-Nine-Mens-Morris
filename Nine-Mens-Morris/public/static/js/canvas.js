@@ -734,6 +734,10 @@ class Canvas {
       // Update Single Player Leaderboard
       this.game.updateSingleplayerLeaderboard(winner);
     }
+    if (this.game.serverEventSource !== null) {
+      console.log("Closing server connection...")
+      this.game.serverEventSource.close()
+    }
   }
 
   cleanUI() {

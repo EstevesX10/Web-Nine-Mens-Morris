@@ -350,6 +350,7 @@ class Game {
     this.levelAI = levelAI;
     this.gameHash = gameHash;
     this.selectedPoints = [];
+    this.serverEventSource = null;
   }
 
   getCurrentPlayer() {
@@ -385,6 +386,11 @@ class Game {
       this.levelAI,
       this.currentState.board.boardSize
     );
+  }
+
+  setupUpdateEvents(callback) {
+    const username = document.getElementById("loginUsername").value;
+    this.serverEventSource = hookUpdate(username, this.gameHash, callback);
   }
 
   async doAiMove() {
