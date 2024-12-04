@@ -1,12 +1,13 @@
 import { ranking } from "./requests/ranking.js";
 import { register } from "./requests/register.js";
+import { join } from "./requests/join.js";
 
 export const routes = {
   GET: {},
   POST: {
     "/register": register,
     "/ranking": ranking,
-    // "/join": join,
+    "/join": join,
   },
   default: (req, res) => {
     res.writeHead(404, { "Content-Type": "text/plain" });
