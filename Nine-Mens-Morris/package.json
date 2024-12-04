@@ -1,0 +1,16 @@
+{
+  "name": "web-dara",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "backend.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon --ignore '*.json'  index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
