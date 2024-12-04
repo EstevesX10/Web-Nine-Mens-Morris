@@ -47,7 +47,6 @@ class PlaceAction {
     this.pos = pos;
     this.player = player;
 
-    this.switchedPlayer = false;
     this.previousPhase = "place";
   }
 
@@ -67,13 +66,8 @@ class PlaceAction {
       gameBoard.gamePhase[this.player] = "moving";
     }
 
-    // Check for mills [If there is a mill we do not change player. We do it otherwise]
-    if (!gameBoard.checkMillFormed(this.pos, this.player)) {
-      gameBoard.switchPlayer();
-      this.switchedPlayer = true;
-    } else {
-      gameBoard.millFormed = true;
-    }
+    // Switch player
+    gameBoard.switchPlayer();
   }
 
   undo(gameBoard) {
@@ -86,11 +80,8 @@ class PlaceAction {
     // Update player phase
     gameBoard.gamePhase[this.player] = this.previousPhase;
 
-    // Check for mills [If there is a mill we do not change player. We do it otherwise]
-    if (this.switchedPlayer) {
-      gameBoard.switchPlayer();
-    }
-    gameBoard.millFormed = false;
+    // Switch player
+    gameBoard.switchPlayer();
   }
 }
 
