@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 
 let UsersData = [];
 
@@ -9,9 +9,14 @@ export function getUsersData() {
 
 export function readUsers() {
   let jsonData, Users;
+  const filePath = "./private/data/users.json";
 
+  // Check if the file already exists
+  if (!existsSync(filePath)) {
+    saveUsers();
+  }
   // Read the saved data
-  jsonData = readFileSync("./private/data/users.json");
+  jsonData = readFileSync(filePath);
 
   // Check if there is any data
   if (jsonData != "") {
@@ -84,13 +89,19 @@ export async function receive(req) {
 }
 
 export function send(res, body) {
-  res.writeHead(200, { "Content-Type": "application/json" });
+  res.writeHead(200, {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  });
   res.write(JSON.stringify(body));
   res.end();
 }
 
 export function error(res, msg) {
-  res.writeHead(400, { "Content-Type": "application/json" });
+  res.writeHead(400, {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  });
   res.write(JSON.stringify({ error: msg }));
   res.end();
 }
