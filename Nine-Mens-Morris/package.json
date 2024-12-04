@@ -1,7 +1,6 @@
 {
-  "name": "web-dara",
+  "name": "nine-mens-morris",
   "version": "1.0.0",
-  "description": "",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -12,5 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.2"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
