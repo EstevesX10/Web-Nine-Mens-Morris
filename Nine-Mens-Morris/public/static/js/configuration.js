@@ -136,7 +136,7 @@ class Configuration {
       // Update Canvas
       canvas = new Canvas("", game);
       console.log(`Connect to ${joinResponse.game} as ${username}`);
-      hookUpdate(username, joinResponse.game, canvas.createNetworkUpdate());
+      game.setupUpdateEvents(canvas.createNetworkUpdate())
     }
 
     // Crate a new Board [On the FrontEnd] based on the board size
