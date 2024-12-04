@@ -17,13 +17,12 @@ export function readUsers() {
   if (jsonData != "") {
     // Parse the info
     Users = JSON.parse(jsonData.toString());
+    // Update the main users list
+    UsersData = Array.isArray(Users) ? Users : [];
   } else {
     // Create a Empty Array
-    Users = [];
+    UsersData = [];
   }
-
-  // Update the main users list
-  UsersData = Array.isArray(Users) ? Users : [];
 }
 
 export function saveUsers() {
@@ -67,10 +66,6 @@ export function getUser(username) {
   return UsersData.find((user) => {
     user.nick === username;
   });
-}
-
-export function printUsers() {
-  console.log(UsersData.toString());
 }
 
 export async function receive(req) {
