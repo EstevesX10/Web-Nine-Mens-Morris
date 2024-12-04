@@ -12,10 +12,7 @@ import crypto from "crypto";
 
 export const register = async (req, res) => {
   // Get the request
-  let requestData = await receive(req);
-
-  // Parse the User
-  let user = requestData;
+  let user = await receive(req);
 
   // Compute the Cypher Password
   const secretPassword = crypto
