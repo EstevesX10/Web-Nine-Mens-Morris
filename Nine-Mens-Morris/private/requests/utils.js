@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
+import crypto from "crypto";
 
 let UsersData = [];
 
@@ -60,9 +61,14 @@ export function addUser(nick, secretPassword) {
   return true;
 }
 
-export function userExists(username) {
-  // Check if a User already exists
-  return UsersData.some((user) => user.nick === username);
+export function userExists(username, password) {
+  // Compute the secret password
+  let secretPassword = crypto.createHash("md5").update(password).digest("hex");
+
+  // Check if a User already exists with the given username and password
+  return UsersData.some(
+    (user) => user.nick === username && user.password === secretPassword
+  );
 }
 
 export function getUser(username) {

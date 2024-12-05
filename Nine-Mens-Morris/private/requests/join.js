@@ -23,7 +23,7 @@ sessions = {
 }
 */
 
-let sessions = {};
+export let sessions = {};
 let finishedSessions = {};
 
 function lookUpSessions(selectedSize) {
@@ -104,7 +104,7 @@ export async function join(req, res) {
   }
 
   // Check if the received nick exists
-  if (!userExists(userJoin.nick)) {
+  if (!userExists(userJoin.nick, userJoin.password)) {
     // Inexistent User
     return error(
       res,

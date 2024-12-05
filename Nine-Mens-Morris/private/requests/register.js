@@ -31,7 +31,7 @@ export async function register(req, res) {
   }
 
   // Check if the User Already exists
-  if (userExists(user.nick)) {
+  if (userExists(user.nick, user.password)) {
     // Perform Login
 
     // Fetch the User
