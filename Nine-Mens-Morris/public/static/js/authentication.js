@@ -1,15 +1,18 @@
-const closeBtn = document.querySelector('.closeIcon');
-const modal = document.querySelector('.modal');
-const errorMsg = document.querySelector('.error-message');
+import { register } from "./serverRequests.js";
+import { navManager } from "./script.js";
+import { g_config } from "./configuration.js";
 
-closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active')
-})
+const closeBtn = document.querySelector(".closeIcon");
+const modal = document.querySelector(".modal");
+const errorMsg = document.querySelector(".error-message");
 
-window.addEventListener('click', event => {
-  if (event.target === modal)
-      modal.classList.remove('active')
-})
+closeBtn.addEventListener("click", () => {
+  modal.classList.remove("active");
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target === modal) modal.classList.remove("active");
+});
 
 class AuthenticationManager {
   constructor() {
@@ -67,7 +70,7 @@ class AuthenticationManager {
 
   async login() {
     // Remove error pop-up if it's on the screen
-    modal.classList.remove('active');
+    modal.classList.remove("active");
 
     // Fetching the values from the login form
     const username = document.getElementById("loginUsername").value;
@@ -115,17 +118,17 @@ class AuthenticationManager {
       navManager.enableNavItems(true);
 
       // Restart game board whenever the player logs out so that the next user does not have messy data
-       g_config.loadBoard();
+      g_config.loadBoard();
     } else {
       errorMsg.innerHTML = "Wrong password! Please try again.";
-      modal.classList.add('active');
+      modal.classList.add("active");
     }
   }
 
   async register() {
     // Remove error pop-up if it's on the screen
-    modal.classList.remove('active');
-    
+    modal.classList.remove("active");
+
     // Fetching the values from the register form
     const username = document.getElementById("registerUsername").value;
     const email = document.getElementById("registerEmail").value;
@@ -172,7 +175,7 @@ class AuthenticationManager {
       navManager.enableNavItems(true);
     } else {
       errorMsg.innerHTML = "User is already registered! Please try again.";
-      modal.classList.add('active');
+      modal.classList.add("active");
     }
   }
 
@@ -224,4 +227,4 @@ class AuthenticationManager {
   }
 }
 
-authManeger = new AuthenticationManager();
+export const authManeger = new AuthenticationManager();

@@ -52,7 +52,7 @@ function minimax(state, depth, alpha, beta, maximizing, player, evaluateFunc) {
     let maxEval = -Infinity;
     for (const move of state.board.getValidActions()) {
       state.execute(move);
-      const eval = minimax(
+      const eval_ = minimax(
         state,
         depth - 1,
         alpha,
@@ -62,8 +62,8 @@ function minimax(state, depth, alpha, beta, maximizing, player, evaluateFunc) {
         evaluateFunc
       );
       state.undo();
-      maxEval = Math.max(maxEval, eval);
-      alpha = Math.max(alpha, eval);
+      maxEval = Math.max(maxEval, eval_);
+      alpha = Math.max(alpha, eval_);
       if (beta <= alpha) {
         break;
       }
@@ -73,7 +73,7 @@ function minimax(state, depth, alpha, beta, maximizing, player, evaluateFunc) {
     let minEval = Infinity;
     for (const move of state.board.getValidActions()) {
       state.execute(move);
-      const eval = minimax(
+      const eval_ = minimax(
         state,
         depth - 1,
         alpha,
@@ -83,8 +83,8 @@ function minimax(state, depth, alpha, beta, maximizing, player, evaluateFunc) {
         evaluateFunc
       );
       state.undo();
-      minEval = Math.min(minEval, eval);
-      beta = Math.min(beta, eval);
+      minEval = Math.min(minEval, eval_);
+      beta = Math.min(beta, eval_);
       if (beta <= alpha) {
         break;
       }

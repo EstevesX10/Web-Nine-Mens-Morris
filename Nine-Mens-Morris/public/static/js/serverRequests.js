@@ -1,7 +1,7 @@
 // const SERVER = "http://twserver.alunos.dcc.fc.up.pt:8008";
-const SERVER = "http://localhost:8104";
+export const SERVER = "http://localhost:8104";
 
-async function fetchData(url, options = {}) {
+export async function fetchData(url, options = {}) {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
@@ -13,7 +13,7 @@ async function fetchData(url, options = {}) {
   }
 }
 
-async function register(nickName, password) {
+export async function register(nickName, password) {
   const response = await fetchData(`${SERVER}/register`, {
     method: "POST",
     body: JSON.stringify({ nick: nickName, password: password }),
@@ -23,7 +23,7 @@ async function register(nickName, password) {
   return response;
 }
 
-async function join(nickName, password, group, size) {
+export async function join(nickName, password, group, size) {
   const response = await fetchData(`${SERVER}/join`, {
     method: "POST",
     body: JSON.stringify({
@@ -38,7 +38,7 @@ async function join(nickName, password, group, size) {
   return response;
 }
 
-async function leave(nickName, password, game) {
+export async function leave(nickName, password, game) {
   const response = await fetchData(`${SERVER}/leave`, {
     method: "POST",
     body: JSON.stringify({ nick: nickName, password: password, game: game }),
@@ -48,7 +48,7 @@ async function leave(nickName, password, game) {
   return response;
 }
 
-async function notify(nickName, password, game, index) {
+export async function notify(nickName, password, game, index) {
   const response = await fetchData(`${SERVER}/notify`, {
     method: "POST",
     body: JSON.stringify({
@@ -66,7 +66,7 @@ async function notify(nickName, password, game, index) {
   return response;
 }
 
-async function ranking(group, size) {
+export async function ranking(group, size) {
   const response = await fetchData(`${SERVER}/ranking`, {
     method: "POST",
     body: JSON.stringify({ group: group, size: size }),
@@ -76,7 +76,7 @@ async function ranking(group, size) {
   return response;
 }
 
-function hookUpdate(nick, gameId, callback) {
+export function hookUpdate(nick, gameId, callback) {
   const eventSource = new EventSource(
     `${SERVER}/update?nick=${nick}&game=${gameId}`
   );

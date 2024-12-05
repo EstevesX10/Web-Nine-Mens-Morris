@@ -1,4 +1,4 @@
-class Canvas {
+export class Canvas {
   constructor(config, game) {
     // Save the instance of a game
     this.game = game;
@@ -45,8 +45,8 @@ class Canvas {
         if (this.game.gameHash !== null) {
           const username = document.getElementById("loginUsername").value;
           const password = document.getElementById("loginPassword").value;
-          console.log("Notifying server giveup")
-          leave(username, password, this.game.gameHash)
+          console.log("Notifying server giveup");
+          leave(username, password, this.game.gameHash);
           this.game.gameHash = null;
         }
       }
@@ -385,13 +385,11 @@ class Canvas {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(
-        `player${player}-notes`
-      ).textContent = this.lastPlayer1Note;
+      document.getElementById(`player${player}-notes`).textContent =
+        this.lastPlayer1Note;
     } else {
-      document.getElementById(
-        `player${player}-notes`
-      ).textContent = this.lastPlayer2Note;
+      document.getElementById(`player${player}-notes`).textContent =
+        this.lastPlayer2Note;
     }
   }
 
@@ -523,9 +521,8 @@ class Canvas {
     const currentPlayer = this.game.getCurrentPlayer();
 
     // Get the phase of the current player
-    const currentPlayerPhase = this.game.currentState.board.getPlayerPhase(
-      currentPlayer
-    );
+    const currentPlayerPhase =
+      this.game.currentState.board.getPlayerPhase(currentPlayer);
 
     // Check if a Mill was formed
     if (this.game.isMillFormed()) {
@@ -735,8 +732,8 @@ class Canvas {
       this.game.updateSingleplayerLeaderboard(winner);
     }
     if (this.game.serverEventSource !== null) {
-      console.log("Closing server connection...")
-      this.game.serverEventSource.close()
+      console.log("Closing server connection...");
+      this.game.serverEventSource.close();
     }
   }
 
@@ -770,7 +767,9 @@ class Canvas {
       if (data.winner !== undefined) {
         const winner = data.winner;
         console.log("Networked winner", winner);
-        this.triggerWinnerContainer(winner === document.getElementById("loginUsername").value ? 1 : 2);
+        this.triggerWinnerContainer(
+          winner === document.getElementById("loginUsername").value ? 1 : 2
+        );
       } else if (data.cell === undefined) {
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {

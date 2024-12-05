@@ -66,4 +66,4 @@ class Rules {
   }
 }
 
-const rules = new Rules();
+export const rules = new Rules();

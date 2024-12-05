@@ -1,4 +1,9 @@
-DIFFICULTY_NAMES = { 0: "pvp", 2: "Easy", 3: "Medium", 5: "Hard" };
+export const DIFFICULTY_NAMES = { 0: "pvp", 2: "Easy", 3: "Medium", 5: "Hard" };
+
+import { State, Board, Game } from "./logicGame.js";
+import { Canvas } from "./canvas.js";
+import { join } from "./serverRequests.js";
+import { hookUpdate } from "./serverRequests.js";
 
 class Configuration {
   constructor() {
@@ -136,7 +141,7 @@ class Configuration {
       // Update Canvas
       canvas = new Canvas("", game);
       console.log(`Connect to ${joinResponse.game} as ${username}`);
-      game.setupUpdateEvents(canvas.createNetworkUpdate())
+      game.setupUpdateEvents(canvas.createNetworkUpdate());
     }
 
     // Crate a new Board [On the FrontEnd] based on the board size
@@ -148,4 +153,4 @@ class Configuration {
 }
 
 let game = null;
-const g_config = new Configuration();
+export let g_config = new Configuration();

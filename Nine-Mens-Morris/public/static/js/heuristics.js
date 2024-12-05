@@ -1,4 +1,4 @@
-const CONTROL_POS = [9, 11, 12, 14];
+export const CONTROL_POS = [9, 11, 12, 14];
 
 function heuristic1(state) {
   // +1 point for each of the current player's pieces, -1 for each of the opponent's pieces

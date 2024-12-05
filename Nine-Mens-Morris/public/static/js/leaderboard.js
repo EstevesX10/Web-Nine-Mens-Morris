@@ -156,4 +156,4 @@ class Leaderboard {
   }
 }
 
-g_leaderboard = new Leaderboard();
+export let g_leaderboard = new Leaderboard();

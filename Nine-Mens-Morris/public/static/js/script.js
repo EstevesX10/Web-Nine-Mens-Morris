@@ -58,4 +58,4 @@ class NavigationManager {
   }
 }
 
-navManager = new NavigationManager();
+export let navManager = new NavigationManager();

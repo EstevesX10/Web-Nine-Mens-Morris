@@ -1,4 +1,6 @@
-const MILLS = [
+import { hookUpdate } from "./serverRequests.js";
+
+export const MILLS = [
   // Horizontal
   [0, 1, 2],
   [8, 9, 10],
@@ -29,7 +31,7 @@ const MILLS = [
 ];
 
 // Adjancency List for the possible moves
-const NEIGHBOR_TABLE = {};
+export const NEIGHBOR_TABLE = {};
 for (let i = 0; i <= 31; i++) {
   NEIGHBOR_TABLE[i] =
     i % 2 === 0
