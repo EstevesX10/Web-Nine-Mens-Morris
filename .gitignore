@@ -23,4 +23,4 @@ TestResults.xml
 # node modules folder
 node_modules/
 # Users data
-**.json
+data/
