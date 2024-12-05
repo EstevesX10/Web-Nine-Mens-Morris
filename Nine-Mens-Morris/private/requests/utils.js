@@ -1,7 +1,9 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import crypto from "crypto";
-
+import { sessions } from "./join.js";
 let UsersData = [];
+
+// [Login / Registration Functions]
 
 export function getUsersData() {
   // Return the Users Data
@@ -75,6 +77,25 @@ export function getUser(username) {
   // Fetches a given user's data
   return UsersData.find((user) => user.nick === username);
 }
+
+// [Session Related Functions]
+
+export function existsSession(gameHash) {
+  // check if the session already exists
+  return gameHash in sessions;
+}
+
+export function isGameOnGoing(gameHash) {
+  // Return if the game is ongoing
+  return sessions[gameHash].ongoing;
+}
+
+export function removeSession(gameHash) {
+  // Remove the selected session associated with the given game hash
+  delete sessions[gameHash];
+}
+
+// [REQUESTS AND RESPONSES]
 
 export async function receive(req) {
   let data = "";

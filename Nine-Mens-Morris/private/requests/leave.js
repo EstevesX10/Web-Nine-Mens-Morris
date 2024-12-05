@@ -2,28 +2,11 @@ import {
   receive,
   send,
   error,
-  readUsers,
   userExists,
-  getUser,
-  addUser,
-  saveUsers,
+  existsSession,
+  isGameOnGoing,
+  removeSession,
 } from "./utils.js";
-import { sessions } from "./join.js";
-
-function existsSession(gameHash) {
-  // check if the session already exists
-  return gameHash in sessions;
-}
-
-function isGameOnGoing(gameHash) {
-  // Return if the game is ongoing
-  return sessions[gameHash].ongoing;
-}
-
-function removeSession(gameHash) {
-  // Remove the selected session associated with the given game hash
-  delete sessions[gameHash];
-}
 
 export async function leave(req, res) {
   // Get the request
