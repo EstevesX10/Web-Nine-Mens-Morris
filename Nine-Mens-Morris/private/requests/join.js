@@ -1,13 +1,5 @@
-import {
-  receive,
-  send,
-  error,
-  readUsers,
-  userExists,
-  getUser,
-  addUser,
-  saveUsers,
-} from "./utils.js";
+import { receive, send, error, userExists } from "./utils.js";
+import { Board, State, Game } from "../../public/static/js/logicGame.js";
 import crypto from "crypto";
 
 /* 
@@ -50,13 +42,19 @@ function addNewSession(username, selectedSize) {
   // Generate a new game hash
   let newGameHash = generateGameHash(username, selectedSize);
 
+  // Create a game state
+  let board = new Board(selectedSize, 1);
+  var gameState = new State(board);
+
   // Define a new session
   let newSession = {
     ongoing: false,
     finished: false,
     size: selectedSize,
+    selected: [],
     player1: username,
-    player2: undefined,
+    player2: null,
+    game: new Game(gameState, 0, newGameHash),
   };
 
   // Add the new session
