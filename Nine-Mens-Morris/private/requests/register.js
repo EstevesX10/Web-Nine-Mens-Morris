@@ -20,6 +20,16 @@ export async function register(req, res) {
     .update(user.password)
     .digest("hex");
 
+  // Check if the user was ommissed
+  if (!user.nick) {
+    return error(res, "No User was given!");
+  }
+
+  // Check if the nick corresponds to a string
+  if (typeof user.nick !== "string") {
+    return error(res, "The User Value must be a String!");
+  }
+
   // Check if the User Already exists
   if (userExists(user.nick)) {
     // Perform Login
