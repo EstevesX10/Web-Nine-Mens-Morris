@@ -6,7 +6,7 @@ const RANKINGS_PATH = "./private/data/ranking.json";
 export async function ranking(req, res) {
   const request = await receive(req);
   if (!request.group || !request.size) {
-    error(res, `malformed request ${request}`);
+    error(res, `missing arguments ${request}`);
     return;
   }
 
