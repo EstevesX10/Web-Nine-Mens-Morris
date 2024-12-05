@@ -42,7 +42,7 @@ for (let i = 0; i <= 31; i++) {
 }
 
 // Actions to be performed in he first phase of the game (Placing pieces)
-class PlaceAction {
+export class PlaceAction {
   constructor(pos, player) {
     this.pos = pos;
     this.player = player;
@@ -87,7 +87,7 @@ class PlaceAction {
 
 // We suppose that the action is valid and good to be performed
 // Can be performed anytime during the game loop
-class DestroyAction {
+export class DestroyAction {
   constructor(pos, player) {
     this.pos = pos;
     this.player = player;
@@ -137,7 +137,7 @@ class DestroyAction {
   }
 }
 
-class MoveAction {
+export class MoveAction {
   constructor(from, to, player) {
     this.from = from;
     this.to = to;
@@ -170,7 +170,7 @@ class MoveAction {
   }
 }
 
-class Board {
+export class Board {
   constructor(boardSize, firstPlayer) {
     this.currentPlayer = firstPlayer;
     this.boardSize = boardSize;
@@ -315,7 +315,7 @@ class Board {
 }
 
 // Holds the board state and history
-class State {
+export class State {
   constructor(board) {
     this.board = board;
     this.history = [];
@@ -343,7 +343,7 @@ class State {
   }
 }
 
-class Game {
+export class Game {
   constructor(state, levelAI, gameHash) {
     this.currentState = state;
     this.levelAI = levelAI;
