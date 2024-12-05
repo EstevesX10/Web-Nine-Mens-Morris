@@ -2,16 +2,17 @@ import { receive, send, error, userExists } from "./utils.js";
 import { Board, State, Game } from "../../public/static/js/logicGame.js";
 import crypto from "crypto";
 
-/* 
-[NOTE - Sessions Structuring ] 
-sessions = { 
+/*
+[NOTE - Sessions Structuring ]
+sessions = {
     hash: {         <game Hash>
         ongoing:    <true || false>
         finished:   <true || false>
         size:       < 2 || 3 || 4 >
         player1:    <player 1 Nick>
         player2:    <player 2 Nick>
-    } 
+        stream:     <update response stream>
+    }
 }
 */
 
@@ -55,6 +56,7 @@ function addNewSession(username, selectedSize) {
     player1: username,
     player2: null,
     game: new Game(gameState, 0, newGameHash),
+    stream: null,
   };
 
   // Add the new session

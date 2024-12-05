@@ -1,5 +1,6 @@
 // const http = new require("http");
 import http from "http";
+import url from "url";
 
 const PORT = 8104;
 
@@ -15,12 +16,12 @@ class Server {
     this.routes = routes;
     this.server = http.createServer((req, res) => {
       const method = req.method;
-      const url = req.url;
+      const url = url.parse(req.url, true);
       const handler =
-        (this.routes[method] && this.routes[method][url]) ||
+        (this.routes[method] && this.routes[method][url].pathname) ||
         this.routes["default"];
 
-      handler(req, res);
+      handler(req, res, url.query);
     });
   }
 
