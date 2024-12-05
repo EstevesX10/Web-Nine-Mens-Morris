@@ -3,9 +3,10 @@ import { register } from "./requests/register.js";
 import { join } from "./requests/join.js";
 import { leave } from "./requests/leave.js";
 import { notify } from "./requests/notify.js";
+import { update } from "./requests/update.js";
 
 export const routes = {
-  GET: {},
+  GET: { "/update": update },
   POST: {
     "/register": register,
     "/ranking": ranking,

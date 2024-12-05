@@ -1,6 +1,6 @@
 import { receive, send, error } from "./utils.js";
 import sessions from "./join.js";
-import { Game } form "../../public/static/js/logicGame.js"
+import { Game } from "../../public/static/js/logicGame.js"
 
 export async function notify(req, res) {
   const request = await receive(req);

@@ -10,16 +10,17 @@ import {
 } from "./utils.js";
 import crypto from "crypto";
 
-/* 
-[NOTE - Sessions Structuring ] 
-sessions = { 
+/*
+[NOTE - Sessions Structuring ]
+sessions = {
     hash: {         <game Hash>
         ongoing:    <true || false>
         finished:   <true || false>
         size:       < 2 || 3 || 4 >
         player1:    <player 1 Nick>
         player2:    <player 2 Nick>
-    } 
+        stream:     <update response stream>
+    }
 }
 */
 
@@ -57,6 +58,7 @@ function addNewSession(username, selectedSize) {
     size: selectedSize,
     player1: username,
     player2: undefined,
+    stream: null,
   };
 
   // Add the new session
