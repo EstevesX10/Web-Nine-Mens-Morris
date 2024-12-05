@@ -36,9 +36,9 @@ for (let i = 0; i <= 31; i++) {
       ? i % 8 === 0
         ? [i + 1, i + 7]
         : [i - 1, i + 1]
-      :i % 8 === 7
-        ? [i-1, i-7, i-8, i+8]
-        : [i - 1, i + 1, i - 8, i + 8];
+      : i % 8 === 7
+      ? [i - 1, i - 7, i - 8, i + 8]
+      : [i - 1, i + 1, i - 8, i + 8];
 }
 
 // Actions to be performed in he first phase of the game (Placing pieces)
@@ -127,9 +127,8 @@ class DestroyAction {
     gameBoard.placedPieces[gameBoard.getOpponent(this.player)]++;
 
     // Update player phase
-    gameBoard.gamePhase[
-      gameBoard.getOpponent(this.player)
-    ] = this.previousPhase;
+    gameBoard.gamePhase[gameBoard.getOpponent(this.player)] =
+      this.previousPhase;
 
     // Switch Player
     gameBoard.switchPlayer();
@@ -349,7 +348,6 @@ class Game {
     this.currentState = state;
     this.levelAI = levelAI;
     this.gameHash = gameHash;
-    this.selectedPoints = [];
     this.serverEventSource = null;
   }
 
@@ -360,10 +358,6 @@ class Game {
   isMillFormed() {
     // Checks if a Mill is formed
     return this.currentState.board.millFormed;
-  }
-
-  getSelectedPieces() {
-    return this.selectedPoints;
   }
 
   checkGameOver() {
