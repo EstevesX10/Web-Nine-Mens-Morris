@@ -95,6 +95,15 @@ export function removeSession(gameHash) {
   delete sessions[gameHash];
 }
 
+// [Game Related Functions]
+
+export function getGameInstance(gameHash) {
+  if (existsSession(gameHash)) {
+    // Return the game instance of the selected game session
+    return sessions[gameHash].game;
+  }
+}
+
 // [REQUESTS AND RESPONSES]
 
 export async function receive(req) {
