@@ -46,6 +46,7 @@ export async function sendUpdate(gameHash, clickIndex) {
     const winner = game.currentState.board.getWinner();
     response.winner = players[winner - 1];
     send(session.stream, response);
+    await updateRanking(response.winner, players[3 - winner - 1], session.size);
     return;
   }
 
