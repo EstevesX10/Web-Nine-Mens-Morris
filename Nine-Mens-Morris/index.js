@@ -18,7 +18,7 @@ class Server {
       const method = req.method;
       const parsedUrl = url.parse(req.url, true);
       const handler =
-        (this.routes[method] && this.routes[method][parsedUrl].pathname) ||
+        (this.routes[method] && this.routes[method][parsedUrl.pathname]) ||
         this.routes["default"];
 
       handler(req, res, parsedUrl.query);

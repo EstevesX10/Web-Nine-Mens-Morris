@@ -24,7 +24,7 @@ export async function update(req, res, query) {
     return;
   }
 
-  session[query.game].stream = res;
+  sessions[query.game].stream = res;
   send(res, {});
 }
 
