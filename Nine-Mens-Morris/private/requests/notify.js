@@ -1,30 +1,35 @@
-import { receive, send, error, userExists } from "./utils.js";
+import { receive, send, error, userExists, existsSession } from "./utils.js";
 import { sessions } from "./join.js";
 import {
   PlaceAction,
   DestroyAction,
   MoveAction,
 } from "../../public/static/js/logicGame.js";
+import { sendUpdate } from "./update.js";
 
-function movePiece(gameSession, action, initialPoint, pointToMoveTo) {
-  const player = action.player;
-  const initialIndex = action.from;
-
-  // Check if the game is over
-  checkGameOver(gameSession);
+function getPlayerNick(gameHash, playerID) {
+  if (playerID === 1) {
+    return sessions[gameHash].player1;
+  } else if (playerID === 2) {
+    return sessions[gameHash].player2;
+  } else {
+    console.log("TRYING TO FETCH A 3rd Player NICK");
+  }
 }
 
 function chooseAction(gameSession, index) {
-  let game = gameSession.game;
-  const currentPlayer = game.getCurrentPlayer();
+  const currentPlayer = gameSession.game.getCurrentPlayer();
 
   // Get the phase of the current player
   const currentPlayerPhase =
-    game.currentState.board.getPlayerPhase(currentPlayer);
+    gameSession.game.currentState.board.getPlayerPhase(currentPlayer);
 
   // Check if a Mill was formed
-  if (game.isMillFormed()) {
-    if (game.currentState.board.getPiece(index) === 3 - currentPlayer) {
+  if (gameSession.game.isMillFormed()) {
+    if (
+      gameSession.game.currentState.board.getPiece(index) ===
+      3 - currentPlayer
+    ) {
       return new DestroyAction(index, currentPlayer);
     }
   }
@@ -32,12 +37,14 @@ function chooseAction(gameSession, index) {
   // Separate the movements based on the current game phase of the player
   else if (currentPlayerPhase === "placing") {
     // Check if it is a empty space
-    if (game.currentState.board.getPiece(index) === 0) {
+    if (gameSession.game.currentState.board.getPiece(index) === 0) {
       // Add a piece
       return new PlaceAction(index, currentPlayer);
     } else {
       console.log("OCUPADO MEUUU!!!");
-      console.log(game.currentState.board.board);
+      console.log(gameSession.game.currentState.board.board);
+      // Non empty cell
+      return "Invalid move: non empty cell";
     }
   }
   // Check if the current player phase corresponds to moving or flying
@@ -54,10 +61,10 @@ function chooseAction(gameSession, index) {
       }
 
       // Check if the final place is empty
-      if (game.currentState.board.getPiece(index) === 0) {
+      if (gameSession.game.currentState.board.getPiece(index) === 0) {
         // Check if a movement is valid
         if (
-          game.currentState.board.isAdjacent(initialIndex, index) ||
+          gameSession.game.currentState.board.isAdjacent(initialIndex, index) ||
           currentPlayerPhase === "flying"
         ) {
           // Define a new and clean Array
@@ -68,12 +75,16 @@ function chooseAction(gameSession, index) {
         }
       } else {
         console.log("OCUPADO MEUUU!!!");
-        console.log(game.currentState.board.board);
+        console.log(gameSession.game.currentState.board.board);
+        // Non empty cell
+        return "Invalid move: non empty cell";
       }
     } else {
       // We are selecting the initial piece
       // Check if the selected piece is valid
-      if (currentPlayer === game.currentState.board.getPiece(index)) {
+      if (
+        currentPlayer === gameSession.game.currentState.board.getPiece(index)
+      ) {
         // Saves the index of a selected point
         gameSession.selected.push([index]);
       } else {
@@ -81,89 +92,55 @@ function chooseAction(gameSession, index) {
         gameSession.selected = [];
 
         console.log("WRONG Point SELECTED!");
+        // Tried to perform an invalid move
+        return "Invalid move: not your piece";
       }
     }
-  } else {
-    console.log("DEU MERDA!");
   }
-
-  return null;
+  return "";
 }
 
 async function handlePointClick(gameSession, index) {
-  let game = gameSession.game;
+  if (
+    !gameSession.game.checkGameOver() // Check if the game is over
+  ) {
+    // Select player action
+    const action = chooseAction(index);
 
-  // Check if the game is over
-  if (game.checkGameOver()) {
-    return;
-  }
+    if (typeof action !== "string") {
+      // Execute the Action
+      gameSession.game.currentState.execute(action);
 
-  // Chck if the players turn
-  if (game.currentState.board.currentPlayer === 2) {
-    return;
-  }
+      // Send update
+      await sendUpdate(gameSession.game.gameHash, index);
 
-  // Select player action
-  const action = chooseAction(index);
-
-  // Check if we are in PVP Mode
-  if (game.gameHash !== null) {
-    await notify(username, password, game.gameHash, index);
-    return;
-  }
-
-  // Playing singleplayer
-  // performe the action
-  if (action === null) {
-    return;
-  }
-  game.currentState.execute(action);
-}
-
-function checkGameOver(gameSession) {
-  let game = gameSession.game;
-
-  // Check if the game is over
-  if (game.checkGameOver()) {
-    // Get Winner
-    const winner = game.currentState.board.getWinner();
-
-    // Toogle the game winner box
-    triggerWinnerContainer(winner);
-  }
-}
-
-function triggerWinnerContainer(gameSession, winner) {
-  let game = gameSession.game;
-
-  if (game.gameHash === null) {
-    // Update Single Player Leaderboard
-    game.updateSingleplayerLeaderboard(winner);
-  }
-  if (game.serverEventSource !== null) {
-    console.log("Closing server connection...");
-    game.serverEventSource.close();
+      // Everything worked out
+      return "";
+    } else {
+      return action;
+    }
   }
 }
 
 export async function notify(req, res) {
-  return;
   // Get the request
   let notification = await receive(req);
 
   // nick, password, game (hash), move (casa do tabuleiro (?))
+
+  console.log(notification);
 
   // Verify if all the parameters were given
   if (
     !notification.nick ||
     !notification.password ||
     !notification.game ||
-    !notification.move
+    !notification.cell
   ) {
     // Missing Arguments
     return error(
       res,
-      "Missing Arguments! Please ensure your request contains all the information!"
+      "[NOTIFY] Missing Arguments! Please ensure your request contains all the information!"
     );
   }
 
@@ -184,11 +161,21 @@ export async function notify(req, res) {
     );
   }
 
+  // Check for invalid values
+  if (notification.cell.square < 0) {
+    return error(res, "'square' is negative!");
+  }
+
   // Get current game Session
   let gameSession = sessions[notification.game];
 
   // Handle Point Click
-  handlePointClick(gameSession, notification.move);
+  let possibleErrorString = handlePointClick(gameSession, notification.move);
 
-  // (O QUE ENVIAR) SESSAO (HASH DO JOGO) + INDICE ONDE SE CLICOU
+  // Check if we got any errors
+  if (possibleErrorString === "") {
+    return send(res, {});
+  } else {
+    return error(res, possibleErrorString);
+  }
 }
