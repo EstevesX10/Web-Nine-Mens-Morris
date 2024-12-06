@@ -24,8 +24,10 @@ export async function update(req, res, query) {
     return;
   }
 
-  session[query.game].stream = res;
-  send(res, {});
+  sessions[query.game].stream = res;
+  res.writeHead(200, SSE_HEADERS);
+  res.write("{}");
+  res.end();
 }
 
 export async function sendUpdate(gameHash, clickIndex) {
