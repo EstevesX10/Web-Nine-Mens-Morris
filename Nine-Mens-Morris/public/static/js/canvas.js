@@ -385,11 +385,13 @@ export class Canvas {
 
   getPlayerLastMessage(player) {
     if (player === 1) {
-      document.getElementById(`player${player}-notes`).textContent =
-        this.lastPlayer1Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = this.lastPlayer1Note;
     } else {
-      document.getElementById(`player${player}-notes`).textContent =
-        this.lastPlayer2Note;
+      document.getElementById(
+        `player${player}-notes`
+      ).textContent = this.lastPlayer2Note;
     }
   }
 
@@ -521,8 +523,9 @@ export class Canvas {
     const currentPlayer = this.game.getCurrentPlayer();
 
     // Get the phase of the current player
-    const currentPlayerPhase =
-      this.game.currentState.board.getPlayerPhase(currentPlayer);
+    const currentPlayerPhase = this.game.currentState.board.getPlayerPhase(
+      currentPlayer
+    );
 
     // Check if a Mill was formed
     if (this.game.isMillFormed()) {
@@ -764,13 +767,16 @@ export class Canvas {
         return;
       }
 
+      // Check if game is over
       if (data.winner !== undefined) {
         const winner = data.winner;
         console.log("Networked winner", winner);
         this.triggerWinnerContainer(
           winner === document.getElementById("loginUsername").value ? 1 : 2
         );
-      } else if (data.cell === undefined) {
+      }
+
+      if (data.cell === undefined) {
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {
           console.log("The other player goes first... Switching player");
