@@ -1,3 +1,6 @@
+import { PlaceAction, DestroyAction, MoveAction } from "./logicGame.js";
+import { notify } from "./serverRequests.js";
+
 export class Canvas {
   constructor(config, game) {
     // Save the instance of a game
