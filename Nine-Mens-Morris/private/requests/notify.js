@@ -20,6 +20,8 @@ function getPlayerNick(gameHash, playerID) {
 function chooseAction(gameSession, index) {
   const currentPlayer = gameSession.game.getCurrentPlayer();
 
+  console.log("INDEX SELECTED " + index);
+
   // Get the phase of the current player
   const currentPlayerPhase =
     gameSession.game.currentState.board.getPlayerPhase(currentPlayer);
@@ -100,12 +102,17 @@ function chooseAction(gameSession, index) {
   return "";
 }
 
-async function handlePointClick(gameSession, index) {
+async function handlePointClick(gameSession, cell) {
   if (
     !gameSession.game.checkGameOver() // Check if the game is over
   ) {
+    // Convert the cell to our coordenates system
+    let index = cell.square * 8 + cell.position;
+
     // Select player action
-    const action = chooseAction(index);
+    const action = chooseAction(gameSession, index);
+
+    console.log(action);
 
     if (typeof action !== "string") {
       // Execute the Action
@@ -125,8 +132,6 @@ async function handlePointClick(gameSession, index) {
 export async function notify(req, res) {
   // Get the request
   let notification = await receive(req);
-
-  // nick, password, game (hash), move (casa do tabuleiro (?))
 
   console.log(notification);
 
@@ -166,11 +171,11 @@ export async function notify(req, res) {
     return error(res, "'square' is negative!");
   }
 
-  // Get current game Session
-  let gameSession = sessions[notification.game];
-
   // Handle Point Click
-  let possibleErrorString = handlePointClick(gameSession, notification.move);
+  let possibleErrorString = handlePointClick(
+    sessions[notification.game],
+    notification.cell
+  );
 
   // Check if we got any errors
   if (possibleErrorString === "") {
