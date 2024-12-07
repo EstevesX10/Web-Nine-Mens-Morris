@@ -57,7 +57,7 @@ export async function sendUpdate(gameHash, clickIndex) {
   };
 
   // Add board
-  response.board = convertBoard(game);
+  response.board = convertBoard(session, game);
 
   // Add phase
   response.phase =
@@ -85,7 +85,7 @@ export async function sendUpdate(gameHash, clickIndex) {
   send(session.stream, response);
 }
 
-function convertBoard(game) {
+function convertBoard(session, game) {
   const numToColor = ["empty", "blue", "red"];
   let board = game.currentState.board.board.map((p) => numToColor[p]);
   board = reshapeArray(board, session.size, 8);
