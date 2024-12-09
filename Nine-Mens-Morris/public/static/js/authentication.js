@@ -1,4 +1,4 @@
-import { register } from "./serverRequests.js";
+import { register, leave } from "./serverRequests.js";
 import { navManager } from "./script.js";
 import { g_config } from "./configuration.js";
 
