@@ -1,8 +1,3 @@
-import { hookUpdate } from "./serverRequests.js";
-import { executeMinimaxMove } from "./ai.js";
-import { heuristic1 } from "./heuristics.js"
-import { g_leaderboard } from "./leaderboard.js"
-
 export const MILLS = [
   // Horizontal
   [0, 1, 2],
@@ -377,37 +372,5 @@ export class Game {
     } else {
       return false;
     }
-  }
-
-  updateSingleplayerLeaderboard(winner) {
-    // Update Single Player Leaderboard
-    g_leaderboard.updateSingleplayer(
-      winner,
-      this.levelAI,
-      this.currentState.board.boardSize
-    );
-  }
-
-  setupUpdateEvents(callback) {
-    const username = document.getElementById("loginUsername").value;
-    this.serverEventSource = hookUpdate(username, this.gameHash, callback);
-  }
-
-  async doAiMove() {
-    // Check if game is over
-    if (this.checkGameOver()) {
-      return;
-    }
-
-    // wait a bit but dont block everything
-    await new Promise((r) => setTimeout(r, 750));
-
-    // Compute the action to be performed by the MinMax
-    const aiAction = executeMinimaxMove(
-      heuristic1,
-      this.levelAI
-    )(this.currentState);
-
-    return aiAction;
   }
 }

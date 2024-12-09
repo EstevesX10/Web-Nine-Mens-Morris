@@ -4,7 +4,7 @@ import {
   PlaceAction,
   DestroyAction,
   MoveAction,
-} from "../../public/static/js/logicGame.js";
+} from "../serverLogicGame.js";
 import { sendUpdate } from "./update.js";
 
 function getPlayerNick(gameHash, playerID) {
@@ -133,7 +133,7 @@ export async function notify(req, res) {
   // Get the request
   let notification = await receive(req);
 
-  console.log(notification);
+  console.log("Received Notify:", notification);
 
   // Verify if all the parameters were given
   if (
@@ -172,7 +172,7 @@ export async function notify(req, res) {
   }
 
   // Handle Point Click
-  let possibleErrorString = handlePointClick(
+  let possibleErrorString = await handlePointClick(
     sessions[notification.game],
     notification.cell
   );

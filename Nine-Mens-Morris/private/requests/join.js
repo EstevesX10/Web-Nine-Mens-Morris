@@ -1,5 +1,5 @@
 import { receive, send, error, userExists } from "./utils.js";
-import { Board, State, Game } from "../../public/static/js/logicGame.js";
+import { Board, State, Game } from "../serverLogicGame.js";
 import crypto from "crypto";
 
 /*

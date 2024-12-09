@@ -1,5 +1,7 @@
 import { PlaceAction, DestroyAction, MoveAction } from "./logicGame.js";
 import { notify } from "./serverRequests.js";
+import { NEIGHBOR_TABLE } from "./logicGame.js"
+import { g_config } from "./configuration.js"
 
 export class Canvas {
   constructor(config, game) {
@@ -764,6 +766,7 @@ export class Canvas {
     const inner = (event) => {
       const data = JSON.parse(event.data);
       console.log(`Got server update ${event.data}`);
+      if (event.data === "{}") { return;}
       if (data.error !== undefined) {
         // TODO: handle error
         console.warn(`Server returned error: ${data.error}`);
