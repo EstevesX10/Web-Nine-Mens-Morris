@@ -1,18 +1,18 @@
-const canvas = document.getElementById('throbber');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById("throbber");
+const ctx = canvas.getContext("2d");
 
-const background = document.getElementById('throbber-bg');
+const background = document.getElementById("throbber-bg");
 
 // Define canvas resolution
-const width = 1050; // Visible width in CSS pixels
-const height = 550; // Visible height in CSS pixels
+const width = canvas.parentElement.clientWidth; //1050; // Visible width in CSS pixels
+const height = canvas.parentElement.clientHeight; //550; // Visible height in CSS pixels
 const scale = window.devicePixelRatio || 1; // Adjust for high-DPI displays
 
 // Scale the canvas for higher resolution
 canvas.width = width * scale;
 canvas.height = height * scale;
-canvas.style.width = `${width}px`;
-canvas.style.height = `${height}px`;
+// canvas.style.width = `${width}px`;
+// canvas.style.height = `${height}px`;
 ctx.scale(scale, scale);
 
 const centerX = width / 2;
