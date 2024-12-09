@@ -5,6 +5,7 @@
       src="https://kit.fontawesome.com/5a93f63a11.js"
       crossorigin="anonymous"
     ></script>
+    <script src="throbber.js" defer></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/css/base.css" />
@@ -297,9 +298,11 @@
         </section>
 
         <!-- Game -->
-        <section id="game" class="content">
+        <section id="game" class="content">     
           <!-- Game Board -->
           <div id="game-layout" class="game-layout">
+            <canvas id="throbber" style="width: 100%; height: 100%; position: absolute; 
+    top: 0; left: 0; z-index: 10"></canvas>
             <!-- Player 1 -->
             <div class="player1">
               <div id="player1-info" class="player1-info">
