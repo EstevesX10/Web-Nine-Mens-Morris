@@ -1,10 +1,6 @@
 import { receive, send, error, userExists, existsSession } from "./utils.js";
 import { sessions } from "./join.js";
-import {
-  PlaceAction,
-  DestroyAction,
-  MoveAction,
-} from "../serverLogicGame.js";
+import { PlaceAction, DestroyAction, MoveAction } from "../serverLogicGame.js";
 import { sendUpdate } from "./update.js";
 
 function chooseAction(gameSession, index) {
@@ -13,8 +9,9 @@ function chooseAction(gameSession, index) {
   console.log("INDEX SELECTED " + index);
 
   // Get the phase of the current player
-  const currentPlayerPhase =
-    gameSession.game.currentState.board.getPlayerPhase(currentPlayer);
+  const currentPlayerPhase = gameSession.game.currentState.board.getPlayerPhase(
+    currentPlayer
+  );
 
   // Check if a Mill was formed
   if (gameSession.game.isMillFormed()) {
@@ -56,14 +53,17 @@ function chooseAction(gameSession, index) {
       if (gameSession.game.currentState.board.getPiece(index) === 0) {
         // Check if a movement is valid
         if (
-          gameSession.game.currentState.board.isAdjacent(initialIndex, index) ||
+          gameSession.game.currentState.board.isAdjacent(
+            initialIndex[0],
+            index
+          ) ||
           currentPlayerPhase === "flying"
         ) {
           // Define a new and clean Array
           gameSession.selected = [];
 
           // Perform the action
-          return new MoveAction(initialIndex, index, currentPlayer);
+          return new MoveAction(initialIndex[0], index, currentPlayer);
         }
       } else {
         console.log("OCUPADO MEUUU!!!");
@@ -137,6 +137,7 @@ async function handlePointClick(username, gameSession, cell) {
       // Everything worked out
       return "";
     } else {
+      await sendUpdate(gameSession.game.gameHash, index);
       return action;
     }
   }

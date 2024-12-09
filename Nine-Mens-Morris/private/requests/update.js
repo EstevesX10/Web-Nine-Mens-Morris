@@ -1,5 +1,6 @@
 import { receive, send, error, getUser } from "./utils.js";
 import { sessions } from "./join.js";
+import { updateRanking } from "./ranking.js";
 
 const SSE_HEADERS = {
   "Access-Control-Allow-Origin": "*", // CORS
@@ -24,19 +25,18 @@ export async function update(req, res, query) {
     return;
   }
 
-  const session = sessions[query.game]
+  const session = sessions[query.game];
   res.writeHead(200, SSE_HEADERS);
   if (session.stream1 === undefined) {
     session.stream1 = res;
     res.write(`data: {}\n\n`);
-  }
-  else {
+  } else {
     session.stream2 = res;
-    const data = {turn: session.player1, phase: "drop"}
+    const data = { turn: session.player1, phase: "drop" };
     session.stream1.write(`data: ${JSON.stringify(data)}\n\n`);
     session.stream2.write(`data: ${JSON.stringify(data)}\n\n`);
   }
-  req.on('close', () => {
+  req.on("close", () => {
     console.log(`${query.nick} Connection closed`);
   });
 }
@@ -71,8 +71,12 @@ export async function sendUpdate(gameHash, clickIndex) {
   response.board = convertBoard(session, game);
 
   // Add phase
+  console.log("gamephase is", game.currentState.board.gamePhase);
   response.phase =
-    game.currentState.board.gamePhase === "place" ? "drop" : "move";
+    game.currentState.board.gamePhase[game.currentState.board.currentPlayer] ===
+    "placing"
+      ? "drop"
+      : "move";
 
   // Add step
   if (response.phase === "move") {
@@ -97,7 +101,7 @@ export async function sendUpdate(gameHash, clickIndex) {
 }
 
 function sseSend(session, msg) {
-  console.log("SSE sending:", msg)
+  console.log("SSE sending:", msg);
   session.stream1.write(`data: ${JSON.stringify(msg)}\n\n`);
 
   session.stream2.write(`data: ${JSON.stringify(msg)}\n\n`);

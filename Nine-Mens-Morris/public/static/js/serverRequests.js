@@ -1,5 +1,6 @@
 // const SERVER = "http://twserver.alunos.dcc.fc.up.pt:8008";
-export const SERVER = "http://localhost:8104";
+// export const SERVER = "http://localhost:8104";
+export const SERVER = "http://twserver.alunos.dcc.fc.up.pt:8104";
 
 export async function fetchData(url, options = {}) {
   try {
