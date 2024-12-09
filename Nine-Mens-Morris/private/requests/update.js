@@ -24,10 +24,21 @@ export async function update(req, res, query) {
     return;
   }
 
-  sessions[query.game].stream = res;
+  const session = sessions[query.game]
   res.writeHead(200, SSE_HEADERS);
-  res.write("{}");
-  res.end();
+  if (session.stream1 === undefined) {
+    session.stream1 = res;
+    res.write(`data: {}\n\n`);
+  }
+  else {
+    session.stream2 = res;
+    const data = {turn: session.player1, phase: "drop"}
+    session.stream1.write(`data: ${JSON.stringify(data)}\n\n`);
+    session.stream2.write(`data: ${JSON.stringify(data)}\n\n`);
+  }
+  req.on('close', () => {
+    console.log(`${query.nick} Connection closed`);
+  });
 }
 
 export async function sendUpdate(gameHash, clickIndex) {
@@ -39,13 +50,13 @@ export async function sendUpdate(gameHash, clickIndex) {
   // Add winner
   if (session.player2 === null) {
     response.winner = null;
-    send(session.stream, response);
+    sseSend(session, response);
     return;
   }
   if (session.game.checkGameOver()) {
     const winner = game.currentState.board.getWinner();
     response.winner = players[winner - 1];
-    send(session.stream, response);
+    sseSend(session, response);
     await updateRanking(response.winner, players[3 - winner - 1], session.size);
     return;
   }
@@ -82,7 +93,14 @@ export async function sendUpdate(gameHash, clickIndex) {
   // Add players
   response.players = players;
 
-  send(session.stream, response);
+  sseSend(session, response);
+}
+
+function sseSend(session, msg) {
+  console.log("SSE sending:", msg)
+  session.stream1.write(`data: ${JSON.stringify(msg)}\n\n`);
+
+  session.stream2.write(`data: ${JSON.stringify(msg)}\n\n`);
 }
 
 function convertBoard(session, game) {

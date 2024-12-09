@@ -134,6 +134,7 @@ export function send(res, body) {
 }
 
 export function error(res, msg) {
+  console.log("SENDING ERROR:", msg)
   res.writeHead(400, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",

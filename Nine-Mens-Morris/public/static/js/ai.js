@@ -1,4 +1,4 @@
-function executeMinimaxMove(evaluateFunc, depth) {
+export function executeMinimaxMove(evaluateFunc, depth) {
   return function executeMinimaxMoveAux(state) {
     /**
      * Updates the game state to the best possible move (uses minimax to determine it)
