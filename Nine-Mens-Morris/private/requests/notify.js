@@ -7,16 +7,6 @@ import {
 } from "../serverLogicGame.js";
 import { sendUpdate } from "./update.js";
 
-function getPlayerNick(gameHash, playerID) {
-  if (playerID === 1) {
-    return sessions[gameHash].player1;
-  } else if (playerID === 2) {
-    return sessions[gameHash].player2;
-  } else {
-    console.log("TRYING TO FETCH A 3rd Player NICK");
-  }
-}
-
 function chooseAction(gameSession, index) {
   const currentPlayer = gameSession.game.getCurrentPlayer();
 
@@ -102,10 +92,33 @@ function chooseAction(gameSession, index) {
   return "";
 }
 
-async function handlePointClick(gameSession, cell) {
+function getPlayerNick(gameSession, playerNick) {
+  // Gets the number of the player based on his nick
+  if (gameSession.player1 === playerNick) {
+    return 1;
+  } else if (gameSession.player2 === playerNick) {
+    return 2;
+  } else {
+    console.log("[INVALID NICK - IT WAS NOT FOUND]");
+  }
+}
+
+function validCurrentPlayer(username, gameSession) {
+  // Verifies the validity of the current player
+  return (
+    getPlayerNick(gameSession, username) === gameSession.game.getCurrentPlayer()
+  );
+}
+
+async function handlePointClick(username, gameSession, cell) {
   if (
     !gameSession.game.checkGameOver() // Check if the game is over
   ) {
+    // Make sure its the right player turn
+    if (!validCurrentPlayer(username, gameSession)) {
+      return "Not your turn motherfucker!";
+    }
+
     // Convert the cell to our coordenates system
     let index = cell.square * 8 + cell.position;
 
@@ -173,6 +186,7 @@ export async function notify(req, res) {
 
   // Handle Point Click
   let possibleErrorString = await handlePointClick(
+    notification.nick,
     sessions[notification.game],
     notification.cell
   );
