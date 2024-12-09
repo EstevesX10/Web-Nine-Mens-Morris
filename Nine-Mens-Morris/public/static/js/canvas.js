@@ -3,6 +3,9 @@ import { notify } from "./serverRequests.js";
 import { NEIGHBOR_TABLE } from "./logicGame.js"
 import { g_config } from "./configuration.js"
 
+let throbber = document.getElementById("throbber");
+let throbber_bg = document.getElementById("throbber-bg");
+
 export class Canvas {
   constructor(config, game) {
     // Save the instance of a game
@@ -783,6 +786,10 @@ export class Canvas {
       }
 
       if (data.cell === undefined) {
+        // Turn off the loading throbber
+        throbber_bg.classList.remove("active");
+        throbber.classList.remove("active");
+
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {
           console.log("The other player goes first... Switching player");
