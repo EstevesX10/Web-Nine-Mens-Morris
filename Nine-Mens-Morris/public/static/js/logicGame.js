@@ -1,4 +1,5 @@
 import { hookUpdate } from "./serverRequests.js";
+import { executeMinimaxMove } from "./ai.js";
 
 export const MILLS = [
   // Horizontal
@@ -129,8 +130,9 @@ export class DestroyAction {
     gameBoard.placedPieces[gameBoard.getOpponent(this.player)]++;
 
     // Update player phase
-    gameBoard.gamePhase[gameBoard.getOpponent(this.player)] =
-      this.previousPhase;
+    gameBoard.gamePhase[
+      gameBoard.getOpponent(this.player)
+    ] = this.previousPhase;
 
     // Switch Player
     gameBoard.switchPlayer();
