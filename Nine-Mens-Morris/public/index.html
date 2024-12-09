@@ -301,8 +301,10 @@
         <section id="game" class="content">     
           <!-- Game Board -->
           <div id="game-layout" class="game-layout">
-            <!-- <canvas id="throbber" style="width: 100%; height: 100%; position: absolute; 
-    top: 0; left: 0; z-index: 10"></canvas> -->
+            <canvas id="throbber-bg" style="width: 100%; height: 100%; position: absolute; 
+    top: 0; left: 0; z-index: 20; background-color: #000000d5;"></canvas>
+            <canvas id="throbber" style="width: 100%; height: 100%; position: absolute; 
+    top: 0; left: 0; z-index: 21"></canvas>
             <!-- Player 1 -->
             <div class="player1">
               <div id="player1-info" class="player1-info">
@@ -504,10 +506,10 @@
         <!-- Authenticaton -->
         <section id="authentication" class="content active">
           <div class="container-authentication">
-            <canvas id="throbber-bg" style="width: 100%; height: 100%; position: absolute; 
+            <!-- <canvas id="throbber-bg" style="width: 100%; height: 100%; position: absolute; 
     top: 0; left: 0; z-index: 10; background-color: #000000d5;"></canvas>
             <canvas id="throbber" style="width: 100%; height: 100%; position: absolute; 
-    top: 0; left: 0; z-index: 10"></canvas>
+    top: 0; left: 0; z-index: 10"></canvas> -->
             <div class="content-authentication">
               <h2 class="logo"><i class="bx bxl-firebase"></i>Authenticaton</h2>
 

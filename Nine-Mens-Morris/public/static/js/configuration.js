@@ -121,6 +121,13 @@ class Configuration {
       // Update Canvas
       canvas = new Canvas("", game);
     } else {
+      // Activate the Throbber
+      let throbber = document.getElementById("throbber");
+      let throbber_bg = document.getElementById("throbber-bg");
+      
+      throbber.classList.add("active");
+      throbber_bg.classList.add("active");
+
       // Get the current authenticated user
       const username = document.getElementById("loginUsername").value;
       const password = document.getElementById("loginPassword").value;
