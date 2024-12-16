@@ -3,20 +3,6 @@ const ctx = throbber.getContext("2d");
 
 const background = document.getElementById("throbber-bg");
 
-// Define throbber resolution
-const width = throbber.parentElement.clientWidth; //1050; // Visible width in CSS pixels
-const height = throbber.parentElement.clientHeight; //550; // Visible height in CSS pixels
-const scale = window.devicePixelRatio || 1; // Adjust for high-DPI displays
-
-// Scale the throbber for higher resolution
-throbber.width = width * scale;
-throbber.height = height * scale;
-// throbber.style.width = `${width}px`;
-// throbber.style.height = `${height}px`;
-ctx.scale(scale, scale);
-
-const centerX = width / 2;
-const centerY = height / 2;
 const radius = 40; // Radius of the main circle
 const totalDots = 10; // Number of dots in the throbber
 const dotRadius = 8; // Radius of each dot
@@ -27,6 +13,24 @@ const speedFactor = 8; // Adjust speed (higher values make it slower)
 let frameCount = 0; // Frame counter
 
 function drawThrobber() {
+
+  // Define throbber resolution
+  const width = throbber.parentElement.clientWidth; //1050; // Visible width in CSS pixels
+  const height = throbber.parentElement.clientHeight; //550; // Visible height in CSS pixels
+  const scale = window.devicePixelRatio || 1; // Adjust for high-DPI displays
+
+  // Scale the throbber for higher resolution
+  throbber.width = width * scale;
+  throbber.height = height * scale;
+  console.log(width);
+  console.log(height);
+  // throbber.style.width = `${width}px`;
+  // throbber.style.height = `${height}px`;
+  ctx.scale(scale, scale);
+
+  const centerX = width / 2;
+  const centerY = height / 2;
+
   ctx.clearRect(0, 0, width, height); // Clear based on CSS size
 
   for (let i = 0; i < totalDots; i++) {

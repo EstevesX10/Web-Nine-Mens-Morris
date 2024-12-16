@@ -787,8 +787,8 @@ export class Canvas {
 
       if (data.cell === undefined) {
         // Turn off the loading throbber
-        throbber_bg.classList.remove("active");
-        throbber.classList.remove("active");
+        throbber.style.display = "none";
+        throbber_bg.style.display = "none";
 
         // This is the first update call
         if (data.turn !== document.getElementById("loginUsername").value) {

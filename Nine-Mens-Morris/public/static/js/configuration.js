@@ -125,8 +125,8 @@ class Configuration {
       let throbber = document.getElementById("throbber");
       let throbber_bg = document.getElementById("throbber-bg");
       
-      throbber.classList.add("active");
-      throbber_bg.classList.add("active");
+      throbber.style.display = "";
+      throbber_bg.style.display = "";
 
       // Get the current authenticated user
       const username = document.getElementById("loginUsername").value;
