@@ -1,13 +1,20 @@
 import { promises as fs } from "fs";
-import { receive, send, error } from "./utils.js";
+import { receive, send, error, validateObject } from "./utils.js";
+
+const RANKING_SPEC = {
+  group: "number",
+  size: "number",
+};
 
 const RANKINGS_PATH = "./private/data/ranking.json";
 
 export async function ranking(req, res) {
   const request = await receive(req);
-  if (!request.group || !request.size) {
-    error(res, `missing arguments ${request}`);
-    return;
+
+  // Validate request
+  const validationError = validateObject(notification, NOTIFY_SPEC);
+  if (validationError) {
+    return error(res, validationError);
   }
 
   if (request.size < 2 || request.size > 3) {

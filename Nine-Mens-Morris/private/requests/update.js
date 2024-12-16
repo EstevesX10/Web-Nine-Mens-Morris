@@ -1,4 +1,4 @@
-import { receive, send, error, getUser } from "./utils.js";
+import { receive, send, error, getUser, validateObject } from "./utils.js";
 import { sessions } from "./join.js";
 import { updateRanking } from "./ranking.js";
 
@@ -9,10 +9,16 @@ const SSE_HEADERS = {
   Connection: "keep-alive",
 };
 
+const UPDATE_SPEC = {
+  game: "string",
+  nick: "string",
+};
+
 export async function update(req, res, query) {
-  if (!query.game || !query.nick) {
-    error(res, `missing arguments ${query}`);
-    return;
+  // Validate request
+  const validationError = validateObject(query, UPDATE_SPEC);
+  if (validationError) {
+    return error(res, validationError);
   }
 
   if (!query.game in sessions) {
@@ -20,14 +26,9 @@ export async function update(req, res, query) {
     return;
   }
 
-  if (!getUser(query.nick)) {
-    error(res, `no user with nick ${query.nick}`);
-    return;
-  }
-
   const session = sessions[query.game];
   res.writeHead(200, SSE_HEADERS);
-  if (session.stream1 === undefined) {
+  if (session.stream1 === null) {
     session.stream1 = res;
     res.write(`data: {}\n\n`);
   } else {

@@ -1,7 +1,24 @@
-import { receive, send, error, userExists, existsSession } from "./utils.js";
+import {
+  receive,
+  send,
+  error,
+  userExists,
+  existsSession,
+  validateObject,
+} from "./utils.js";
 import { sessions } from "./join.js";
 import { PlaceAction, DestroyAction, MoveAction } from "../serverLogicGame.js";
 import { sendUpdate } from "./update.js";
+
+const NOTIFY_SPEC = {
+  nick: "string",
+  password: "string",
+  game: "string",
+  cell: {
+    square: "number",
+    position: "number",
+  },
+};
 
 function chooseAction(gameSession, index) {
   const currentPlayer = gameSession.game.getCurrentPlayer();
@@ -150,17 +167,9 @@ export async function notify(req, res) {
   console.log("Received Notify:", notification);
 
   // Verify if all the parameters were given
-  if (
-    !notification.nick ||
-    !notification.password ||
-    !notification.game ||
-    !notification.cell
-  ) {
-    // Missing Arguments
-    return error(
-      res,
-      "[NOTIFY] Missing Arguments! Please ensure your request contains all the information!"
-    );
+  const validationError = validateObject(notification, NOTIFY_SPEC);
+  if (validationError) {
+    return error(res, validationError);
   }
 
   // Check if the user exists
@@ -168,7 +177,8 @@ export async function notify(req, res) {
     // Send an Error
     return error(
       res,
-      `Invalid User (${notification.nick})! Please perform Registration!`
+      `Invalid User (${notification.nick})! Please perform Registration!`,
+      401
     );
   }
 

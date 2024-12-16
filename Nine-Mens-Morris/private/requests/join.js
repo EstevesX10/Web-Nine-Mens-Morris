@@ -1,4 +1,4 @@
-import { receive, send, error, userExists } from "./utils.js";
+import { receive, send, error, userExists, validateObject } from "./utils.js";
 import { Board, State, Game } from "../serverLogicGame.js";
 import crypto from "crypto";
 
@@ -16,6 +16,13 @@ sessions = {
     }
 }
 */
+
+const JOIN_SPEC = {
+  nick: "string",
+  password: "string",
+  group: "number",
+  size: "number",
+};
 
 export let sessions = {};
 let finishedSessions = {};
@@ -82,18 +89,10 @@ export async function join(req, res) {
   // Get the request
   let userJoin = await receive(req);
 
-  // Check if any argument was ommised
-  if (
-    !userJoin.nick ||
-    !userJoin.password ||
-    !userJoin.group ||
-    !userJoin.size
-  ) {
-    // Missing Arguments
-    return error(
-      res,
-      "Missing Arguments! Please ensure your request contains all the information!"
-    );
+  // Validate request
+  const validationError = validateObject(userJoin, JOIN_SPEC);
+  if (validationError) {
+    return error(res, validationError);
   }
 
   // Verify the integrity of Board Size
@@ -110,7 +109,8 @@ export async function join(req, res) {
     // Inexistent User
     return error(
       res,
-      `Invalid User (${userJoin.nick})! Please perform Registration!`
+      `Invalid User (${userJoin.nick})! Please perform Registration!`,
+      401
     );
   }
 

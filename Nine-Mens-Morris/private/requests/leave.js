@@ -6,7 +6,14 @@ import {
   existsSession,
   isGameOnGoing,
   removeSession,
+  validateObject,
 } from "./utils.js";
+
+const LEAVE_SPEC = {
+  nick: "string",
+  password: "string",
+  game: "string",
+};
 
 export async function leave(req, res) {
   // Get the request
@@ -15,12 +22,9 @@ export async function leave(req, res) {
   console.log(userLeave);
 
   // Check if any argument was ommised
-  if (!userLeave.nick || !userLeave.password || !userLeave.game) {
-    // Missing Arguments
-    return error(
-      res,
-      "Missing Arguments! Please ensure your request contains all the information!"
-    );
+  const validationError = validateObject(userLeave, LEAVE_SPEC);
+  if (validationError) {
+    return error(res, validationError);
   }
 
   // Check if the received nick exists
@@ -28,7 +32,8 @@ export async function leave(req, res) {
     // Inexistent User
     return error(
       res,
-      `Invalid User (${userLeave.nick})! Please perform Registration!`
+      `Invalid User (${userLeave.nick})! Please perform Registration!`,
+      401
     );
   }
 

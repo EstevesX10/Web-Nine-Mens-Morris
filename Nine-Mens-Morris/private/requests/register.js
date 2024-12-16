@@ -7,8 +7,14 @@ import {
   getUser,
   addUser,
   saveUsers,
+  validateObject,
 } from "./utils.js";
 import crypto from "crypto";
+
+const REGISTER_SPEC = {
+  nick: "string",
+  password: "string",
+};
 
 export async function register(req, res) {
   // Get the request
@@ -20,22 +26,16 @@ export async function register(req, res) {
     .update(user.password)
     .digest("hex");
 
-  // Check if the user was ommissed
-  if (!user.nick) {
-    return error(res, "No User was given!");
-  }
-
-  // Check if the nick corresponds to a string
-  if (typeof user.nick !== "string") {
-    return error(res, "The User Value must be a String!");
+  // Validate request
+  const validationError = validateObject(user, REGISTER_SPEC);
+  if (validationError) {
+    return error(res, validationError);
   }
 
   // Check if the User Already exists
-  if (userExists(user.nick, user.password)) {
+  let currentUser = getUser(user.nick);
+  if (currentUser) {
     // Perform Login
-
-    // Fetch the User
-    let currentUser = getUser(user.nick);
 
     // Check if the Secret Password is the same as the one saved
     if (currentUser.password === secretPassword) {
@@ -43,7 +43,11 @@ export async function register(req, res) {
       return send(res, {});
     } else {
       // User Already exist - Send error
-      return error(res, "User already exists! Please check your Password!");
+      return error(
+        res,
+        "User already exists! Please check your Password!",
+        401
+      );
     }
   } else {
     // Perform Registration

@@ -64,11 +64,12 @@ export function addUser(nick, secretPassword) {
 }
 
 export function userExists(username, password) {
-  // Compute the secret password
   let secretPassword = crypto.createHash("md5").update(password).digest("hex");
 
   // Check if a User already exists with the given username and password
-  return UsersData.some((user) => user.nick === username);
+  return UsersData.some(
+    (user) => user.nick === username && user.password === secretPassword
+  );
 }
 
 export function getUser(username) {
@@ -122,6 +123,38 @@ export async function receive(req) {
   return JSON.parse(data);
 }
 
+export function validateObject(obj, specification) {
+  // Recursive function to validate nested objects
+  function validateNested(currentObj, currentSpec, path = []) {
+    for (const [key, spec] of Object.entries(currentSpec)) {
+      const currentPath = [...path, key];
+
+      if (!(key in currentObj)) {
+        return `Missing required attribute: ${currentPath.join(".")}`;
+      }
+
+      if (typeof spec === "object" && spec !== null) {
+        if (typeof currentObj[key] !== "object" || currentObj[key] === null) {
+          return `Invalid type for ${currentPath.join(
+            "."
+          )}: expected object, got ${typeof currentObj[key]}`;
+        }
+        const nestedResult = validateNested(currentObj[key], spec, currentPath);
+        if (nestedResult) return nestedResult;
+      } else {
+        if (typeof currentObj[key] !== spec) {
+          return `Invalid type for ${currentPath.join(
+            "."
+          )}: expected ${spec}, got ${typeof currentObj[key]}`;
+        }
+      }
+    }
+    return null;
+  }
+  // Start validation
+  return validateNested(obj, specification);
+}
+
 export function send(res, body) {
   res.writeHead(200, {
     "Content-Type": "application/json",
@@ -131,9 +164,9 @@ export function send(res, body) {
   res.end();
 }
 
-export function error(res, msg) {
+export function error(res, msg, errorCode) {
   console.log("SENDING ERROR:", msg);
-  res.writeHead(400, {
+  res.writeHead(errorCode !== undefined ? errorCode : 400, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   });
