@@ -68,9 +68,7 @@ export function userExists(username, password) {
   let secretPassword = crypto.createHash("md5").update(password).digest("hex");
 
   // Check if a User already exists with the given username and password
-  return UsersData.some(
-    (user) => user.nick === username && user.password === secretPassword
-  );
+  return UsersData.some((user) => user.nick === username);
 }
 
 export function getUser(username) {
@@ -134,7 +132,7 @@ export function send(res, body) {
 }
 
 export function error(res, msg) {
-  console.log("SENDING ERROR:", msg)
+  console.log("SENDING ERROR:", msg);
   res.writeHead(400, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",

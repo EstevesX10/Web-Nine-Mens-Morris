@@ -11,7 +11,8 @@ sessions = {
         size:       < 2 || 3 || 4 >
         player1:    <player 1 Nick>
         player2:    <player 2 Nick>
-        stream:     <update response stream>
+        stream1:    <player 1 update response stream>
+        stream2:    <player 2 update response stream>
     }
 }
 */
@@ -56,7 +57,8 @@ function addNewSession(username, selectedSize) {
     player1: username,
     player2: null,
     game: new Game(gameState, 0, newGameHash),
-    stream: null,
+    stream1: null,
+    stream2: null,
   };
 
   // Add the new session
