@@ -43,7 +43,7 @@ function drawThrobber() {
 
     // Set color and transparency
     const alpha = i === currentDot ? 1 : 0.2; // Active dot is fully opaque
-    ctx.fillStyle = `rgba(150, 200, 255, ${alpha})`;
+    ctx.fillStyle = `rgba(0, 150, 255, ${alpha})`;
 
     // Draw the dot
     ctx.beginPath();
