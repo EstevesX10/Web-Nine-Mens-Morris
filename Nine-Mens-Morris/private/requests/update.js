@@ -1,4 +1,11 @@
-import { receive, send, error, getUser, validateObject } from "./utils.js";
+import {
+  receive,
+  send,
+  error,
+  getUser,
+  validateObject,
+  removeSession,
+} from "./utils.js";
 import { sessions } from "./join.js";
 import { updateRanking } from "./ranking.js";
 
@@ -37,8 +44,20 @@ export async function update(req, res, query) {
     session.stream1.write(`data: ${JSON.stringify(data)}\n\n`);
     session.stream2.write(`data: ${JSON.stringify(data)}\n\n`);
   }
-  req.on("close", () => {
+  req.on("close", async () => {
     console.log(`${query.nick} Connection closed`);
+
+    if (!session.ongoing) return;
+
+    // Send end game
+    const players = [session.player1, session.player2];
+    const winner = session.player1 === query.nick ? 2 : 1;
+    const response = {};
+    response.winner = players[winner - 1];
+    sseSend(session, response);
+    removeSession(query.game);
+
+    await updateRanking(response.winner, players[3 - winner - 1], session.size);
   });
 }
 
@@ -103,9 +122,11 @@ export async function sendUpdate(gameHash, clickIndex) {
 
 function sseSend(session, msg) {
   console.log("SSE sending:", msg);
-  session.stream1.write(`data: ${JSON.stringify(msg)}\n\n`);
+  if (session.stream1)
+    session.stream1.write(`data: ${JSON.stringify(msg)}\n\n`);
 
-  session.stream2.write(`data: ${JSON.stringify(msg)}\n\n`);
+  if (session.stream2)
+    session.stream2.write(`data: ${JSON.stringify(msg)}\n\n`);
 }
 
 function convertBoard(session, game) {

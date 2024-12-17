@@ -91,6 +91,7 @@ export function isGameOnGoing(gameHash) {
 
 export function removeSession(gameHash) {
   // Remove the selected session associated with the given game hash
+  sessions[gameHash].ongoing = false;
   delete sessions[gameHash];
 }
 
