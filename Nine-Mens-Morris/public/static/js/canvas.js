@@ -816,13 +816,23 @@ export class Canvas {
       } else if (prevRequest === "to") {
         console.assert(prevFrom !== -1, "Got step='to' without step='from'");
 
-        if (prevFrom === cellToIndex(data.cell)) {
+        const index = cellToIndex(data.cell);
+        if (prevFrom === index) {
           // Piece has deselected
+          prevRequest = data.phase === "drop" ? "drop" : data.step;
           return;
         }
 
-        if (!this.game.currentState.board.isAdjacent(prevFrom, cellToIndex(data.cell))) {
+        if (!this.game.currentState.board.isAdjacent(prevFrom, index)) {
           // Cells are not adjacent
+          console.log("Networked not adjacent:", prevFrom, index);
+          prevRequest = data.phase === "drop" ? "drop" : data.step;
+          return;
+        }
+
+        if (this.game.currentState.board.board[index] !== 0) {
+          // Cell is not empty
+          prevRequest = data.phase === "drop" ? "drop" : data.step;
           return;
         }
 

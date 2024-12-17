@@ -37,6 +37,8 @@ function chooseAction(gameSession, index) {
       3 - currentPlayer
     ) {
       return new DestroyAction(index, currentPlayer);
+    } else {
+      return "Not an enemy piece";
     }
   }
 
@@ -64,6 +66,7 @@ function chooseAction(gameSession, index) {
         // Selected the same piece twice
         // Clear Previously Selected Piece
         gameSession.selected = [];
+        return "";
       }
 
       // Check if the final place is empty
@@ -82,7 +85,7 @@ function chooseAction(gameSession, index) {
           // Perform the action
           return new MoveAction(initialIndex[0], index, currentPlayer);
         } else {
-          return "Invalid Move: cells are not adjacent"
+          return "Invalid Move: cells are not adjacent";
         }
       } else {
         console.log("OCUPADO MEUUU!!!");
@@ -156,7 +159,9 @@ async function handlePointClick(username, gameSession, cell) {
       // Everything worked out
       return "";
     } else {
-      await sendUpdate(gameSession.game.gameHash, index);
+      if (action === "") {
+        await sendUpdate(gameSession.game.gameHash, index);
+      }
       return action;
     }
   }
