@@ -21,7 +21,11 @@ class Server {
         (this.routes[method] && this.routes[method][parsedUrl.pathname]) ||
         this.routes["default"];
 
-      handler(req, res, parsedUrl.query);
+      try {
+        handler(req, res, parsedUrl.query);
+      } catch (err) {
+        console.error("Something went wrong!", err);
+      }
     });
   }
 

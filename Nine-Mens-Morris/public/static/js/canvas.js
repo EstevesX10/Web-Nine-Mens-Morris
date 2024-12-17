@@ -1,7 +1,7 @@
 import { PlaceAction, DestroyAction, MoveAction } from "./logicGame.js";
-import { notify } from "./serverRequests.js";
-import { NEIGHBOR_TABLE } from "./logicGame.js"
-import { g_config } from "./configuration.js"
+import { notify, leave } from "./serverRequests.js";
+import { NEIGHBOR_TABLE } from "./logicGame.js";
+import { g_config } from "./configuration.js";
 
 let throbber = document.getElementById("throbber");
 let throbber_bg = document.getElementById("throbber-bg");
@@ -769,7 +769,9 @@ export class Canvas {
     const inner = (event) => {
       const data = JSON.parse(event.data);
       console.log(`Got server update ${event.data}`);
-      if (event.data === "{}") { return;}
+      if (event.data === "{}") {
+        return;
+      }
       if (data.error !== undefined) {
         // TODO: handle error
         console.warn(`Server returned error: ${data.error}`);
@@ -799,8 +801,10 @@ export class Canvas {
           this.game.currentState.board.switchPlayer();
         }
       } else if (prevRequest === "drop") {
+        const index = cellToIndex(data.cell);
+        if (this.game.currentState.board.board[index] !== 0) return;
         const action = new PlaceAction(
-          cellToIndex(data.cell),
+          index,
           this.game.currentState.board.getCurrentPlayer()
         );
         console.log("Networked placing", action);
@@ -814,6 +818,11 @@ export class Canvas {
 
         if (prevFrom === cellToIndex(data.cell)) {
           // Piece has deselected
+          return;
+        }
+
+        if (!this.game.currentState.board.isAdjacent(prevFrom, cellToIndex(data.cell))) {
+          // Cells are not adjacent
           return;
         }
 

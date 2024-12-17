@@ -81,6 +81,8 @@ function chooseAction(gameSession, index) {
 
           // Perform the action
           return new MoveAction(initialIndex[0], index, currentPlayer);
+        } else {
+          return "Invalid Move: cells are not adjacent"
         }
       } else {
         console.log("OCUPADO MEUUU!!!");
@@ -142,7 +144,7 @@ async function handlePointClick(username, gameSession, cell) {
     // Select player action
     const action = chooseAction(gameSession, index);
 
-    console.log(action);
+    console.log("Action:", action);
 
     if (typeof action !== "string") {
       // Execute the Action
