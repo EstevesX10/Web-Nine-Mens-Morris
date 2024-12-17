@@ -8,6 +8,7 @@ import {
   removeSession,
   validateObject,
 } from "./utils.js";
+import { sessions } from "./join.js";
 
 const LEAVE_SPEC = {
   nick: "string",
@@ -41,6 +42,12 @@ export async function leave(req, res) {
   if (!existsSession(userLeave.game)) {
     return error(res, `Invalid Game Session (game hash = ${userLeave.game})!`);
   }
+
+  // Close streams
+  const stream1 = sessions[userLeave.game].stream1;
+  if (stream1) stream1.end();
+  const stream2 = sessions[userLeave.game].stream2;
+  if (stream2) stream2.end();
 
   // Check if the session is not ongoing and remove it
   if (!isGameOnGoing(userLeave.game)) {

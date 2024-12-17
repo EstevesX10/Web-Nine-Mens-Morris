@@ -67,6 +67,12 @@ export async function sendUpdate(gameHash, clickIndex) {
   const game = session.game;
   const players = [session.player1, session.player2];
 
+  // Add cell
+  response.cell = {
+    square: Math.floor(clickIndex / 8),
+    position: clickIndex % 8,
+  };
+
   // Add winner
   if (session.player2 === null) {
     response.winner = null;
@@ -80,12 +86,6 @@ export async function sendUpdate(gameHash, clickIndex) {
     await updateRanking(response.winner, players[3 - winner - 1], session.size);
     return;
   }
-
-  // Add cell
-  response.cell = {
-    square: Math.floor(clickIndex / 8),
-    position: clickIndex % 8,
-  };
 
   // Add board
   response.board = convertBoard(session, game);

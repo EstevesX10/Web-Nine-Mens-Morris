@@ -773,7 +773,6 @@ export class Canvas {
         return;
       }
       if (data.error !== undefined) {
-        // TODO: handle error
         console.warn(`Server returned error: ${data.error}`);
         return;
       }
@@ -819,19 +818,6 @@ export class Canvas {
         const index = cellToIndex(data.cell);
         if (prevFrom === index) {
           // Piece has deselected
-          prevRequest = data.phase === "drop" ? "drop" : data.step;
-          return;
-        }
-
-        if (!this.game.currentState.board.isAdjacent(prevFrom, index)) {
-          // Cells are not adjacent
-          console.log("Networked not adjacent:", prevFrom, index);
-          prevRequest = data.phase === "drop" ? "drop" : data.step;
-          return;
-        }
-
-        if (this.game.currentState.board.board[index] !== 0) {
-          // Cell is not empty
           prevRequest = data.phase === "drop" ? "drop" : data.step;
           return;
         }
