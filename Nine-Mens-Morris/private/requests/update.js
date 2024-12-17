@@ -28,7 +28,7 @@ export async function update(req, res, query) {
     return error(res, validationError);
   }
 
-  if (!query.game in sessions) {
+  if (!(query.game in sessions)) {
     error(res, `game does not exist: ${query.game}`);
     return;
   }

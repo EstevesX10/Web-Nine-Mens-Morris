@@ -12,7 +12,7 @@ export async function ranking(req, res) {
   const request = await receive(req);
 
   // Validate request
-  const validationError = validateObject(notification, NOTIFY_SPEC);
+  const validationError = validateObject(request, RANKING_SPEC);
   if (validationError) {
     return error(res, validationError);
   }

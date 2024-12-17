@@ -195,6 +195,10 @@ export async function notify(req, res) {
     return error(res, "'square' is negative!");
   }
 
+  if (notification.cell.square >= sessions[notification.game].size) {
+    return error(res, "'square' is too big!");
+  }
+
   // Handle Point Click
   let possibleErrorString = await handlePointClick(
     notification.nick,
