@@ -1,6 +1,7 @@
 import { register, leave } from "./serverRequests.js";
 import { navManager } from "./script.js";
 import { g_config } from "./configuration.js";
+import { game } from "./configuration.js";
 
 const closeBtn = document.querySelector(".closeIcon");
 const modal = document.querySelector(".modal");

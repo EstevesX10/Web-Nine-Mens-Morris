@@ -13,7 +13,6 @@ const speedFactor = 8; // Adjust speed (higher values make it slower)
 let frameCount = 0; // Frame counter
 
 function drawThrobber() {
-
   // Define throbber resolution
   const width = throbber.parentElement.clientWidth; //1050; // Visible width in CSS pixels
   const height = throbber.parentElement.clientHeight; //550; // Visible height in CSS pixels
@@ -22,8 +21,6 @@ function drawThrobber() {
   // Scale the throbber for higher resolution
   throbber.width = width * scale;
   throbber.height = height * scale;
-  console.log(width);
-  console.log(height);
   // throbber.style.width = `${width}px`;
   // throbber.style.height = `${height}px`;
   ctx.scale(scale, scale);

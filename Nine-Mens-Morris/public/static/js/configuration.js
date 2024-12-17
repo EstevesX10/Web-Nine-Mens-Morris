@@ -124,7 +124,7 @@ class Configuration {
       // Activate the Throbber
       let throbber = document.getElementById("throbber");
       let throbber_bg = document.getElementById("throbber-bg");
-      
+
       throbber.style.display = "";
       throbber_bg.style.display = "";
 
@@ -159,5 +159,5 @@ class Configuration {
   }
 }
 
-let game = null;
+export let game = null;
 export let g_config = new Configuration();
