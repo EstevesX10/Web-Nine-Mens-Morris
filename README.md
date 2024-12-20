@@ -36,15 +36,19 @@
 
 ## Project Overview
 
-Nine men's morris [Strategy board game for two players] Implementation
+This project involves the development of a **web-based** version of the traditional game `Nine Men's Morris`, structured in **three phases**.
 
-> ADD PROJECT OVERVIEW
+The **first phase** focused on building a **Single-Page Application (SPA)** with core features such as an **interactive game board**, **user configuration**, **instructions**, **leaderboards**, **messaging**, and **basic AI for single-player mode**. Consequently, this phase established the **foundational gameplay** and **user interface** of the application.
 
-## Project Results
+In the **second phase**, the game was made distributed, enabling **multiplayer** functionality by integrating with a **web server** to manage **real-time client-server communication and gameplay**.
 
-> ADD PROJECT RESULTS
+Finally, in the **third phase**, a **custom server** was developed using **Node.js** to replace the external server. This included implementing features like **persistent data storage**, **modular server architecture**, and **secure communication through hashing and encryption**, ensuring a robust and independent **backend** for the application.
 
-https://github.com/user-attachments/assets/d5b41125-6592-43f9-8f64-eaba62ef4500
+## Project Demo
+
+<div align = "center">
+ <video src= "https://github.com/user-attachments/assets/d5b41125-6592-43f9-8f64-eaba62ef4500" />
+</div>
 
 ## Authorship
 
