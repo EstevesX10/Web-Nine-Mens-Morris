@@ -44,6 +44,8 @@ Nine men's morris [Strategy board game for two players] Implementation
 
 > ADD PROJECT RESULTS
 
+https://github.com/user-attachments/assets/d5b41125-6592-43f9-8f64-eaba62ef4500
+
 ## Authorship
 
 - **Authors** &#8594; [Gonçalo Esteves](https://github.com/EstevesX10), [Nuno Gomes](https://github.com/NightF0x26) and [Pedro Afonseca](https://github.com/PsuperX)
