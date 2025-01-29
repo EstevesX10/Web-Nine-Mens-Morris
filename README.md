@@ -46,7 +46,7 @@ This project involves the development of a **web-based** version of the traditio
 
 ## Project Demo
 
-Finally, here's a **quick demo** of the final Web Application:
+This demo focuses on the **Single-Player mode**, where you can challenge an **AI opponent** with three difficulty levels (implemented using the `Minimax` algorithm). Although the two-player mode isn’t showcased here, when you choose `PVP`, you’ll be placed in a **queue** to match with other players who have selected the **same board settings**. Below is a quick look at the **final web application**:
 
 <div align = "center">
  <video src= "https://github.com/user-attachments/assets/d5b41125-6592-43f9-8f64-eaba62ef4500" />
