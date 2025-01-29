@@ -23,14 +23,14 @@
 <br/>
 
 <div align="center">
-    <a href="https://github.com/EstevesX10/_REPO_NAME_/blob/main/LICENSE">
-        <img src="https://img.shields.io/github/license/EstevesX10/_REPO_NAME_?style=flat&logo=gitbook&logoColor=142348&label=License&color=142348">
+    <a href="https://github.com/EstevesX10/Web-Nine-Mens-Morris/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/EstevesX10/Web-Nine-Mens-Morris?style=flat&logo=gitbook&logoColor=142348&label=License&color=142348">
     </a>
     <a href="">
-        <img src="https://img.shields.io/github/repo-size/EstevesX10/_REPO_NAME_?style=flat&logo=googlecloudstorage&logoColor=142348&logoSize=auto&label=Repository%20Size&color=142348">
+        <img src="https://img.shields.io/github/repo-size/EstevesX10/Web-Nine-Mens-Morris?style=flat&logo=googlecloudstorage&logoColor=142348&logoSize=auto&label=Repository%20Size&color=142348">
     </a>
     <a href="">
-        <img src="https://img.shields.io/github/stars/EstevesX10/_REPO_NAME_?style=flat&logo=adafruit&logoColor=142348&logoSize=auto&label=Stars&color=142348">
+        <img src="https://img.shields.io/github/stars/EstevesX10/Web-Nine-Mens-Morris?style=flat&logo=adafruit&logoColor=142348&logoSize=auto&label=Stars&color=142348">
     </a>
 </div>
 
