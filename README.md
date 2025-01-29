@@ -38,13 +38,15 @@
 
 This project involves the development of a **web-based** version of the traditional game `Nine Men's Morris`, structured in **three phases**.
 
-The **first phase** focused on building a **Single-Page Application (SPA)** with core features such as an **interactive game board**, **user configuration**, **instructions**, **leaderboards**, **messaging**, and **basic AI for single-player mode**. Consequently, this phase established the **foundational gameplay** and **user interface** of the application.
+1. The **first phase** focused on building a **Single-Page Application (SPA)** with core features such as an **interactive game board**, **user configuration**, **instructions**, **leaderboards**, **messaging**, and **basic AI for single-player mode**. Consequently, this phase established the **foundational gameplay** and **user interface** of the application.
 
-In the **second phase**, the game was made distributed, enabling **multiplayer** functionality by integrating with a **web server** to manage **real-time client-server communication and gameplay**.
+2. In the **second phase**, the game was made distributed, enabling **multiplayer** functionality by integrating with a **web server** to manage **real-time client-server communication and gameplay**.
 
-Finally, in the **third phase**, a **custom server** was developed using **Node.js** to replace the external server. This included implementing features like **persistent data storage**, **modular server architecture**, and **secure communication through hashing and encryption**, ensuring a robust and independent **backend** for the application.
+3. Finally, in the **third phase**, a **custom server** was developed using **Node.js** to replace the external server. This included implementing features like **persistent data storage**, **modular server architecture**, and **secure communication through hashing and encryption**, ensuring a robust and independent **backend** for the application.
 
 ## Project Demo
+
+Finally, here's a **quick demo** of the final Web Application:
 
 <div align = "center">
  <video src= "https://github.com/user-attachments/assets/d5b41125-6592-43f9-8f64-eaba62ef4500" />
